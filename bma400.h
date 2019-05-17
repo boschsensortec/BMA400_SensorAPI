@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2017 - 2018 Bosch Sensortec GmbH
+ * Copyright (C) 2018 - 2019 Bosch Sensortec GmbH
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -40,12 +40,14 @@
  * patent rights of the copyright holder.
  *
  * @file       bma400.h
- * @date       25 Sep 2018
- * @version    1.5.0
+ * @date       09 May 2019
+ * @version    1.5.2
  * @brief
  *
  */
+
 /*! @file bma400.h */
+
 /*!
  * @defgroup BMA400 SENSOR API
  * @{
@@ -53,18 +55,22 @@
 
 #ifndef BMA400_H__
 #define BMA400_H__
+
 /*! CPP guard */
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 /*********************************************************************/
 /* header files */
 
 #include "bma400_defs.h"
+
 /*********************************************************************/
 /* (extern) variable declarations */
 /*********************************************************************/
 /* function prototype declarations */
+
 /*!
  * @brief This API is the entry point, Call this API before using other APIs.
  * This API reads the chip-id of the sensor which is the first step to
@@ -301,7 +307,8 @@ int8_t bma400_get_interrupt_status(uint16_t *int_status, const struct bma400_dev
  * @return Result of API execution status
  * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
  */
-int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8_t n_sett, const struct bma400_dev *dev);
+int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8_t n_sett,
+                                     const struct bma400_dev *dev);
 
 /*!
  * @brief This API is used to enable the various interrupts
@@ -324,7 +331,8 @@ int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8
  * @return Result of API execution status
  * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
  */
-int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8_t n_sett, const struct bma400_dev *dev);
+int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8_t n_sett,
+                               const struct bma400_dev *dev);
 
 /*!
  * @brief This API is used to get the step counter output in form
@@ -416,9 +424,9 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, const struct bma400_d
  * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
  */
 int8_t bma400_extract_accel(struct bma400_fifo_data *fifo,
-			    struct bma400_sensor_data *accel_data,
-			    uint16_t *frame_count,
-			    const struct bma400_dev *dev);
+                            struct bma400_sensor_data *accel_data,
+                            uint16_t *frame_count,
+                            const struct bma400_dev *dev);
 
 /*!
  * @brief This is used to perform self test of accelerometer in BMA400
@@ -448,7 +456,7 @@ int8_t bma400_set_step_counter_param(uint8_t *sccr_conf, const struct bma400_dev
 
 #ifdef __cplusplus
 }
-#endif  /* End of CPP guard */
+#endif /* End of CPP guard */
 
-#endif  /* BMA400_H__ */
+#endif /* BMA400_H__ */
 /** @}*/
