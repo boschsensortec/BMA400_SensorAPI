@@ -15,4 +15,7 @@ The BMA400 is the first real ultra-low power acceleration sensor without comprom
 
 For more information refer product page [Link](https://www.bosch-sensortec.com/bst/products/all_products/bma400_1)
 
+## License
+Refer to the LICENSE file for details
+
 # Copyright (C) 2018 Bosch Sensortec GmbH
