@@ -1,63 +1,46 @@
 /**
- * Copyright (C) 2018 - 2019 Bosch Sensortec GmbH
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright
- * notice, this list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * Neither the name of the copyright holder nor the names of the
- * contributors may be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
- * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDER
- * OR CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
- * OR CONSEQUENTIAL DAMAGES(INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
- *
- * The information provided is believed to be accurate and reliable.
- * The copyright holder assumes no responsibility
- * for the consequences of use
- * of such information nor for any infringement of patents or
- * other rights of third parties which may result from its use.
- * No license is granted by implication or otherwise under any patent or
- * patent rights of the copyright holder.
- *
- * @file    bma400_defs.h
- * @date    09 May 2019
- * @version 1.5.2
- * @brief
- *
- */
+* Copyright (c) 2020 Bosch Sensortec GmbH. All rights reserved.
+*
+* BSD-3-Clause
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright
+*    notice, this list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its
+*    contributors may be used to endorse or promote products derived from
+*    this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+* COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+* STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+* IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*
+* @file bma400_defs.h
+* @date 10/01/2020
+* @version  1.5.6
+*
+*/
 
-/*! \file bma400_defs.h */
+/*! @cond DOXYGEN_BMA400_DEFS_H_ */
 
-/*!
- * @defgroup BMA400 SENSOR API
- * @brief
- * @{
- */
 #ifndef BMA400_DEFS_H_
 #define BMA400_DEFS_H_
 
-/*********************************************************************/
-/**\ header files */
 #ifdef __KERNEL__
 #include <linux/types.h>
 #include <linux/kernel.h>
@@ -65,10 +48,6 @@
 #include <stdint.h>
 #include <stddef.h>
 #endif
-
-/*********************************************************************/
-/** \name       Common macros                    */
-/*********************************************************************/
 
 #if !defined(UINT8_C) && !defined(INT8_C)
 #define INT8_C(x)   S8_C(x)
@@ -90,60 +69,56 @@
 #define UINT64_C(x) U64_C(x)
 #endif
 
-/**\name C standard macros */
+/* C standard macros */
 #ifndef NULL
 #ifdef __cplusplus
-#define NULL  0
+#define NULL                           0
 #else
-#define NULL  ((void *) 0)
+#define NULL                           ((void *) 0)
 #endif
 #endif
 
 #ifndef TRUE
-#define TRUE  UINT8_C(1)
+#define TRUE                           UINT8_C(1)
 #endif
 
 #ifndef FALSE
-#define FALSE UINT8_C(0)
+#define FALSE                          UINT8_C(0)
 #endif
 
-/********************************************************/
-/**\name Macro definitions */
-/**\name API success code */
+/* API success code */
 #define BMA400_OK                      INT8_C(0)
 
-/**\name API error codes */
+/* API error codes */
 #define BMA400_E_NULL_PTR              INT8_C(-1)
 #define BMA400_E_COM_FAIL              INT8_C(-2)
 #define BMA400_E_DEV_NOT_FOUND         INT8_C(-3)
 #define BMA400_E_INVALID_CONFIG        INT8_C(-4)
 
-/**\name API warning codes */
+/* API warning codes */
 #define BMA400_W_SELF_TEST_FAIL        INT8_C(1)
 
-/**\name CHIP ID VALUE */
+/* CHIP ID VALUE */
 #define BMA400_CHIP_ID                 UINT8_C(0x90)
 
-/********************************************************/
-/**\name    USER CONFIGURATION MACROS               */
-/**\name BMA400 I2C address macros */
+/* BMA400 I2C address macros */
 #define BMA400_I2C_ADDRESS_SDO_LOW     UINT8_C(0x14)
 #define BMA400_I2C_ADDRESS_SDO_HIGH    UINT8_C(0x15)
 
-/**\name Power mode configurations */
+/* Power mode configurations */
 #define BMA400_NORMAL_MODE             UINT8_C(0x02)
 #define BMA400_SLEEP_MODE              UINT8_C(0x00)
 #define BMA400_LOW_POWER_MODE          UINT8_C(0x01)
 
-/**\name Enable / Disable macros */
+/* Enable / Disable macros */
 #define BMA400_DISABLE                 UINT8_C(0)
 #define BMA400_ENABLE                  UINT8_C(1)
 
-/**\name Data/sensortime selection macros */
+/* Data/sensortime selection macros */
 #define BMA400_DATA_ONLY               UINT8_C(0x00)
 #define BMA400_DATA_SENSOR_TIME        UINT8_C(0x01)
 
-/**\name ODR configurations  */
+/* ODR configurations  */
 #define BMA400_ODR_12_5HZ              UINT8_C(0x05)
 #define BMA400_ODR_25HZ                UINT8_C(0x06)
 #define BMA400_ODR_50HZ                UINT8_C(0x07)
@@ -152,13 +127,13 @@
 #define BMA400_ODR_400HZ               UINT8_C(0x0A)
 #define BMA400_ODR_800HZ               UINT8_C(0x0B)
 
-/**\name Accel Range configuration */
+/* Accel Range configuration */
 #define BMA400_2G_RANGE                UINT8_C(0x00)
 #define BMA400_4G_RANGE                UINT8_C(0x01)
 #define BMA400_8G_RANGE                UINT8_C(0x02)
 #define BMA400_16G_RANGE               UINT8_C(0x03)
 
-/**\name Accel Axes selection settings for
+/* Accel Axes selection settings for
  * DATA SAMPLING, WAKEUP, ORIENTATION CHANGE,
  * GEN1, GEN2 , ACTIVITY CHANGE
  */
@@ -167,46 +142,46 @@
 #define BMA400_Z_AXIS_EN               UINT8_C(0x04)
 #define BMA400_XYZ_AXIS_EN             UINT8_C(0x07)
 
-/**\name Accel filter(data_src_reg) selection settings */
+/* Accel filter(data_src_reg) selection settings */
 #define BMA400_DATA_SRC_ACCEL_FILT_1   UINT8_C(0x00)
 #define BMA400_DATA_SRC_ACCEL_FILT_2   UINT8_C(0x01)
 #define BMA400_DATA_SRC_ACCEL_FILT_LP  UINT8_C(0x02)
 
-/**\name Accel OSR (OSR,OSR_LP) settings */
+/* Accel OSR (OSR,OSR_LP) settings */
 #define BMA400_ACCEL_OSR_SETTING_0     UINT8_C(0x00)
 #define BMA400_ACCEL_OSR_SETTING_1     UINT8_C(0x01)
 #define BMA400_ACCEL_OSR_SETTING_2     UINT8_C(0x02)
 #define BMA400_ACCEL_OSR_SETTING_3     UINT8_C(0x03)
 
-/**\name Accel filt1_bw settings */
+/* Accel filt1_bw settings */
 /* Accel filt1_bw = 0.48 * ODR */
 #define BMA400_ACCEL_FILT1_BW_0        UINT8_C(0x00)
 
 /* Accel filt1_bw = 0.24 * ODR */
 #define BMA400_ACCEL_FILT1_BW_1        UINT8_C(0x01)
 
-/**\name Auto wake-up timeout value of 10.24s */
+/* Auto wake-up timeout value of 10.24s */
 #define BMA400_AUTO_WAKEUP_TIMEOUT_MAX UINT16_C(0x0FFF)
 
-/**\name Auto low power timeout value of 10.24s */
+/* Auto low power timeout value of 10.24s */
 #define BMA400_AUTO_LP_TIMEOUT_MAX     UINT16_C(0x0FFF)
 
-/**\name Reference Update macros */
+/* Reference Update macros */
 #define BMA400_MANUAL_UPDATE           UINT8_C(0x00)
 #define BMA400_ONE_TIME_UPDATE         UINT8_C(0x01)
 #define BMA400_EVERY_TIME_UPDATE       UINT8_C(0x02)
 #define BMA400_LP_EVERY_TIME_UPDATE    UINT8_C(0x03)
 
-/**\name Reference Update macros for orient interrupts */
+/* Reference Update macros for orient interrupts */
 #define BMA400_ORIENT_REFU_ACC_FILT_2  UINT8_C(0x01)
 #define BMA400_ORIENT_REFU_ACC_FILT_LP UINT8_C(0x02)
 
-/**\name Stability evaluation macros for orient interrupts */
+/* Stability evaluation macros for orient interrupts */
 #define BMA400_STABILITY_DISABLED      UINT8_C(0x00)
 #define BMA400_STABILITY_ACC_FILT_2    UINT8_C(0x01)
 #define BMA400_STABILITY_ACC_FILT_LP   UINT8_C(0x02)
 
-/**\name Number of samples needed for Auto-wakeup interrupt evaluation  */
+/* Number of samples needed for Auto-wakeup interrupt evaluation  */
 #define BMA400_SAMPLE_COUNT_1          UINT8_C(0x00)
 #define BMA400_SAMPLE_COUNT_2          UINT8_C(0x01)
 #define BMA400_SAMPLE_COUNT_3          UINT8_C(0x02)
@@ -216,7 +191,7 @@
 #define BMA400_SAMPLE_COUNT_7          UINT8_C(0x06)
 #define BMA400_SAMPLE_COUNT_8          UINT8_C(0x07)
 
-/**\name Auto low power configurations */
+/* Auto low power configurations */
 /* Auto low power timeout disabled  */
 #define BMA400_AUTO_LP_TIMEOUT_DISABLE UINT8_C(0x00)
 
@@ -234,13 +209,13 @@
  */
 #define BMA400_AUTO_LP_TIME_RESET_EN   UINT8_C(0x08)
 
-/**\name    TAP INTERRUPT CONFIG MACROS   */
+/*    TAP INTERRUPT CONFIG MACROS   */
 /* Axes select for TAP interrupt */
 #define BMA400_X_AXIS_EN_TAP           UINT8_C(0x02)
 #define BMA400_Y_AXIS_EN_TAP           UINT8_C(0x01)
 #define BMA400_Z_AXIS_EN_TAP           UINT8_C(0x00)
 
-/*! TAP tics_th setting */
+/* TAP tics_th setting */
 
 /* Maximum time between upper and lower peak of a tap, in data samples
  * this time depends on the mechanics of the device tapped onto
@@ -259,7 +234,7 @@
 /* Configures 18 data samples for high-low tap signal change time */
 #define BMA400_TICS_TH_18_DATA_SAMPLES UINT8_C(0x03)
 
-/*! TAP Sensitivity setting */
+/* TAP Sensitivity setting */
 /* It modifies the threshold for minimum TAP amplitude */
 /* BMA400_TAP_SENSITIVITY_0 correspond to highest sensitivity */
 #define BMA400_TAP_SENSITIVITY_0       UINT8_C(0x00)
@@ -273,7 +248,7 @@
 /* BMA400_TAP_SENSITIVITY_7 correspond to lowest sensitivity */
 #define BMA400_TAP_SENSITIVITY_7       UINT8_C(0x07)
 
-/*!  BMA400 TAP - quiet  settings */
+/*  BMA400 TAP - quiet  settings */
 
 /* Quiet refers to minimum quiet time before and after double tap,
  * in the data samples This time also defines the longest time interval
@@ -292,7 +267,7 @@
 /* Configures 120 data samples quiet time between single or double taps */
 #define BMA400_QUIET_120_DATA_SAMPLES UINT8_C(0x03)
 
-/*!  BMA400 TAP - quiet_dt  settings */
+/*  BMA400 TAP - quiet_dt  settings */
 
 /* quiet_dt refers to Minimum time between the two taps of a
  * double tap, in data samples
@@ -310,7 +285,7 @@
 /* Configures 16 data samples minimum time between double taps */
 #define BMA400_QUIET_DT_16_DATA_SAMPLES  UINT8_C(0x03)
 
-/**\name    ACTIVITY CHANGE CONFIG MACROS   */
+/*    ACTIVITY CHANGE CONFIG MACROS   */
 /* Data source for activity change detection */
 #define BMA400_DATA_SRC_ACC_FILT1        UINT8_C(0x00)
 #define BMA400_DATA_SRC_ACC_FILT2        UINT8_C(0x01)
@@ -322,13 +297,13 @@
 #define BMA400_ACT_CH_SAMPLE_CNT_256     UINT8_C(0x03)
 #define BMA400_ACT_CH_SAMPLE_CNT_512     UINT8_C(0x04)
 
-/**\name Interrupt pin configuration macros */
+/* Interrupt pin configuration macros */
 #define BMA400_INT_PUSH_PULL_ACTIVE_0    UINT8_C(0x00)
 #define BMA400_INT_PUSH_PULL_ACTIVE_1    UINT8_C(0x01)
 #define BMA400_INT_OPEN_DRIVE_ACTIVE_0   UINT8_C(0x02)
 #define BMA400_INT_OPEN_DRIVE_ACTIVE_1   UINT8_C(0x03)
 
-/**\name Interrupt Assertion status macros */
+/* Interrupt Assertion status macros */
 #define BMA400_WAKEUP_INT_ASSERTED       UINT16_C(0x0001)
 #define BMA400_ORIENT_CH_INT_ASSERTED    UINT16_C(0x0002)
 #define BMA400_GEN1_INT_ASSERTED         UINT16_C(0x0004)
@@ -344,22 +319,21 @@
 #define BMA400_ACT_CH_Y_ASSERTED         UINT16_C(0x4000)
 #define BMA400_ACT_CH_Z_ASSERTED         UINT16_C(0x8000)
 
-/**\name Generic interrupt criterion_sel configuration macros */
+/* Generic interrupt criterion_sel configuration macros */
 #define BMA400_ACTIVITY_INT              UINT8_C(0x01)
 #define BMA400_INACTIVITY_INT            UINT8_C(0x00)
 
-/**\name Generic interrupt axes evaluation logic configuration macros */
+/* Generic interrupt axes evaluation logic configuration macros */
 #define BMA400_ALL_AXES_INT              UINT8_C(0x01)
 #define BMA400_ANY_AXES_INT              UINT8_C(0x00)
 
-/**\name Generic interrupt hysteresis configuration macros */
+/* Generic interrupt hysteresis configuration macros */
 #define BMA400_HYST_0_MG                 UINT8_C(0x00)
 #define BMA400_HYST_24_MG                UINT8_C(0x01)
 #define BMA400_HYST_48_MG                UINT8_C(0x02)
 #define BMA400_HYST_96_MG                UINT8_C(0x03)
 
-/**********************************************************************/
-/**\name BMA400 Register Address */
+/* BMA400 Register Address */
 #define BMA400_CHIP_ID_ADDR              UINT8_C(0x00)
 #define BMA400_STATUS_ADDR               UINT8_C(0x03)
 #define BMA400_ACCEL_DATA_ADDR           UINT8_C(0x04)
@@ -389,24 +363,24 @@
 #define BMA400_SELF_TEST_ADDR            UINT8_C(0x7D)
 #define BMA400_COMMAND_REG_ADDR          UINT8_C(0x7E)
 
-/**\name BMA400 Command register */
+/* BMA400 Command register */
 #define BMA400_SOFT_RESET_CMD            UINT8_C(0xB6)
 #define BMA400_FIFO_FLUSH_CMD            UINT8_C(0xB0)
 
-/**\name BMA400 Delay definitions */
+/* BMA400 Delay definitions */
 #define BMA400_SOFT_RESET_DELAY_MS       UINT8_C(5)
 #define BMA400_SELF_TEST_DELAY_MS        UINT8_C(7)
 #define BMA400_SELF_TEST_DATA_READ_MS    UINT8_C(50)
 
-/**\name Interface selection macro */
+/* Interface selection macro */
 #define BMA400_SPI_WR_MASK               UINT8_C(0x7F)
 #define BMA400_SPI_RD_MASK               UINT8_C(0x80)
 
-/**\name UTILITY MACROS */
+/* UTILITY MACROS */
 #define BMA400_SET_LOW_BYTE              UINT16_C(0x00FF)
 #define BMA400_SET_HIGH_BYTE             UINT16_C(0xFF00)
 
-/**\name Interrupt mapping selection */
+/* Interrupt mapping selection */
 #define BMA400_DATA_READY_INT_MAP        UINT8_C(0x01)
 #define BMA400_FIFO_WM_INT_MAP           UINT8_C(0x02)
 #define BMA400_FIFO_FULL_INT_MAP         UINT8_C(0x03)
@@ -419,7 +393,7 @@
 #define BMA400_STEP_INT_MAP              UINT8_C(0x0A)
 #define BMA400_INT_OVERRUN_MAP           UINT8_C(0x0B)
 
-/**\name BMA400 FIFO configurations */
+/* BMA400 FIFO configurations */
 #define BMA400_FIFO_AUTO_FLUSH           UINT8_C(0x01)
 #define BMA400_FIFO_STOP_ON_FULL         UINT8_C(0x02)
 #define BMA400_FIFO_TIME_EN              UINT8_C(0x04)
@@ -429,7 +403,7 @@
 #define BMA400_FIFO_Y_EN                 UINT8_C(0x40)
 #define BMA400_FIFO_Z_EN                 UINT8_C(0x80)
 
-/**\name BMA400 FIFO data configurations */
+/* BMA400 FIFO data configurations */
 #define BMA400_FIFO_EN_X                 UINT8_C(0x01)
 #define BMA400_FIFO_EN_Y                 UINT8_C(0x02)
 #define BMA400_FIFO_EN_Z                 UINT8_C(0x04)
@@ -438,42 +412,42 @@
 #define BMA400_FIFO_EN_XZ                UINT8_C(0x05)
 #define BMA400_FIFO_EN_XYZ               UINT8_C(0x07)
 
-/**\name BMA400 Self test configurations */
+/* BMA400 Self test configurations */
 #define BMA400_DISABLE_SELF_TEST         UINT8_C(0x00)
 #define BMA400_ENABLE_POSITIVE_SELF_TEST UINT8_C(0x07)
 #define BMA400_ENABLE_NEGATIVE_SELF_TEST UINT8_C(0x0F)
 
-/**\name BMA400 FIFO data masks */
+/* BMA400 FIFO data masks */
 #define BMA400_FIFO_HEADER_MASK          UINT8_C(0x3E)
 #define BMA400_FIFO_BYTES_OVERREAD       UINT8_C(25)
 #define BMA400_AWIDTH_MASK               UINT8_C(0xEF)
 #define BMA400_FIFO_DATA_EN_MASK         UINT8_C(0x0E)
 
-/**\name BMA400 Step status field - Activity status */
+/* BMA400 Step status field - Activity status */
 #define BMA400_STILL_ACT                 UINT8_C(0x00)
 #define BMA400_WALK_ACT                  UINT8_C(0x01)
 #define BMA400_RUN_ACT                   UINT8_C(0x02)
 
-/*! It is inserted when FIFO_CONFIG0.fifo_data_src
+/* It is inserted when FIFO_CONFIG0.fifo_data_src
  * is changed during the FIFO read
  */
 #define BMA400_FIFO_CONF0_CHANGE         UINT8_C(0x01)
 
-/*! It is inserted when ACC_CONFIG0.filt1_bw
+/* It is inserted when ACC_CONFIG0.filt1_bw
  * is changed during the FIFO read
  */
 #define BMA400_ACCEL_CONF0_CHANGE        UINT8_C(0x02)
 
-/*! It is inserted when ACC_CONFIG1.acc_range
+/* It is inserted when ACC_CONFIG1.acc_range
  * acc_odr or osr is changed during the FIFO read
  */
 #define BMA400_ACCEL_CONF1_CHANGE        UINT8_C(0x04)
 
-/*! Accel width setting either 12/8 bit mode */
+/* Accel width setting either 12/8 bit mode */
 #define BMA400_12_BIT_FIFO_DATA          UINT8_C(0x01)
 #define BMA400_8_BIT_FIFO_DATA           UINT8_C(0x00)
 
-/**\name BMA400 FIFO header configurations */
+/* BMA400 FIFO header configurations */
 #define BMA400_FIFO_SENSOR_TIME          UINT8_C(0xA0)
 #define BMA400_FIFO_EMPTY_FRAME          UINT8_C(0x80)
 #define BMA400_FIFO_CONTROL_FRAME        UINT8_C(0x48)
@@ -485,7 +459,7 @@
 #define BMA400_FIFO_YZ_ENABLE            UINT8_C(0x8C)
 #define BMA400_FIFO_XZ_ENABLE            UINT8_C(0x8A)
 
-/**\name BMA400 bit mask definitions */
+/* BMA400 bit mask definitions */
 #define BMA400_POWER_MODE_STATUS_MSK     UINT8_C(0x06)
 #define BMA400_POWER_MODE_STATUS_POS     UINT8_C(1)
 
@@ -650,7 +624,7 @@
 #define BMA400_FIFO_8_BIT_EN_MSK         UINT8_C(0x10)
 #define BMA400_FIFO_8_BIT_EN_POS         UINT8_C(4)
 
-/**\name Macro to SET and GET BITS of a register */
+/* Macro to SET and GET BITS of a register */
 #define BMA400_SET_BITS(reg_data, bitname, data) \
     ((reg_data & ~(bitname##_MSK)) |   \
      ((data << bitname##_POS) & bitname##_MSK))
@@ -675,40 +649,33 @@
 #define BMA400_ST_ACC_Y_AXIS_SIGNAL_DIFF UINT16_C(1200)
 #define BMA400_ST_ACC_Z_AXIS_SIGNAL_DIFF UINT16_C(250)
 
-/********************************************************/
-
-/*!
- * @brief Interface selection enums
+/*
+ * Interface selection enums
  */
 enum bma400_intf {
-    /*! SPI interface */
+    /* SPI interface */
     BMA400_SPI_INTF,
 
-    /*! I2C interface */
+    /* I2C interface */
     BMA400_I2C_INTF
 };
 
-/********************************************************/
-/**\name    TYPE DEFINITIONS */
-
-/*!
- * @brief Bus communication function pointer which should be mapped to
+/*
+ * Bus communication function pointer which should be mapped to
  * the platform specific read and write functions of the user
  */
+
 /*
  * typedef int8_t (*bma400_com_fptr_t)(void *intf_ptr, uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data,
  *                                    uint16_t length);
  */
 typedef int8_t (*bma400_com_fptr_t)(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t length);
 
-/*! Delay function pointer */
+/* Delay function pointer */
 typedef void (*bma400_delay_fptr_t)(uint32_t period);
 
-/********************************************************/
-/**\name    STRUCTURE DEFINITIONS*/
-
-/*!
- * @brief Sensor selection enums
+/*
+ * Sensor selection enums
  */
 enum bma400_sensor {
     BMA400_ACCEL,
@@ -720,8 +687,8 @@ enum bma400_sensor {
     BMA400_STEP_COUNTER_INT
 };
 
-/*!
- * @brief Interrupt channel selection enums
+/*
+ * Interrupt channel selection enums
  */
 enum bma400_int_chan {
     BMA400_UNMAP_INT_PIN,
@@ -730,15 +697,15 @@ enum bma400_int_chan {
     BMA400_MAP_BOTH_INT_PINS
 };
 
-/*!
- * @brief Interrupt pin hardware configurations
+/*
+ * Interrupt pin hardware configurations
  */
 struct bma400_int_pin_conf
 {
-    /*! Interrupt channel selection enums */
+    /* Interrupt channel selection enums */
     enum bma400_int_chan int_chan;
 
-    /*! Interrupt pin configuration
+    /* Interrupt pin configuration
      * Assignable Macros :
      *  - BMA400_INT_PUSH_PULL_ACTIVE_0
      *  - BMA400_INT_PUSH_PULL_ACTIVE_1
@@ -748,12 +715,12 @@ struct bma400_int_pin_conf
     uint8_t pin_conf;
 };
 
-/*!
- * @brief Accel basic configuration
+/*
+ * Accel basic configuration
  */
 struct bma400_acc_conf
 {
-    /*! Output data rate
+    /* Output data rate
      * Assignable macros :
      *  - BMA400_ODR_12_5HZ  - BMA400_ODR_25HZ   - BMA400_ODR_50HZ
      *  - BMA400_ODR_100HZ   - BMA400_ODR_200HZ  - BMA400_ODR_400HZ
@@ -761,14 +728,14 @@ struct bma400_acc_conf
      */
     uint8_t odr;
 
-    /*! Range of sensor
+    /* Range of sensor
      * Assignable macros :
      *  - BMA400_2G_RANGE   - BMA400_8G_RANGE
      *  - BMA400_4G_RANGE   - BMA400_16G_RANGE
      */
     uint8_t range;
 
-    /*! Filter setting for data source
+    /* Filter setting for data source
      * Assignable Macros :
      * - BMA400_DATA_SRC_ACCEL_FILT_1
      * - BMA400_DATA_SRC_ACCEL_FILT_2
@@ -776,34 +743,34 @@ struct bma400_acc_conf
      */
     uint8_t data_src;
 
-    /*! Assignable Macros for osr and osr_lp:
+    /* Assignable Macros for osr and osr_lp:
      * - BMA400_ACCEL_OSR_SETTING_0     - BMA400_ACCEL_OSR_SETTING_2
      * - BMA400_ACCEL_OSR_SETTING_1     - BMA400_ACCEL_OSR_SETTING_3
      */
 
-    /*! OSR setting for data source */
+    /* OSR setting for data source */
     uint8_t osr;
 
-    /*! OSR setting for low power mode */
+    /* OSR setting for low power mode */
     uint8_t osr_lp;
 
-    /*! Filter 1 Bandwidth
+    /* Filter 1 Bandwidth
      * Assignable macros :
      *  - BMA400_ACCEL_FILT1_BW_0
      *  - BMA400_ACCEL_FILT1_BW_1
      */
     uint8_t filt1_bw;
 
-    /*! Interrupt channel to be mapped */
+    /* Interrupt channel to be mapped */
     enum bma400_int_chan int_chan;
 };
 
-/*!
- * @brief Tap interrupt configurations
+/*
+ * Tap interrupt configurations
  */
 struct bma400_tap_conf
 {
-    /*! Axes enabled to sense tap setting
+    /* Axes enabled to sense tap setting
      * Assignable macros :
      *   - BMA400_X_AXIS_EN_TAP
      *   - BMA400_Y_AXIS_EN_TAP
@@ -811,7 +778,7 @@ struct bma400_tap_conf
      */
     uint8_t axes_sel;
 
-    /*! TAP sensitivity settings modifies the threshold
+    /* TAP sensitivity settings modifies the threshold
      *  for minimum TAP amplitude
      * Assignable macros :
      *   - BMA400_TAP_SENSITIVITY_0  - BMA400_TAP_SENSITIVITY_4
@@ -825,7 +792,7 @@ struct bma400_tap_conf
      */
     uint8_t sensitivity;
 
-    /*! TAP tics_th setting is the maximum time between upper and lower
+    /* TAP tics_th setting is the maximum time between upper and lower
      * peak of a tap, in data samples, This time depends on the
      * mechanics of the device tapped onto  default = 12 samples
      * Assignable macros :
@@ -836,7 +803,7 @@ struct bma400_tap_conf
      */
     uint8_t tics_th;
 
-    /*! BMA400 TAP - quiet  settings to configure minimum quiet time
+    /* BMA400 TAP - quiet  settings to configure minimum quiet time
      *  before and after double tap, in the data samples.
      * This time also defines the longest time interval between two
      * taps so that they are considered as double tap
@@ -848,7 +815,7 @@ struct bma400_tap_conf
      */
     uint8_t quiet;
 
-    /*! BMA400 TAP - quiet_dt  settings
+    /* BMA400 TAP - quiet_dt  settings
      * quiet_dt refers to Minimum time between the two taps of a
      * double tap, in data samples
      * Assignable macros :
@@ -859,19 +826,19 @@ struct bma400_tap_conf
      */
     uint8_t quiet_dt;
 
-    /*! Interrupt channel to be mapped */
+    /* Interrupt channel to be mapped */
     enum bma400_int_chan int_chan;
 };
 
-/*!
- * @brief Activity change interrupt configurations
+/*
+ * Activity change interrupt configurations
  */
 struct bma400_act_ch_conf
 {
-    /*! Threshold for activity change (8 mg/LSB) */
+    /* Threshold for activity change (8 mg/LSB) */
     uint8_t act_ch_thres;
 
-    /*! Axes enabled to sense activity change
+    /* Axes enabled to sense activity change
      * Assignable macros :
      *   - BMA400_X_AXIS_EN
      *   - BMA400_Y_AXIS_EN
@@ -880,14 +847,14 @@ struct bma400_act_ch_conf
      */
     uint8_t axes_sel;
 
-    /*! Data Source for activity change
+    /* Data Source for activity change
      * Assignable macros :
      *    - BMA400_DATA_SRC_ACC_FILT1
      *    - BMA400_DATA_SRC_ACC_FILT2
      */
     uint8_t data_source;
 
-    /*! Sample count for sensing act_ch
+    /* Sample count for sensing act_ch
      * Assignable macros :
      *  - BMA400_ACT_CH_SAMPLE_CNT_32
      *  - BMA400_ACT_CH_SAMPLE_CNT_64
@@ -897,27 +864,27 @@ struct bma400_act_ch_conf
      */
     uint8_t act_ch_ntps;
 
-    /*! Interrupt channel to be mapped */
+    /* Interrupt channel to be mapped */
     enum bma400_int_chan int_chan;
 };
 
-/*!
- * @brief Generic interrupt configurations
+/*
+ * Generic interrupt configurations
  */
 struct bma400_gen_int_conf
 {
-    /*! Threshold for the gen1 interrupt (1 LSB = 8mg)
+    /* Threshold for the gen1 interrupt (1 LSB = 8mg)
      * if gen_int_thres = 10, then threshold = 10 * 8 = 80mg
      */
     uint8_t gen_int_thres;
 
-    /*! Duration for which the condition has to persist until
+    /* Duration for which the condition has to persist until
      *  interrupt can be triggered
      *  duration is measured in data samples of selected data source
      */
     uint16_t gen_int_dur;
 
-    /*! Enable axes to sense for the gen1 interrupt
+    /* Enable axes to sense for the gen1 interrupt
      * Assignable macros :
      *  - BMA400_X_AXIS_EN
      *  - BMA400_Y_AXIS_EN
@@ -926,28 +893,28 @@ struct bma400_gen_int_conf
      */
     uint8_t axes_sel;
 
-    /*! Data source to sense for the gen1 interrupt
+    /* Data source to sense for the gen1 interrupt
      * Assignable macros :
      *  - BMA400_DATA_SRC_ACC_FILT1
      *  - BMA400_DATA_SRC_ACC_FILT2
      */
     uint8_t data_src;
 
-    /*! Activity/Inactivity selection macros
+    /* Activity/Inactivity selection macros
      * Assignable macros :
      *  - BMA400_ACTIVITY_INT
      *  - BMA400_INACTIVITY_INT
      */
     uint8_t criterion_sel;
 
-    /*! Axes selection logic macros
+    /* Axes selection logic macros
      * Assignable macros :
      *  - BMA400_ALL_AXES_INT
      *  - BMA400_ANY_AXES_INT
      */
     uint8_t evaluate_axes;
 
-    /*! Reference x,y,z values updates
+    /* Reference x,y,z values updates
      * Assignable macros :
      *  - BMA400_MANUAL_UPDATE
      *  - BMA400_ONE_TIME_UPDATE
@@ -956,7 +923,7 @@ struct bma400_gen_int_conf
      */
     uint8_t ref_update;
 
-    /*! Hysteresis value
+    /* Hysteresis value
      * Higher the hysteresis value, Lower the value of noise
      * Assignable macros :
      *  - BMA400_HYST_0_MG
@@ -966,25 +933,25 @@ struct bma400_gen_int_conf
      */
     uint8_t hysteresis;
 
-    /*! Threshold value for x axes */
+    /* Threshold value for x axes */
     uint16_t int_thres_ref_x;
 
-    /*! Threshold value for y axes */
+    /* Threshold value for y axes */
     uint16_t int_thres_ref_y;
 
-    /*! Threshold value for z axes */
+    /* Threshold value for z axes */
     uint16_t int_thres_ref_z;
 
-    /*! Interrupt channel to be mapped */
+    /* Interrupt channel to be mapped */
     enum bma400_int_chan int_chan;
 };
 
-/*!
- * @brief Orient interrupt configurations
+/*
+ * Orient interrupt configurations
  */
 struct bma400_orient_int_conf
 {
-    /*! Enable axes to sense for the gen1 interrupt
+    /* Enable axes to sense for the gen1 interrupt
      * Assignable macros :
      *  - BMA400_X_AXIS_EN
      *  - BMA400_Y_AXIS_EN
@@ -993,14 +960,14 @@ struct bma400_orient_int_conf
      */
     uint8_t axes_sel;
 
-    /*! Data source to sense for the gen1 interrupt
+    /* Data source to sense for the gen1 interrupt
      * Assignable macros :
      *  - BMA400_DATA_SRC_ACC_FILT1
      *  - BMA400_DATA_SRC_ACC_FILT2
      */
     uint8_t data_src;
 
-    /*! Reference x,y,z values updates
+    /* Reference x,y,z values updates
      * Assignable macros :
      *  - BMA400_MANUAL_UPDATE
      *  - BMA400_ORIENT_REFU_ACC_FILT_2
@@ -1008,22 +975,22 @@ struct bma400_orient_int_conf
      */
     uint8_t ref_update;
 
-    /*! Threshold for the orient interrupt (1 LSB = 8mg)
+    /* Threshold for the orient interrupt (1 LSB = 8mg)
      * if orient_thres = 10, then threshold = 10 * 8 = 80mg
      */
     uint8_t orient_thres;
 
-    /*! Threshold to check for stability (1 LSB = 8mg)
+    /* Threshold to check for stability (1 LSB = 8mg)
      * if stability_thres = 10, then threshold = 10 * 8 = 80mg
      */
     uint8_t stability_thres;
 
-    /*! orient_int_dur duration in which orient interrupt
+    /* orient_int_dur duration in which orient interrupt
      * should occur, It is 8bit value configurable at 10ms/LSB.
      */
     uint8_t orient_int_dur;
 
-    /*! Stability check conditions
+    /* Stability check conditions
      * Assignable macros :
      *  - BMA400_STABILITY_DISABLED
      *  - BMA400_STABILITY_ACC_FILT_2
@@ -1031,28 +998,28 @@ struct bma400_orient_int_conf
      */
     uint8_t stability_mode;
 
-    /*! Reference value for x axes */
+    /* Reference value for x axes */
     uint16_t orient_ref_x;
 
-    /*! Reference value for y axes */
+    /* Reference value for y axes */
     uint16_t orient_ref_y;
 
-    /*! Reference value for z axes */
+    /* Reference value for z axes */
     uint16_t orient_ref_z;
 
-    /*! Interrupt channel to be mapped */
+    /* Interrupt channel to be mapped */
     enum bma400_int_chan int_chan;
 };
 
 /* Step counter configurations */
 struct bma400_step_int_conf
 {
-    /*! Interrupt channel to be mapped */
+    /* Interrupt channel to be mapped */
     enum bma400_int_chan int_chan;
 };
 
-/*!
- * @brief Union of sensor Configurations
+/*
+ * Union of sensor Configurations
  */
 union bma400_set_param
 {
@@ -1075,8 +1042,8 @@ union bma400_set_param
     struct bma400_step_int_conf step_cnt;
 };
 
-/*!
- * @brief Sensor selection and their configurations
+/*
+ * Sensor selection and their configurations
  */
 struct bma400_sensor_conf
 {
@@ -1087,8 +1054,8 @@ struct bma400_sensor_conf
     union bma400_set_param param;
 };
 
-/*!
- * @brief enum to select device settings
+/*
+ * enum to select device settings
  */
 enum bma400_device {
     BMA400_AUTOWAKEUP_TIMEOUT,
@@ -1099,18 +1066,18 @@ enum bma400_device {
     BMA400_FIFO_CONF
 };
 
-/*!
- * @brief BMA400 auto-wakeup configurations
+/*
+ * BMA400 auto-wakeup configurations
  */
 struct bma400_auto_wakeup_conf
 {
-    /*! Enable auto wake-up by using timeout threshold
+    /* Enable auto wake-up by using timeout threshold
      * Assignable Macros :
      *   - BMA400_ENABLE    - BMA400_DISABLE
      */
     uint8_t wakeup_timeout;
 
-    /*! Timeout threshold after which auto wake-up occurs
+    /* Timeout threshold after which auto wake-up occurs
      * It is 12bit value configurable at 2.5ms/LSB
      * Maximum timeout is 10.24s (4096 * 2.5) for
      * which the assignable macro is :
@@ -1119,12 +1086,12 @@ struct bma400_auto_wakeup_conf
     uint16_t timeout_thres;
 };
 
-/*!
- * @brief BMA400 wakeup configurations
+/*
+ * BMA400 wakeup configurations
  */
 struct bma400_wakeup_conf
 {
-    /*! Wakeup reference update
+    /* Wakeup reference update
      *  Assignable macros:
      *   - BMA400_MANUAL_UPDATE
      *   - BMA400_ONE_TIME_UPDATE
@@ -1132,7 +1099,7 @@ struct bma400_wakeup_conf
      */
     uint8_t wakeup_ref_update;
 
-    /*! Number of samples for interrupt condition evaluation
+    /* Number of samples for interrupt condition evaluation
      * Assignable Macros :
      *  - BMA400_SAMPLE_COUNT_1  - BMA400_SAMPLE_COUNT_5
      *  - BMA400_SAMPLE_COUNT_2  - BMA400_SAMPLE_COUNT_6
@@ -1141,7 +1108,7 @@ struct bma400_wakeup_conf
      */
     uint8_t sample_count;
 
-    /*! Enable low power wake-up interrupt for X(BIT 0), Y(BIT 1), Z(BIT 2)
+    /* Enable low power wake-up interrupt for X(BIT 0), Y(BIT 1), Z(BIT 2)
      * axes  0 - not active; 1 - active
      * Assignable macros :
      *  - BMA400_X_AXIS_EN
@@ -1151,28 +1118,28 @@ struct bma400_wakeup_conf
      */
     uint8_t wakeup_axes_en;
 
-    /*! Interrupt threshold configuration  */
+    /* Interrupt threshold configuration  */
     uint8_t int_wkup_threshold;
 
-    /*! Reference acceleration x-axis for the wake-up interrupt */
+    /* Reference acceleration x-axis for the wake-up interrupt */
     uint8_t int_wkup_ref_x;
 
-    /*! Reference acceleration y-axis for the wake-up interrupt */
+    /* Reference acceleration y-axis for the wake-up interrupt */
     uint8_t int_wkup_ref_y;
 
-    /*! Reference acceleration z-axis for the wake-up interrupt */
+    /* Reference acceleration z-axis for the wake-up interrupt */
     uint8_t int_wkup_ref_z;
 
-    /*! Interrupt channel to be mapped */
+    /* Interrupt channel to be mapped */
     enum bma400_int_chan int_chan;
 };
 
-/*!
- * @brief BMA400 auto-low power configurations
+/*
+ * BMA400 auto-low power configurations
  */
 struct bma400_auto_lp_conf
 {
-    /*! Enable auto low power mode using  data ready interrupt /
+    /* Enable auto low power mode using  data ready interrupt /
      * Genric interrupt1 / timeout counter value
      * Assignable macros :
      * - BMA400_AUTO_LP_DRDY_TRIGGER
@@ -1183,7 +1150,7 @@ struct bma400_auto_lp_conf
      */
     uint8_t auto_low_power_trigger;
 
-    /*! Timeout threshold after which auto wake-up occurs
+    /* Timeout threshold after which auto wake-up occurs
      * It is 12bit value configurable at 2.5ms/LSB
      * Maximum timeout is 10.24s (4096 * 2.5) for
      *  which the assignable macro is :
@@ -1192,12 +1159,12 @@ struct bma400_auto_lp_conf
     uint16_t auto_lp_timeout_threshold;
 };
 
-/*!
- * @brief FIFO configurations
+/*
+ * FIFO configurations
  */
 struct bma400_fifo_conf
 {
-    /*! Select FIFO configurations to enable/disable
+    /* Select FIFO configurations to enable/disable
      * Assignable Macros :
      *   - BMA400_FIFO_AUTO_FLUSH
      *   - BMA400_FIFO_STOP_ON_FULL
@@ -1210,34 +1177,34 @@ struct bma400_fifo_conf
      */
     uint8_t conf_regs;
 
-    /*! Enable/ disable selected FIFO configurations
+    /* Enable/ disable selected FIFO configurations
      * Assignable Macros :
      *   - BMA400_ENABLE
      *   - BMA400_DISABLE
      */
     uint8_t conf_status;
 
-    /*! Value to set the water-mark */
+    /* Value to set the water-mark */
     uint16_t fifo_watermark;
 
-    /*! Interrupt pin mapping for FIFO full interrupt */
+    /* Interrupt pin mapping for FIFO full interrupt */
     enum bma400_int_chan fifo_full_channel;
 
-    /*! Interrupt pin mapping for FIFO water-mark interrupt */
+    /* Interrupt pin mapping for FIFO water-mark interrupt */
     enum bma400_int_chan fifo_wm_channel;
 };
 
-/*!
- * @brief Interrupt overrun configurations
+/*
+ * Interrupt overrun configurations
  */
 struct bma400_int_overrun
 {
-    /*! Interrupt pin mapping for interrupt overrun */
+    /* Interrupt pin mapping for interrupt overrun */
     enum bma400_int_chan int_chan;
 };
 
-/*!
- * @brief Union of device configuration parameters
+/*
+ * Union of device configuration parameters
  */
 union bma400_device_params
 {
@@ -1260,8 +1227,8 @@ union bma400_device_params
     struct bma400_int_overrun overrun_int;
 };
 
-/*!
- * @brief BMA400 device configuration
+/*
+ * BMA400 device configuration
  */
 struct bma400_device_conf
 {
@@ -1272,26 +1239,26 @@ struct bma400_device_conf
     union bma400_device_params param;
 };
 
-/*!
- * @brief BMA400 sensor data
+/*
+ * BMA400 sensor data
  */
 struct bma400_sensor_data
 {
-    /*! X-axis sensor data */
+    /* X-axis sensor data */
     int16_t x;
 
-    /*! Y-axis sensor data */
+    /* Y-axis sensor data */
     int16_t y;
 
-    /*! Z-axis sensor data */
+    /* Z-axis sensor data */
     int16_t z;
 
-    /*! sensor time */
+    /* sensor time */
     uint32_t sensortime;
 };
 
-/*!
- * @brief BMA400 interrupt selection
+/*
+ * BMA400 interrupt selection
  */
 enum bma400_int_type {
     /* DRDY interrupt */
@@ -1331,15 +1298,15 @@ enum bma400_int_type {
     BMA400_AUTO_WAKEUP_EN
 };
 
-/*!
- * @brief Interrupt enable/disable configurations
+/*
+ * Interrupt enable/disable configurations
  */
 struct bma400_int_enable
 {
-    /*! Enum to choose the interrupt to be enabled */
+    /* Enum to choose the interrupt to be enabled */
     enum bma400_int_type type;
 
-    /*! Enable/ disable selected interrupts
+    /* Enable/ disable selected interrupts
      * Assignable Macros :
      *   - BMA400_ENABLE
      *   - BMA400_DISABLE
@@ -1348,77 +1315,76 @@ struct bma400_int_enable
 };
 struct bma400_fifo_data
 {
-    /*! Data buffer of user defined length is to be mapped here */
+    /* Data buffer of user defined length is to be mapped here */
     uint8_t *data;
 
-    /*! While calling the API  "bma400_get_fifo_data" , length stores
+    /* While calling the API  "bma400_get_fifo_data" , length stores
      *  number of bytes in FIFO to be read (specified by user as input)
      *  and after execution of the API ,number of FIFO data bytes
      *  available is provided as an output to user
      */
     uint16_t length;
 
-    /*! FIFO time enable */
+    /* FIFO time enable */
     uint8_t fifo_time_enable;
 
-    /*! FIFO 8bit mode enable */
+    /* FIFO 8bit mode enable */
     uint8_t fifo_8_bit_en;
 
-    /*! Streaming of the Accelerometer data for selected x,y,z axes
+    /* Streaming of the Accelerometer data for selected x,y,z axes
      *   - BMA400_FIFO_X_EN
      *   - BMA400_FIFO_Y_EN
      *   - BMA400_FIFO_Z_EN
      */
     uint8_t fifo_data_enable;
 
-    /*! Will be equal to length when no more frames are there to parse */
+    /* Will be equal to length when no more frames are there to parse */
     uint16_t accel_byte_start_idx;
 
-    /*! It stores the value of configuration changes
+    /* It stores the value of configuration changes
      * in sensor during FIFO read
      */
     uint8_t conf_change;
 
-    /*! Value of FIFO sensor time time */
+    /* Value of FIFO sensor time time */
     uint32_t fifo_sensor_time;
 };
 
-/*!
- * @brief bma400 device structure
+/*
+ * bma400 device structure
  */
 struct bma400_dev
 {
-    /*! Chip Id */
+    /* Chip Id */
     uint8_t chip_id;
 
-    /*! Device Id */
+    /* Device Id */
     uint8_t dev_id;
 
-    /*! SPI/I2C Interface selection */
+    /* SPI/I2C Interface selection */
     enum bma400_intf intf;
 
-    /*! Interface handle pointer */
+    /* Interface handle pointer */
     void *intf_ptr;
 
-    /*! Decide SPI or I2C read mechanism */
+    /* Decide SPI or I2C read mechanism */
     uint8_t dummy_byte;
 
-    /*! Bus read function pointer */
+    /* Bus read function pointer */
     bma400_com_fptr_t read;
 
-    /*! Bus write function pointer */
+    /* Bus write function pointer */
     bma400_com_fptr_t write;
 
-    /*! delay(in ms) function pointer */
+    /* delay(in ms) function pointer */
     bma400_delay_fptr_t delay_ms;
 
-    /*! Resolution for FOC */
+    /* Resolution for FOC */
     uint8_t resolution;
 
-    /*! User set read/write length */
+    /* User set read/write length */
     uint16_t read_write_len;
 };
 
 #endif /* BMA400_DEFS_H_ */
-/** @}*/
-/** @}*/
+/*! @endcond */

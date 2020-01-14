@@ -1,74 +1,59 @@
-/**\mainpage
- * Copyright (C) 2018 - 2019 Bosch Sensortec GmbH
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright
- * notice, this list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * Neither the name of the copyright holder nor the names of the
- * contributors may be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
- * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDER
- * OR CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
- * OR CONSEQUENTIAL DAMAGES(INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
- *
- * The information provided is believed to be accurate and reliable.
- * The copyright holder assumes no responsibility
- * for the consequences of use
- * of such information nor for any infringement of patents or
- * other rights of third parties which may result from its use.
- * No license is granted by implication or otherwise under any patent or
- * patent rights of the copyright holder.
- *
- * File     bma400.c
- * Date     15 May 2019
- * Version  1.5.2
- *
- */
+/**
+* Copyright (c) 2020 Bosch Sensortec GmbH. All rights reserved.
+*
+* BSD-3-Clause
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright
+*    notice, this list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its
+*    contributors may be used to endorse or promote products derived from
+*    this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+* COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+* STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+* IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*
+* @file bma400.c
+* @date 10/01/2020
+* @version  1.5.6
+*
+*/
 
-/*! @file bma400.c
- * @brief Sensor driver for BMA400 sensor
- */
 #include "bma400.h"
 
-/************************** Internal macros *******************************/
-/********************** Static function declarations ************************/
-
-/*!
+/*
  * @brief Accel self test diff xyz data structure
  */
 struct selftest_delta_limit
 {
-    /*! Accel X  data */
-    uint16_t x;
+    /* Accel X  data */
+    int32_t x;
 
-    /*! Accel Y  data */
-    uint16_t y;
+    /* Accel Y  data */
+    int32_t y;
 
-    /*! Accel Z  data */
-    uint16_t z;
+    /* Accel Z  data */
+    int32_t z;
 };
 
-/*!
+/*
  * @brief This API is used to calculate the power of given
  * base value.
  *
@@ -79,7 +64,7 @@ struct selftest_delta_limit
  */
 static int32_t power(int16_t base, uint8_t resolution);
 
-/*!
+/*
  *  @brief This API converts lsb value of axes to mg for self-test
  *
  *  @param[in] accel_data_diff : Pointer variable used to pass accel difference
@@ -92,7 +77,7 @@ static int32_t power(int16_t base, uint8_t resolution);
 static void convert_lsb_g(const struct selftest_delta_limit *accel_data_diff,
                           struct selftest_delta_limit *accel_data_diff_mg);
 
-/*!
+/*
  * @brief This internal API is used to validate the device pointer for
  * null conditions.
  *
@@ -103,7 +88,7 @@ static void convert_lsb_g(const struct selftest_delta_limit *accel_data_diff,
  */
 static int8_t null_ptr_check(const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This internal API is used to set the accel configurations in sensor
  *
  * @param[in] accel_conf : Structure instance with accel configurations
@@ -114,7 +99,7 @@ static int8_t null_ptr_check(const struct bma400_dev *dev);
  */
 static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API reads accel data along with sensor time
  *
  * @param[in] data_sel   : Variable to select the data to be read
@@ -130,7 +115,7 @@ static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, const str
  */
 static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API enables the auto-wakeup feature
  * of the sensor using a timeout value
  *
@@ -142,7 +127,7 @@ static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
  */
 static int8_t set_autowakeup_timeout(const struct bma400_auto_wakeup_conf *wakeup_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API enables the auto-wakeup feature of the sensor
  *
  * @param[in] conf  : Configuration value to enable/disable
@@ -154,7 +139,7 @@ static int8_t set_autowakeup_timeout(const struct bma400_auto_wakeup_conf *wakeu
  */
 static int8_t set_auto_wakeup(uint8_t conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API sets the parameters for auto-wakeup feature
  * of the sensor
  *
@@ -166,7 +151,7 @@ static int8_t set_auto_wakeup(uint8_t conf, const struct bma400_dev *dev);
  */
 static int8_t set_autowakeup_interrupt(const struct bma400_wakeup_conf *wakeup_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API sets the sensor to enter low power mode
  * automatically  based on the configurations
  *
@@ -178,7 +163,7 @@ static int8_t set_autowakeup_interrupt(const struct bma400_wakeup_conf *wakeup_c
  */
 static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API sets the tap setting parameters
  *
  * @param[in] tap_set : Structure instance of tap configurations
@@ -189,7 +174,7 @@ static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf,
  */
 static int8_t set_tap_conf(const struct bma400_tap_conf *tap_set, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API sets the parameters for activity change detection
  *
  * @param[in] act_ch_set : Structure instance of activity change
@@ -201,7 +186,7 @@ static int8_t set_tap_conf(const struct bma400_tap_conf *tap_set, const struct b
  */
 static int8_t set_activity_change_conf(const struct bma400_act_ch_conf *act_ch_set, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API sets the parameters for generic interrupt1 configuration
  *
  * @param[in] gen_int_set : Structure instance of generic interrupt
@@ -213,7 +198,7 @@ static int8_t set_activity_change_conf(const struct bma400_act_ch_conf *act_ch_s
  */
 static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API sets the parameters for generic interrupt2 configuration
  *
  * @param[in] gen_int_set : Structure instance of generic interrupt
@@ -225,7 +210,7 @@ static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, const 
  */
 static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API sets the parameters for orientation interrupt
  *
  * @param[in] orient_conf : Structure instance of orient interrupt
@@ -237,7 +222,7 @@ static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, const 
  */
 static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This internal API is used to get the accel configurations in sensor
  *
  * @param[in,out] accel_conf  : Structure instance of basic
@@ -249,7 +234,7 @@ static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, c
  */
 static int8_t get_accel_conf(struct bma400_acc_conf *accel_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API gets the set sensor settings for auto-wakeup timeout feature
  *
  * @param[in,out] wakeup_conf : Structure instance of wake-up configurations
@@ -260,7 +245,7 @@ static int8_t get_accel_conf(struct bma400_acc_conf *accel_conf, const struct bm
  */
 static int8_t get_autowakeup_timeout(struct bma400_auto_wakeup_conf *wakeup_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API gets the set sensor settings for
  * auto-wakeup interrupt feature
  *
@@ -272,7 +257,7 @@ static int8_t get_autowakeup_timeout(struct bma400_auto_wakeup_conf *wakeup_conf
  */
 static int8_t get_autowakeup_interrupt(struct bma400_wakeup_conf *wakeup_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API gets the sensor to get the auto-low
  * power mode configuration settings
  *
@@ -285,7 +270,7 @@ static int8_t get_autowakeup_interrupt(struct bma400_wakeup_conf *wakeup_conf, c
  */
 static int8_t get_auto_low_power(struct bma400_auto_lp_conf *auto_lp_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API sets the tap setting parameters
  *
  * @param[in,out] tap_set : Structure instance of tap configurations
@@ -296,7 +281,7 @@ static int8_t get_auto_low_power(struct bma400_auto_lp_conf *auto_lp_conf, const
  */
 static int8_t get_tap_conf(struct bma400_tap_conf *tap_set, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API gets the parameters for activity change detection
  *
  * @param[in,out] act_ch_set : Structure instance of activity
@@ -308,7 +293,7 @@ static int8_t get_tap_conf(struct bma400_tap_conf *tap_set, const struct bma400_
  */
 static int8_t get_activity_change_conf(struct bma400_act_ch_conf *act_ch_set, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API gets the generic interrupt1 configuration
  *
  * @param[in,out] gen_int_set : Structure instance of generic
@@ -320,7 +305,7 @@ static int8_t get_activity_change_conf(struct bma400_act_ch_conf *act_ch_set, co
  */
 static int8_t get_gen1_int(struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API gets the generic interrupt2 configuration
  *
  * @param[in,out] gen_int_set : Structure instance of generic
@@ -332,7 +317,7 @@ static int8_t get_gen1_int(struct bma400_gen_int_conf *gen_int_set, const struct
  */
 static int8_t get_gen2_int(struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API gets the parameters for orientation interrupt
  *
  * @param[in,out] orient_conf : Structure instance of orient
@@ -344,7 +329,7 @@ static int8_t get_gen2_int(struct bma400_gen_int_conf *gen_int_set, const struct
  */
 static int8_t get_orient_int(struct bma400_orient_int_conf *orient_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API sets the selected interrupt to be mapped to
  * the hardware interrupt pin of the sensor
  *
@@ -356,7 +341,7 @@ static int8_t get_orient_int(struct bma400_orient_int_conf *orient_conf, const s
  */
 static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int_chan int_map);
 
-/*!
+/*
  * @brief This API checks whether the interrupt is mapped to the INT pin1
  * or INT pin2 of the sensor
  *
@@ -371,7 +356,7 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
  */
 static void check_mapped_interrupts(uint8_t int_1_map, uint8_t int_2_map, enum bma400_int_chan *int_map);
 
-/*!
+/*
  * @brief This API gets the selected interrupt and its mapping to
  * the hardware interrupt pin of the sensor
  *
@@ -383,7 +368,7 @@ static void check_mapped_interrupts(uint8_t int_1_map, uint8_t int_2_map, enum b
  */
 static void get_int_pin_map(const uint8_t *data_array, uint8_t int_enable, enum bma400_int_chan *int_map);
 
-/*!
+/*
  * @brief This API is used to set the interrupt pin configurations
  *
  * @param[in] int_conf     : Interrupt pin configuration
@@ -394,7 +379,7 @@ static void get_int_pin_map(const uint8_t *data_array, uint8_t int_enable, enum 
  */
 static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API is used to set the interrupt pin configurations
  *
  * @param[in,out] int_conf     : Interrupt pin configuration
@@ -405,7 +390,7 @@ static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, const struct
  */
 static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API is used to set the FIFO configurations
  *
  * @param[in,out] fifo_conf       : Structure instance containing the FIFO
@@ -417,7 +402,7 @@ static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, const struc
  */
 static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API is used to get the FIFO configurations
  *
  * @param[in,out] fifo_conf       : Structure instance containing the FIFO
@@ -429,7 +414,7 @@ static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, const stru
  */
 static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API is used to get the number of bytes filled in FIFO
  *
  * @param[in,out] fifo_byte_cnt   : Number of bytes in the FIFO buffer
@@ -441,7 +426,7 @@ static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, const struct bma
  */
 static int8_t get_fifo_length(uint16_t *fifo_byte_cnt, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API is used to read the FIFO of BMA400
  *
  * @param[in,out] fifo : Pointer to the fifo structure.
@@ -451,9 +436,9 @@ static int8_t get_fifo_length(uint16_t *fifo_byte_cnt, const struct bma400_dev *
  * @return Result of API execution status
  * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
  */
-static int8_t read_fifo(struct bma400_fifo_data *fifo, const struct bma400_dev *dev);
+static int8_t read_fifo(const struct bma400_fifo_data *fifo, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API is used to unpack the accelerometer frames from the FIFO
  *
  * @param[in,out] fifo            : Pointer to the fifo structure.
@@ -469,7 +454,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                                uint16_t *frame_count,
                                const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API is used to check for a frame availability in FIFO
  *
  * @param[in,out] fifo            : Pointer to the fifo structure.
@@ -480,13 +465,13 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
  *
  * @return Nothing
  */
-static void check_frame_available(struct bma400_fifo_data *fifo,
+static void check_frame_available(const struct bma400_fifo_data *fifo,
                                   uint8_t *frame_available,
                                   uint8_t accel_width,
                                   uint8_t data_en,
                                   uint16_t *data_index);
 
-/*!
+/*
  * @brief This API is used to unpack the accelerometer xyz data from the FIFO
  * and store it in the user defined buffer
  *
@@ -498,13 +483,13 @@ static void check_frame_available(struct bma400_fifo_data *fifo,
  *
  * @return Nothing
  */
-static void unpack_accel(struct bma400_fifo_data *fifo,
+static void unpack_accel(const struct bma400_fifo_data *fifo,
                          struct bma400_sensor_data *accel_data,
                          uint16_t *data_index,
                          uint8_t accel_width,
                          uint8_t frame_header);
 
-/*!
+/*
  * @brief This API is used to parse and store the sensor time from the
  * FIFO data in the structure instance dev
  *
@@ -515,7 +500,7 @@ static void unpack_accel(struct bma400_fifo_data *fifo,
  */
 static void unpack_sensortime_frame(struct bma400_fifo_data *fifo, uint16_t *data_index);
 
-/*!
+/*
  * @brief This API validates the self test results
  *
  * @param[in] accel_pos : Structure pointer to store accel data
@@ -531,7 +516,7 @@ static void unpack_sensortime_frame(struct bma400_fifo_data *fifo, uint16_t *dat
 static int8_t validate_accel_self_test(const struct bma400_sensor_data *accel_pos,
                                        const struct bma400_sensor_data *accel_neg);
 
-/*!
+/*
  * @brief This API performs self test with positive excitation
  *
  * @param[in] accel_pos : Structure pointer to store accel data
@@ -543,7 +528,7 @@ static int8_t validate_accel_self_test(const struct bma400_sensor_data *accel_po
  */
 static int8_t positive_excited_accel(struct bma400_sensor_data *accel_pos, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API performs self test with negative excitation
  *
  * @param[in] accel_neg : Structure pointer to store accel data
@@ -555,7 +540,7 @@ static int8_t positive_excited_accel(struct bma400_sensor_data *accel_pos, const
  */
 static int8_t negative_excited_accel(struct bma400_sensor_data *accel_neg, const struct bma400_dev *dev);
 
-/*!
+/*
  * @brief This API performs the pre-requisites needed to perform the self test
  *
  * @param[in] dev   : structure instance of bma400_dev
@@ -565,13 +550,6 @@ static int8_t negative_excited_accel(struct bma400_sensor_data *accel_neg, const
  */
 static int8_t enable_self_test(const struct bma400_dev *dev);
 
-/********************** Global function definitions ************************/
-
-/*!
- *  @brief This API is the entry point, Call this API before using other APIs.
- *  This API reads the chip-id of the sensor which is the first step to
- *  verify the sensor and updates the trim parameters of the sensor.
- */
 int8_t bma400_init(struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -624,10 +602,6 @@ int8_t bma400_init(struct bma400_dev *dev)
     return rslt;
 }
 
-/*!
- * @brief This API writes the given data to the register address
- * of the sensor.
- */
 int8_t bma400_set_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -675,9 +649,6 @@ int8_t bma400_set_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
     return rslt;
 }
 
-/*!
- * @brief This API reads the data from the given register address of the sensor.
- */
 int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -724,10 +695,6 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
     return rslt;
 }
 
-/*!
- * @brief This API is used to perform soft-reset of the sensor
- * where all the registers are reset to their default values.
- */
 int8_t bma400_soft_reset(const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -752,9 +719,6 @@ int8_t bma400_soft_reset(const struct bma400_dev *dev)
     return rslt;
 }
 
-/*!
- * @brief This API is used to set the power mode of the sensor.
- */
 int8_t bma400_set_power_mode(uint8_t power_mode, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -788,9 +752,6 @@ int8_t bma400_set_power_mode(uint8_t power_mode, const struct bma400_dev *dev)
     return rslt;
 }
 
-/*!
- * @brief This API is used to get the power mode of the sensor.
- */
 int8_t bma400_get_power_mode(uint8_t *power_mode, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -809,9 +770,6 @@ int8_t bma400_get_power_mode(uint8_t *power_mode, const struct bma400_dev *dev)
     return rslt;
 }
 
-/*!
- * @brief This API is used to get the accel data along with the sensor-time
- */
 int8_t bma400_get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -833,10 +791,6 @@ int8_t bma400_get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
     return rslt;
 }
 
-/*!
- * @brief This API is used to set the sensor settings like sensor
- * configurations and interrupt configurations
- */
 int8_t bma400_set_sensor_conf(const struct bma400_sensor_conf *conf, uint16_t n_sett, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -935,15 +889,10 @@ int8_t bma400_set_sensor_conf(const struct bma400_sensor_conf *conf, uint16_t n_
     return rslt;
 }
 
-/*!
- * @brief This API is used to get the sensor settings like sensor
- * configurations and interrupt configurations and store
- * them in the corresponding structure instance
- */
 int8_t bma400_get_sensor_conf(struct bma400_sensor_conf *conf, uint16_t n_sett, const struct bma400_dev *dev)
 {
-    int8_t rslt = BMA400_OK;
-    uint16_t idx = 0;
+    int8_t rslt;
+    uint16_t idx;
     uint8_t data_array[3] = { 0 };
 
     if (conf == NULL)
@@ -952,11 +901,10 @@ int8_t bma400_get_sensor_conf(struct bma400_sensor_conf *conf, uint16_t n_sett, 
 
         return rslt;
     }
-    if (rslt == BMA400_OK)
-    {
-        /* Read the interrupt pin mapping configurations */
-        rslt = bma400_get_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
-    }
+
+    /* Read the interrupt pin mapping configurations */
+    rslt = bma400_get_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
+
     for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
     {
         switch (conf[idx].type)
@@ -1034,13 +982,10 @@ int8_t bma400_get_sensor_conf(struct bma400_sensor_conf *conf, uint16_t n_sett, 
     return rslt;
 }
 
-/*!
- * @brief This API is used to set the device specific settings
- */
 int8_t bma400_set_device_conf(const struct bma400_device_conf *conf, uint8_t n_sett, const struct bma400_dev *dev)
 {
     int8_t rslt = BMA400_OK;
-    uint16_t idx = 0;
+    uint16_t idx;
     uint8_t data_array[3] = { 0 };
 
     if (conf == NULL)
@@ -1049,11 +994,10 @@ int8_t bma400_set_device_conf(const struct bma400_device_conf *conf, uint8_t n_s
 
         return rslt;
     }
-    if (rslt == BMA400_OK)
-    {
-        /* Read the interrupt pin mapping configurations */
-        rslt = bma400_get_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
-    }
+
+    /* Read the interrupt pin mapping configurations */
+    rslt = bma400_get_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
+
     for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
     {
         switch (conf[idx].type)
@@ -1102,10 +1046,6 @@ int8_t bma400_set_device_conf(const struct bma400_device_conf *conf, uint8_t n_s
     return rslt;
 }
 
-/*!
- * @brief This API is used to get the device specific settings and store
- * them in the corresponding structure instance
- */
 int8_t bma400_get_device_conf(struct bma400_device_conf *conf, uint8_t n_sett, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1166,10 +1106,6 @@ int8_t bma400_get_device_conf(struct bma400_device_conf *conf, uint8_t n_sett, c
     return rslt;
 }
 
-/*!
- * @brief This API is used to get the status of all the interrupts
- * whether they are asserted or not
- */
 int8_t bma400_get_interrupt_status(uint16_t *int_status, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1192,10 +1128,6 @@ int8_t bma400_get_interrupt_status(uint16_t *int_status, const struct bma400_dev
     return rslt;
 }
 
-/*!
- * @brief This API is used to set the step counter's configuration
- * parameters from the registers 0x59 to 0x71
- */
 int8_t bma400_set_step_counter_param(uint8_t *sccr_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1213,10 +1145,6 @@ int8_t bma400_set_step_counter_param(uint8_t *sccr_conf, const struct bma400_dev
     return rslt;
 }
 
-/*!
- * @brief This API is used to get the step counter output in form
- * of number of steps in the step_count value
- */
 int8_t bma400_get_steps_counted(uint32_t *step_count, uint8_t *activity_data, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1236,9 +1164,6 @@ int8_t bma400_get_steps_counted(uint32_t *step_count, uint8_t *activity_data, co
     return rslt;
 }
 
-/*!
- * @brief This API is used to get the temperature data output
- */
 int8_t bma400_get_temperature_data(int16_t *temperature_data, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1259,10 +1184,6 @@ int8_t bma400_get_temperature_data(int16_t *temperature_data, const struct bma40
     return rslt;
 }
 
-/*!
- * @brief This API is used to get the enable/disable
- * status of the various interrupts
- */
 int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8_t n_sett, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1338,9 +1259,6 @@ int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8
     return rslt;
 }
 
-/*!
- * @brief This API is used to enable the various interrupts
- */
 int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8_t n_sett, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1415,9 +1333,6 @@ int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8
     return rslt;
 }
 
-/*!
- * @brief This API reads the FIFO data from the sensor
- */
 int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1477,11 +1392,6 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, const struct bma400_d
     return rslt;
 }
 
-/*!
- * @brief This API parses and extracts the accelerometer frames, FIFO time
- * and control frames from FIFO data read by the "bma400_get_fifo_data" API
- * and stores it in the "accel_data" structure instance.
- */
 int8_t bma400_extract_accel(struct bma400_fifo_data *fifo,
                             struct bma400_sensor_data *accel_data,
                             uint16_t *frame_count,
@@ -1502,10 +1412,6 @@ int8_t bma400_extract_accel(struct bma400_fifo_data *fifo,
     return rslt;
 }
 
-/*!
- *  @brief This API writes fifo_flush command to command register.This
- *  action clears all data in the FIFO
- */
 int8_t bma400_set_fifo_flush(const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1524,9 +1430,6 @@ int8_t bma400_set_fifo_flush(const struct bma400_dev *dev)
     return rslt;
 }
 
-/*!
- * @brief This is used to perform self test of accelerometer in BMA400
- */
 int8_t bma400_perform_self_test(const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1576,13 +1479,7 @@ int8_t bma400_perform_self_test(const struct bma400_dev *dev)
     return rslt;
 }
 
-/****************************************************************************/
-/**\name    INTERNAL APIs                                               */
-
-/*!
- * @brief This internal API is used to validate the device structure pointer for
- * null conditions.
- */
+/*****************************INTERNAL APIs***********************************************/
 static int8_t null_ptr_check(const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1601,9 +1498,6 @@ static int8_t null_ptr_check(const struct bma400_dev *dev)
     return rslt;
 }
 
-/*!
- * @brief This internal API is used to set the accel configurations in sensor
- */
 static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1629,9 +1523,6 @@ static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, const str
     return rslt;
 }
 
-/*!
- * @brief This internal API is used to set the accel configurations in sensor
- */
 static int8_t get_accel_conf(struct bma400_acc_conf *accel_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1651,9 +1542,6 @@ static int8_t get_accel_conf(struct bma400_acc_conf *accel_conf, const struct bm
     return rslt;
 }
 
-/*!
- * @brief This API reads accel data along with sensor time
- */
 static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1729,10 +1617,6 @@ static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
     return rslt;
 }
 
-/*!
- * @brief This API enables the auto-wakeup feature
- * of the sensor using a timeout value
- */
 static int8_t set_autowakeup_timeout(const struct bma400_auto_wakeup_conf *wakeup_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1760,9 +1644,6 @@ static int8_t set_autowakeup_timeout(const struct bma400_auto_wakeup_conf *wakeu
     return rslt;
 }
 
-/*!
- * @brief This API gets the set sensor settings for auto-wakeup timeout feature
- */
 static int8_t get_autowakeup_timeout(struct bma400_auto_wakeup_conf *wakeup_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1784,9 +1665,6 @@ static int8_t get_autowakeup_timeout(struct bma400_auto_wakeup_conf *wakeup_conf
     return rslt;
 }
 
-/*!
- * @brief This API enables the auto-wakeup feature of the sensor
- */
 static int8_t set_auto_wakeup(uint8_t conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1804,10 +1682,6 @@ static int8_t set_auto_wakeup(uint8_t conf, const struct bma400_dev *dev)
     return rslt;
 }
 
-/*!
- * @brief This API sets the parameters for auto-wakeup feature
- * of the sensor
- */
 static int8_t set_autowakeup_interrupt(const struct bma400_wakeup_conf *wakeup_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1840,10 +1714,6 @@ static int8_t set_autowakeup_interrupt(const struct bma400_wakeup_conf *wakeup_c
     return rslt;
 }
 
-/*!
- * @brief This API gets the set sensor settings for
- * auto-wakeup interrupt feature
- */
 static int8_t get_autowakeup_interrupt(struct bma400_wakeup_conf *wakeup_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1877,10 +1747,6 @@ static int8_t get_autowakeup_interrupt(struct bma400_wakeup_conf *wakeup_conf, c
     return rslt;
 }
 
-/*!
- * @brief This API sets the sensor to enter low power mode
- * automatically  based on the configurations
- */
 static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1920,10 +1786,6 @@ static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf,
     return rslt;
 }
 
-/*!
- * @brief This API gets the sensor to get the auto-low
- * power mode configuration settings
- */
 static int8_t get_auto_low_power(struct bma400_auto_lp_conf *auto_lp_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1946,9 +1808,6 @@ static int8_t get_auto_low_power(struct bma400_auto_lp_conf *auto_lp_conf, const
     return rslt;
 }
 
-/*!
- * @brief This API sets the tap setting parameters
- */
 static int8_t set_tap_conf(const struct bma400_tap_conf *tap_set, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -1979,9 +1838,6 @@ static int8_t set_tap_conf(const struct bma400_tap_conf *tap_set, const struct b
     return rslt;
 }
 
-/*!
- * @brief This API gets the tap setting parameters
- */
 static int8_t get_tap_conf(struct bma400_tap_conf *tap_set, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2009,9 +1865,6 @@ static int8_t get_tap_conf(struct bma400_tap_conf *tap_set, const struct bma400_
     return rslt;
 }
 
-/*!
- * @brief This API sets the parameters for activity change detection
- */
 static int8_t set_activity_change_conf(const struct bma400_act_ch_conf *act_ch_set, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2037,9 +1890,6 @@ static int8_t set_activity_change_conf(const struct bma400_act_ch_conf *act_ch_s
     return rslt;
 }
 
-/*!
- * @brief This API gets the parameters for activity change detection
- */
 static int8_t get_activity_change_conf(struct bma400_act_ch_conf *act_ch_set, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2066,9 +1916,6 @@ static int8_t get_activity_change_conf(struct bma400_act_ch_conf *act_ch_set, co
     return rslt;
 }
 
-/*!
- * @brief This API sets the parameters for generic interrupt1 configuration
- */
 static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2138,9 +1985,6 @@ static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, const 
     return rslt;
 }
 
-/*!
- * @brief This API gets the generic interrupt1 configuration
- */
 static int8_t get_gen1_int(struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2185,9 +2029,6 @@ static int8_t get_gen1_int(struct bma400_gen_int_conf *gen_int_set, const struct
     return rslt;
 }
 
-/*!
- * @brief This API sets the parameters for generic interrupt2 configuration
- */
 static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2257,9 +2098,6 @@ static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, const 
     return rslt;
 }
 
-/*!
- * @brief This API gets the generic interrupt2 configuration
- */
 static int8_t get_gen2_int(struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2304,9 +2142,6 @@ static int8_t get_gen2_int(struct bma400_gen_int_conf *gen_int_set, const struct
     return rslt;
 }
 
-/*!
- * @brief This API sets the parameters for orientation interrupt
- */
 static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2368,9 +2203,6 @@ static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, c
     return rslt;
 }
 
-/*!
- * @brief This API gets the parameters for orientation interrupt
- */
 static int8_t get_orient_int(struct bma400_orient_int_conf *orient_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2412,10 +2244,6 @@ static int8_t get_orient_int(struct bma400_orient_int_conf *orient_conf, const s
     return rslt;
 }
 
-/*!
- * @brief This API sets the selected interrupt to be mapped to
- * the hardware interrupt pin of the sensor
- */
 static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int_chan int_map)
 {
     switch (int_enable)
@@ -2667,10 +2495,6 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
     }
 }
 
-/*!
- * @brief This API checks whether the interrupt is mapped to the INT pin1
- * or INT pin2 of the sensor
- */
 static void check_mapped_interrupts(uint8_t int_1_map, uint8_t int_2_map, enum bma400_int_chan *int_map)
 {
     if ((int_1_map == BMA400_ENABLE) && (int_2_map == BMA400_DISABLE))
@@ -2695,10 +2519,6 @@ static void check_mapped_interrupts(uint8_t int_1_map, uint8_t int_2_map, enum b
     }
 }
 
-/*!
- * @brief This API gets the selected interrupt and its mapping to
- * the hardware interrupt pin of the sensor
- */
 static void get_int_pin_map(const uint8_t *data_array, uint8_t int_enable, enum bma400_int_chan *int_map)
 {
     uint8_t int_1_map;
@@ -2832,9 +2652,6 @@ static void get_int_pin_map(const uint8_t *data_array, uint8_t int_enable, enum 
     }
 }
 
-/*!
- * @brief This API is used to set the interrupt pin configurations
- */
 static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2861,9 +2678,6 @@ static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, const struct
     return rslt;
 }
 
-/*!
- * @brief This API is used to get the interrupt pin configurations
- */
 static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2887,9 +2701,6 @@ static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, const struc
     return rslt;
 }
 
-/*!
- * @brief This API is used to get the FIFO configurations
- */
 static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2921,9 +2732,6 @@ static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, const struct bma
     return rslt;
 }
 
-/*!
- * @brief This API is used to set the FIFO configurations
- */
 static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2972,9 +2780,6 @@ static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, const stru
     return rslt;
 }
 
-/*!
- *  @brief This API is used to get the number of bytes filled in FIFO
- */
 static int8_t get_fifo_length(uint16_t *fifo_byte_cnt, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -2992,10 +2797,7 @@ static int8_t get_fifo_length(uint16_t *fifo_byte_cnt, const struct bma400_dev *
     return rslt;
 }
 
-/*!
- *  @brief This API is used to read the FIFO of BMA400
- */
-static int8_t read_fifo(struct bma400_fifo_data *fifo, const struct bma400_dev *dev)
+static int8_t read_fifo(const struct bma400_fifo_data *fifo, const struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data;
@@ -3047,9 +2849,6 @@ static int8_t read_fifo(struct bma400_fifo_data *fifo, const struct bma400_dev *
     return rslt;
 }
 
-/*!
- *  @brief This API is used to unpack the accelerometer frames from the FIFO
- */
 static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                                struct bma400_sensor_data *accel_data,
                                uint16_t *frame_count,
@@ -3197,10 +2996,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
     *frame_count = accel_index;
 }
 
-/*!
- *  @brief This API is used to check for a frame availability in FIFO
- */
-static void check_frame_available(struct bma400_fifo_data *fifo,
+static void check_frame_available(const struct bma400_fifo_data *fifo,
                                   uint8_t *frame_available,
                                   uint8_t accel_width,
                                   uint8_t data_en,
@@ -3220,14 +3016,11 @@ static void check_frame_available(struct bma400_fifo_data *fifo,
                     *frame_available = BMA400_DISABLE;
                 }
             }
-            else
+            else if ((*data_index + 3) > fifo->length)
             {
-                if ((*data_index + 3) > fifo->length)
-                {
-                    /* Partial frame available */
-                    *data_index = fifo->length;
-                    *frame_available = BMA400_DISABLE;
-                }
+                /* Partial frame available */
+                *data_index = fifo->length;
+                *frame_available = BMA400_DISABLE;
             }
             break;
         case BMA400_FIFO_X_ENABLE:
@@ -3244,14 +3037,11 @@ static void check_frame_available(struct bma400_fifo_data *fifo,
                     *frame_available = BMA400_DISABLE;
                 }
             }
-            else
+            else if ((*data_index + 1) > fifo->length)
             {
-                if ((*data_index + 1) > fifo->length)
-                {
-                    /* Partial frame available */
-                    *data_index = fifo->length;
-                    *frame_available = BMA400_DISABLE;
-                }
+                /* Partial frame available */
+                *data_index = fifo->length;
+                *frame_available = BMA400_DISABLE;
             }
             break;
         case BMA400_FIFO_XY_ENABLE:
@@ -3268,14 +3058,11 @@ static void check_frame_available(struct bma400_fifo_data *fifo,
                     *frame_available = BMA400_DISABLE;
                 }
             }
-            else
+            else if ((*data_index + 2) > fifo->length)
             {
-                if ((*data_index + 2) > fifo->length)
-                {
-                    /* Partial frame available */
-                    *data_index = fifo->length;
-                    *frame_available = BMA400_DISABLE;
-                }
+                /* Partial frame available */
+                *data_index = fifo->length;
+                *frame_available = BMA400_DISABLE;
             }
             break;
         case BMA400_FIFO_SENSOR_TIME:
@@ -3299,11 +3086,7 @@ static void check_frame_available(struct bma400_fifo_data *fifo,
     }
 }
 
-/*!
- *  @brief This API is used to unpack the accelerometer xyz data from the FIFO
- *  and store it in the user defined buffer
- */
-static void unpack_accel(struct bma400_fifo_data *fifo,
+static void unpack_accel(const struct bma400_fifo_data *fifo,
                          struct bma400_sensor_data *accel_data,
                          uint16_t *data_index,
                          uint8_t accel_width,
@@ -3421,10 +3204,6 @@ static void unpack_accel(struct bma400_fifo_data *fifo,
     }
 }
 
-/*!
- *  @brief This API is used to parse and store the sensor time from the
- *  FIFO data in the structure instance dev
- */
 static void unpack_sensortime_frame(struct bma400_fifo_data *fifo, uint16_t *data_index)
 {
     uint32_t time_msb;
@@ -3440,26 +3219,23 @@ static void unpack_sensortime_frame(struct bma400_fifo_data *fifo, uint16_t *dat
     *data_index = (*data_index) + 3;
 }
 
-/*!
- * @brief This API validates the self test results
- */
 static int8_t validate_accel_self_test(const struct bma400_sensor_data *accel_pos,
                                        const struct bma400_sensor_data *accel_neg)
 {
 
     int8_t rslt;
 
-    /*! Structure for difference of accel values in g */
+    /* Structure for difference of accel values in g */
     struct selftest_delta_limit accel_data_diff = { 0, 0, 0 };
 
-    /*! Structure for difference of accel values in mg */
+    /* Structure for difference of accel values in mg */
     struct selftest_delta_limit accel_data_diff_mg = { 0, 0, 0 };
 
     accel_data_diff.x = accel_pos->x - accel_neg->x;
     accel_data_diff.y = accel_pos->y - accel_neg->y;
     accel_data_diff.z = accel_pos->z - accel_neg->z;
 
-    /*! Converting LSB of the differences of accel
+    /* Converting LSB of the differences of accel
      * values to mg
      */
     convert_lsb_g(&accel_data_diff, &accel_data_diff_mg);
@@ -3472,11 +3248,13 @@ static int8_t validate_accel_self_test(const struct bma400_sensor_data *accel_po
     if (((accel_data_diff_mg.x) > BMA400_ST_ACC_X_AXIS_SIGNAL_DIFF) &&
         ((accel_data_diff_mg.y) > BMA400_ST_ACC_Y_AXIS_SIGNAL_DIFF) &&
         ((accel_data_diff_mg.z) > BMA400_ST_ACC_Z_AXIS_SIGNAL_DIFF))
-    /*
-     *   if (((accel_pos->x - accel_neg->x) > 205) && ((accel_pos->y - accel_neg->y) > 205) &&
-     *          ((accel_pos->z - accel_neg->z) > 103))
-     */
     {
+
+        /*
+         *   if (((accel_pos->x - accel_neg->x) > 205) && ((accel_pos->y - accel_neg->y) > 205) &&
+         *          ((accel_pos->z - accel_neg->z) > 103))
+         */
+
         /* Self test pass condition */
         rslt = BMA400_OK;
     }
@@ -3489,33 +3267,27 @@ static int8_t validate_accel_self_test(const struct bma400_sensor_data *accel_po
     return rslt;
 }
 
-/*!
- *  @brief This API converts lsb value of axes to mg for self-test *
- */
 static void convert_lsb_g(const struct selftest_delta_limit *accel_data_diff,
                           struct selftest_delta_limit *accel_data_diff_mg)
 {
     uint32_t lsb_per_g;
 
-    /*! Range considered for self-test is 4g */
+    /* Range considered for self-test is 4g */
     uint8_t range = BMA400_4G_RANGE;
 
-    /*! lsb_per_g for the respective resolution and 8g range*/
+    /* lsb_per_g for the respective resolution and 8g range*/
     lsb_per_g = (uint32_t)(power(2, 8) / (2 * range));
 
-    /*! accel x value in mg */
+    /* accel x value in mg */
     accel_data_diff_mg->x = (accel_data_diff->x / (int32_t)lsb_per_g) * 1000;
 
-    /*! accel y value in mg */
+    /* accel y value in mg */
     accel_data_diff_mg->y = (accel_data_diff->y / (int32_t)lsb_per_g) * 1000;
 
-    /*! accel z value in mg */
+    /* accel z value in mg */
     accel_data_diff_mg->z = (accel_data_diff->z / (int32_t)lsb_per_g) * 1000;
 }
 
-/*!
- * @brief This API is used to calculate the power of 2
- */
 static int32_t power(int16_t base, uint8_t resolution)
 {
     uint8_t i = 1;
@@ -3531,9 +3303,6 @@ static int32_t power(int16_t base, uint8_t resolution)
     return value;
 }
 
-/*!
- * @brief This API performs self test with positive excitation
- */
 static int8_t positive_excited_accel(struct bma400_sensor_data *accel_pos, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -3551,9 +3320,6 @@ static int8_t positive_excited_accel(struct bma400_sensor_data *accel_pos, const
     return rslt;
 }
 
-/*!
- * @brief This API performs self test with negative excitation
- */
 static int8_t negative_excited_accel(struct bma400_sensor_data *accel_neg, const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -3577,9 +3343,6 @@ static int8_t negative_excited_accel(struct bma400_sensor_data *accel_neg, const
     return rslt;
 }
 
-/*!
- * @brief This API performs the pre-requisites needed to perform the self test
- */
 static int8_t enable_self_test(const struct bma400_dev *dev)
 {
     int8_t rslt;
@@ -3596,6 +3359,7 @@ static int8_t enable_self_test(const struct bma400_dev *dev)
     {
         /* Modify to the desired configurations */
         accel_setting.param.accel.odr = BMA400_ODR_100HZ;
+
         /*accel_setting.param.accel.range = BMA400_8G_RANGE; */
         accel_setting.param.accel.range = BMA400_4G_RANGE;
         accel_setting.param.accel.osr = BMA400_ACCEL_OSR_SETTING_3;
