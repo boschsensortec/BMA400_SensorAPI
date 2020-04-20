@@ -607,6 +607,13 @@ int8_t bma400_set_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
     int8_t rslt;
     uint8_t count;
 
+	if (reg_data == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
+
     /* Check for null pointer in the device structure */
     rslt = null_ptr_check(dev);
 
@@ -634,9 +641,14 @@ int8_t bma400_set_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
          */
         if (len > 1)
         {
-            for (count = 0; count < len; count++)
+            for (count = 0; (count < len) && (rslt == BMA400_OK); count++)
             {
                 rslt = dev->write(dev->dev_id, reg_addr, &reg_data[count], 1);
+                if (rslt != BMA400_OK)
+                {
+                    /* Failure case */
+                    rslt = BMA400_E_COM_FAIL;
+                }
                 reg_addr++;
             }
         }
@@ -655,6 +667,13 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
     uint16_t index;
     uint16_t temp_len = len + dev->dummy_byte;
     uint8_t temp_buff[temp_len];
+
+	if (reg_data == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
 
     /* Check for null pointer in the device structure */
     rslt = null_ptr_check(dev);
@@ -757,6 +776,13 @@ int8_t bma400_get_power_mode(uint8_t *power_mode, const struct bma400_dev *dev)
     int8_t rslt;
     uint8_t reg_data;
 
+	if (power_mode == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
+
     /* Check for null pointer in the device structure*/
     rslt = null_ptr_check(dev);
 
@@ -773,6 +799,13 @@ int8_t bma400_get_power_mode(uint8_t *power_mode, const struct bma400_dev *dev)
 int8_t bma400_get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, const struct bma400_dev *dev)
 {
     int8_t rslt;
+
+	if (accel == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
 
     /* Check for null pointer in the device structure*/
     rslt = null_ptr_check(dev);
@@ -797,6 +830,13 @@ int8_t bma400_set_sensor_conf(const struct bma400_sensor_conf *conf, uint16_t n_
     uint16_t idx = 0;
     uint8_t data_array[3] = { 0 };
 
+	if (conf == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
+
     /* Check for null pointer in the device structure*/
     rslt = null_ptr_check(dev);
 
@@ -807,7 +847,7 @@ int8_t bma400_set_sensor_conf(const struct bma400_sensor_conf *conf, uint16_t n_
         rslt = bma400_get_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
         if (rslt == BMA400_OK)
         {
-            for (idx = 0; idx < n_sett; idx++)
+            for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
             {
                 switch (conf[idx].type)
                 {
@@ -1052,6 +1092,13 @@ int8_t bma400_get_device_conf(struct bma400_device_conf *conf, uint8_t n_sett, c
     uint16_t idx = 0;
     uint8_t data_array[3] = { 0 };
 
+	if (conf == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
+
     /* Check for null pointer in the device structure*/
     rslt = null_ptr_check(dev);
 
@@ -1062,7 +1109,7 @@ int8_t bma400_get_device_conf(struct bma400_device_conf *conf, uint8_t n_sett, c
         rslt = bma400_get_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
         if (rslt == BMA400_OK)
         {
-            for (idx = 0; idx < n_sett; idx++)
+            for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
             {
                 switch (conf[idx].type)
                 {
@@ -1111,6 +1158,13 @@ int8_t bma400_get_interrupt_status(uint16_t *int_status, const struct bma400_dev
     int8_t rslt;
     uint8_t reg_data[3];
 
+	if (int_status == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
+
     /* Check for null pointer in the device structure*/
     rslt = null_ptr_check(dev);
 
@@ -1132,6 +1186,10 @@ int8_t bma400_set_step_counter_param(uint8_t *sccr_conf, const struct bma400_dev
 {
     int8_t rslt;
 
+	if (sccr_conf == NULL) {
+		return BMA400_E_NULL_PTR;
+	}
+
     /* Check for null pointer in the device structure*/
     rslt = null_ptr_check(dev);
 
@@ -1149,6 +1207,13 @@ int8_t bma400_get_steps_counted(uint32_t *step_count, uint8_t *activity_data, co
 {
     int8_t rslt;
     uint8_t data_arrray[4];
+
+	if ((step_count == NULL) || (activity_data == NULL))
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
 
     /* Check for null pointer in the device structure*/
     rslt = null_ptr_check(dev);
@@ -1168,6 +1233,13 @@ int8_t bma400_get_temperature_data(int16_t *temperature_data, const struct bma40
 {
     int8_t rslt;
     uint8_t reg_data;
+
+	if (temperature_data == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
 
     /* Check for null pointer in the device structure*/
     rslt = null_ptr_check(dev);
@@ -1191,6 +1263,13 @@ int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8
     uint8_t reg_data[2];
     uint8_t wkup_int;
 
+	if (int_select == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
+
     /* Check for null pointer in the device structure */
     rslt = null_ptr_check(dev);
 
@@ -1200,7 +1279,7 @@ int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8
         rslt = bma400_get_regs(BMA400_INT_CONF_0_ADDR, reg_data, 2, dev);
         if (rslt == BMA400_OK)
         {
-            for (idx = 0; idx < n_sett; idx++)
+            for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
             {
                 /* Read the enable/disable of interrupts
                  * based on user selection
@@ -1265,6 +1344,13 @@ int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8
     uint8_t conf, idx = 0;
     uint8_t reg_data[2];
 
+	if (int_select == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
+
     /* Check for null pointer in the device structure */
     rslt = null_ptr_check(dev);
 
@@ -1274,7 +1360,7 @@ int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8
         rslt = bma400_get_regs(BMA400_INT_CONF_0_ADDR, reg_data, 2, dev);
         if (rslt == BMA400_OK)
         {
-            for (idx = 0; idx < n_sett; idx++)
+            for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
             {
                 conf = int_select[idx].conf;
 
@@ -1340,6 +1426,13 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, const struct bma400_d
     uint16_t fifo_byte_cnt = 0;
     uint16_t user_fifo_len = 0;
 
+	if (fifo == NULL)
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
+
     /* Check for null pointer in the device structure */
     rslt = null_ptr_check(dev);
 
@@ -1398,6 +1491,13 @@ int8_t bma400_extract_accel(struct bma400_fifo_data *fifo,
                             const struct bma400_dev *dev)
 {
     int8_t rslt;
+
+	if ((fifo == NULL) || (accel_data == NULL) || (frame_count == NULL))
+    {
+        rslt = BMA400_E_NULL_PTR;
+
+        return rslt;
+    }
 
     /* Check for null pointer in the device structure */
     rslt = null_ptr_check(dev);
