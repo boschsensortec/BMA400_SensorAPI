@@ -30,9 +30,9 @@
 * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 * POSSIBILITY OF SUCH DAMAGE.
 *
-* @file bma400.h
-* @date 10/01/2020
-* @version  1.5.6
+* @file       bma400.h
+* @date       2020-06-05
+* @version    v1.5.8
 *
 */
 
@@ -71,9 +71,9 @@ extern "C" {
  * @param[in,out] dev : Structure instance of bma400_dev
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
 int8_t bma400_init(struct bma400_dev *dev);
 
@@ -106,11 +106,11 @@ int8_t bma400_init(struct bma400_dev *dev);
  * @note The accelerometer data value is in LSB, based on the range selected.
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, const struct bma400_dev *dev);
+int8_t bma400_get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, struct bma400_dev *dev);
 
 /**
  * \ingroup bma400
@@ -137,11 +137,11 @@ int8_t bma400_get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
  * @endcode
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_set_power_mode(uint8_t power_mode, const struct bma400_dev *dev);
+int8_t bma400_set_power_mode(uint8_t power_mode, struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiConfig
@@ -161,11 +161,11 @@ int8_t bma400_set_power_mode(uint8_t power_mode, const struct bma400_dev *dev);
  * @endcode
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_get_power_mode(uint8_t *power_mode, const struct bma400_dev *dev);
+int8_t bma400_get_power_mode(uint8_t *power_mode, struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiConfig
@@ -190,11 +190,11 @@ int8_t bma400_get_power_mode(uint8_t *power_mode, const struct bma400_dev *dev);
  * (Examples are mentioned in the readme.md).
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_set_sensor_conf(const struct bma400_sensor_conf *conf, uint16_t n_sett, const struct bma400_dev *dev);
+int8_t bma400_set_sensor_conf(const struct bma400_sensor_conf *conf, uint16_t n_sett, struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiConfig
@@ -213,11 +213,11 @@ int8_t bma400_set_sensor_conf(const struct bma400_sensor_conf *conf, uint16_t n_
  * @note Once the API is called, the settings structure will be updated in the settings structure.
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_get_sensor_conf(struct bma400_sensor_conf *conf, uint16_t n_sett, const struct bma400_dev *dev);
+int8_t bma400_get_sensor_conf(struct bma400_sensor_conf *conf, uint16_t n_sett, struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiConfig
@@ -242,11 +242,11 @@ int8_t bma400_get_sensor_conf(struct bma400_sensor_conf *conf, uint16_t n_sett, 
  * conf structure(refer Examples).
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_set_device_conf(const struct bma400_device_conf *conf, uint8_t n_sett, const struct bma400_dev *dev);
+int8_t bma400_set_device_conf(const struct bma400_device_conf *conf, uint8_t n_sett, struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiConfig
@@ -265,11 +265,11 @@ int8_t bma400_set_device_conf(const struct bma400_device_conf *conf, uint8_t n_s
  * in the settings structure.
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_get_device_conf(struct bma400_device_conf *conf, uint8_t n_sett, const struct bma400_dev *dev);
+int8_t bma400_get_device_conf(struct bma400_device_conf *conf, uint8_t n_sett, struct bma400_dev *dev);
 
 /**
  * \ingroup bma400
@@ -289,11 +289,11 @@ int8_t bma400_get_device_conf(struct bma400_device_conf *conf, uint8_t n_sett, c
  *  @param[in] dev           : Structure instance of bma400_dev.
  *
  * @return Result of API execution status
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_set_fifo_flush(const struct bma400_dev *dev);
+int8_t bma400_set_fifo_flush(struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiFifo
@@ -316,11 +316,11 @@ int8_t bma400_set_fifo_flush(const struct bma400_dev *dev);
  * @param[in,out] dev       : Structure instance of bma400_dev.
  *
  * @return Result of API execution status
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, const struct bma400_dev *dev);
+int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiFifo
@@ -350,9 +350,9 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, const struct bma400_d
  * @param[in] dev             : Structure instance of bma400_dev.
  *
  * @return Result of API execution status
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
 int8_t bma400_extract_accel(struct bma400_fifo_data *fifo,
                             struct bma400_sensor_data *accel_data,
@@ -400,11 +400,11 @@ int8_t bma400_extract_accel(struct bma400_fifo_data *fifo,
  * }
  *@endcode
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_get_interrupt_status(uint16_t *int_status, const struct bma400_dev *dev);
+int8_t bma400_get_interrupt_status(uint16_t *int_status, struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiInterrupt
@@ -424,12 +424,11 @@ int8_t bma400_get_interrupt_status(uint16_t *int_status, const struct bma400_dev
  * output is stored in int_select->conf either as BMA400_ENABLE/BMA400_DISABLE
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8_t n_sett,
-                                     const struct bma400_dev *dev);
+int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8_t n_sett, struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiInterrupt
@@ -457,12 +456,11 @@ int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8
  *    rslt = bma400_enable_interrupt(&int_select, 2, dev);
  *@endcode
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8_t n_sett,
-                               const struct bma400_dev *dev);
+int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8_t n_sett, struct bma400_dev *dev);
 
 /**
  * \ingroup bma400
@@ -485,11 +483,11 @@ int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8
  * @param[in] dev      : Structure instance of bma400_dev.
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_set_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const struct bma400_dev *dev);
+int8_t bma400_set_regs(uint8_t reg_addr, const uint8_t *reg_data, uint32_t len, struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiRegister
@@ -509,11 +507,11 @@ int8_t bma400_set_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
  * Register address - 0x14(BMA400_FIFO_DATA_ADDR)
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const struct bma400_dev *dev);
+int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, struct bma400_dev *dev);
 
 /**
  * \ingroup bma400
@@ -532,11 +530,11 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
  * @param[in] dev       : Structure instance of bma400_dev.
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_soft_reset(const struct bma400_dev *dev);
+int8_t bma400_soft_reset(struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiSystem
@@ -553,11 +551,11 @@ int8_t bma400_soft_reset(const struct bma400_dev *dev);
  * define the required settings after performing the self test.
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error / failure
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_perform_self_test(const struct bma400_dev *dev);
+int8_t bma400_perform_self_test(struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiSystem
@@ -565,7 +563,7 @@ int8_t bma400_perform_self_test(const struct bma400_dev *dev);
  * \code
  * int8_t bma400_get_temperature_data(int16_t *temperature_data, const struct bma400_dev *dev);
  * \endcode
- * @details This API is used to get the temperature data output.
+ * @details This API is used to get the raw temperature data output.
  *
  * @note Temperature data output must be divided by a factor of 10
  * Consider temperature_data = 195 ,
@@ -575,11 +573,11 @@ int8_t bma400_perform_self_test(const struct bma400_dev *dev);
  * @param[in] dev                    : Structure instance of bma400_dev.
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_get_temperature_data(int16_t *temperature_data, const struct bma400_dev *dev);
+int8_t bma400_get_temperature_data(int16_t *temperature_data, struct bma400_dev *dev);
 
 /**
  * \ingroup bma400
@@ -593,17 +591,48 @@ int8_t bma400_get_temperature_data(int16_t *temperature_data, const struct bma40
  * \code
  * int8_t bma400_set_step_counter_param(uint8_t *sccr_conf, const struct bma400_dev *dev);
  * \endcode
- * @details This API is used to set the step counter's configuration parameters from the registers 0x59 to 0x71.
+ * @details This API is used to set the step counter's configuration parameters from the registers 0x59 to 0x70.
+ *
+ *@verbatim
+ *----------------------------------------------------------------------
+ * Register name              Address    wrist(default)   non-wrist
+ *----------------------------------------------------------------------
+ * STEP_COUNTER_CONFIG0        0x59             1             1
+ * STEP_COUNTER_CONFIG1        0x5A            45            50
+ * STEP_COUNTER_CONFIG2        0x5B           123           120
+ * STEP_COUNTER_CONFIG3        0x5C           212           230
+ * STEP_COUNTER_CONFIG4        0x5D            68           135
+ * STEP_COUNTER_CONFIG5        0x5E             1             0
+ * STEP_COUNTER_CONFIG6        0x5F            59           132
+ * STEP_COUNTER_CONFIG7        0x60           122           108
+ * STEP_COUNTER_CONFIG8        0x61           219           156
+ * STEP_COUNTER_CONFIG9        0x62           123           117
+ * STEP_COUNTER_CONFIG10       0x63            63           100
+ * STEP_COUNTER_CONFIG11       0x64           108           126
+ * STEP_COUNTER_CONFIG12       0x65           205           170
+ * STEP_COUNTER_CONFIG13       0x66            39            12
+ * STEP_COUNTER_CONFIG14       0x67            25            12
+ * STEP_COUNTER_CONFIG15       0x68           150            74
+ * STEP_COUNTER_CONFIG16       0x69           160           160
+ * STEP_COUNTER_CONFIG17       0x6A           195             0
+ * STEP_COUNTER_CONFIG18       0x6B            14             0
+ * STEP_COUNTER_CONFIG19       0x6C            12            12
+ * STEP_COUNTER_CONFIG20       0x6D            60            60
+ * STEP_COUNTER_CONFIG21       0x6E           240           240
+ * STEP_COUNTER_CONFIG22       0x6F             0             1
+ * STEP_COUNTER_CONFIG23       0x70           247             0
+ *------------------------------------------------------------------------
+ *@endverbatim
  *
  * @param[in] sccr_conf : sc config parameter
  * @param[in] dev    : Structure instance of bma400_dev.
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error / failure
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_set_step_counter_param(uint8_t *sccr_conf, const struct bma400_dev *dev);
+int8_t bma400_set_step_counter_param(const uint8_t *sccr_conf, struct bma400_dev *dev);
 
 /*!
  * \ingroup bma400ApiSc
@@ -624,20 +653,14 @@ int8_t bma400_set_step_counter_param(uint8_t *sccr_conf, const struct bma400_dev
  *  0x02            | BMA400_RUN_ACT
  *
  * @return Result of API execution status.
- * @retval Zero Success
- * @retval Postive Warning
- * @retval Negative Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-int8_t bma400_get_steps_counted(uint32_t *step_count, uint8_t *activity_data, const struct bma400_dev *dev);
-
-/**
- * \ingroup bma400
- * \defgroup bma400Examples Examples
- * @brief Reference Examples */
+int8_t bma400_get_steps_counted(uint32_t *step_count, uint8_t *activity_data, struct bma400_dev *dev);
 
 #ifdef __cplusplus
 }
 #endif /* End of CPP guard */
 
 #endif /* BMA400_H__ */
-/** @} */

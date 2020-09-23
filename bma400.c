@@ -30,9 +30,9 @@
 * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 * POSSIBILITY OF SUCH DAMAGE.
 *
-* @file bma400.c
-* @date 10/01/2020
-* @version  1.5.6
+* @file       bma400.c
+* @date       2020-06-05
+* @version    v1.5.8
 *
 */
 
@@ -41,7 +41,7 @@
 /*
  * @brief Accel self test diff xyz data structure
  */
-struct selftest_delta_limit
+struct bma400_selftest_delta_limit
 {
     /* Accel X  data */
     int32_t x;
@@ -53,29 +53,9 @@ struct selftest_delta_limit
     int32_t z;
 };
 
-/*
- * @brief This API is used to calculate the power of given
- * base value.
- *
- * @param[in] base : value of base
- * @param[in] resolution : resolution of the sensor
- *
- * @return : return the value of base^resolution
- */
-static int32_t power(int16_t base, uint8_t resolution);
-
-/*
- *  @brief This API converts lsb value of axes to mg for self-test
- *
- *  @param[in] accel_data_diff : Pointer variable used to pass accel difference
- *  values in g
- *  @param[out] accel_data_diff_mg : Pointer variable used to store accel
- *  difference values in mg
- *
- *  @return None *
- */
-static void convert_lsb_g(const struct selftest_delta_limit *accel_data_diff,
-                          struct selftest_delta_limit *accel_data_diff_mg);
+/************************************************************************************/
+/*********************** Static function declarations *******************************/
+/************************************************************************************/
 
 /*
  * @brief This internal API is used to validate the device pointer for
@@ -84,9 +64,39 @@ static void convert_lsb_g(const struct selftest_delta_limit *accel_data_diff,
  * @param[in] dev : Structure instance of bma400_dev.
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
 static int8_t null_ptr_check(const struct bma400_dev *dev);
+
+/*
+ * @brief This internal API is used to set sensor configurations
+ *
+ * @param[in] data      : Data to be mapped with interrupt
+ * @param[in] conf      : Sensor configurations to be set
+ * @param[in] dev       : Structure instance of bma400_dev
+ *
+ * @return Result of API execution status
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
+ */
+static int8_t set_sensor_conf(uint8_t *data, const struct bma400_sensor_conf *conf, struct bma400_dev *dev);
+
+/*
+ * @brief This internal API is used to get sensor configurations
+ *
+ * @param[in] data      : Data to be mapped with interrupt
+ * @param[in] conf      : Sensor configurations to be set
+ * @param[in] dev       : Structure instance of bma400_dev
+ *
+ * @return Result of API execution status
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
+ */
+static int8_t get_sensor_conf(const uint8_t *data, struct bma400_sensor_conf *conf, struct bma400_dev *dev);
 
 /*
  * @brief This internal API is used to set the accel configurations in sensor
@@ -95,9 +105,11 @@ static int8_t null_ptr_check(const struct bma400_dev *dev);
  * @param[in] dev             : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, const struct bma400_dev *dev);
+static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API reads accel data along with sensor time
@@ -111,9 +123,11 @@ static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, const str
  *   - BMA400_DATA_SENSOR_TIME
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, const struct bma400_dev *dev);
+static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, struct bma400_dev *dev);
 
 /*
  * @brief This API enables the auto-wakeup feature
@@ -123,9 +137,11 @@ static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
  * @param[in] dev         : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_autowakeup_timeout(const struct bma400_auto_wakeup_conf *wakeup_conf, const struct bma400_dev *dev);
+static int8_t set_autowakeup_timeout(const struct bma400_auto_wakeup_conf *wakeup_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API enables the auto-wakeup feature of the sensor
@@ -135,9 +151,11 @@ static int8_t set_autowakeup_timeout(const struct bma400_auto_wakeup_conf *wakeu
  * @param[in] dev   : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_auto_wakeup(uint8_t conf, const struct bma400_dev *dev);
+static int8_t set_auto_wakeup(uint8_t conf, struct bma400_dev *dev);
 
 /*
  * @brief This API sets the parameters for auto-wakeup feature
@@ -147,9 +165,11 @@ static int8_t set_auto_wakeup(uint8_t conf, const struct bma400_dev *dev);
  * @param[in] dev         : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_autowakeup_interrupt(const struct bma400_wakeup_conf *wakeup_conf, const struct bma400_dev *dev);
+static int8_t set_autowakeup_interrupt(const struct bma400_wakeup_conf *wakeup_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API sets the sensor to enter low power mode
@@ -159,9 +179,11 @@ static int8_t set_autowakeup_interrupt(const struct bma400_wakeup_conf *wakeup_c
  * @param[in] dev            : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf, const struct bma400_dev *dev);
+static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API sets the tap setting parameters
@@ -170,9 +192,11 @@ static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf,
  * @param[in] dev     : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_tap_conf(const struct bma400_tap_conf *tap_set, const struct bma400_dev *dev);
+static int8_t set_tap_conf(const struct bma400_tap_conf *tap_set, struct bma400_dev *dev);
 
 /*
  * @brief This API sets the parameters for activity change detection
@@ -182,9 +206,11 @@ static int8_t set_tap_conf(const struct bma400_tap_conf *tap_set, const struct b
  * @param[in] dev        : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_activity_change_conf(const struct bma400_act_ch_conf *act_ch_set, const struct bma400_dev *dev);
+static int8_t set_activity_change_conf(const struct bma400_act_ch_conf *act_ch_set, struct bma400_dev *dev);
 
 /*
  * @brief This API sets the parameters for generic interrupt1 configuration
@@ -194,9 +220,11 @@ static int8_t set_activity_change_conf(const struct bma400_act_ch_conf *act_ch_s
  * @param[in] dev         : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev);
+static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, struct bma400_dev *dev);
 
 /*
  * @brief This API sets the parameters for generic interrupt2 configuration
@@ -206,9 +234,11 @@ static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, const 
  * @param[in] dev         : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev);
+static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, struct bma400_dev *dev);
 
 /*
  * @brief This API sets the parameters for orientation interrupt
@@ -218,9 +248,11 @@ static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, const 
  * @param[in] dev         : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, const struct bma400_dev *dev);
+static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, struct bma400_dev *dev);
 
 /*
  * @brief This internal API is used to get the accel configurations in sensor
@@ -230,9 +262,11 @@ static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, c
  * @param[in] dev             : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_accel_conf(struct bma400_acc_conf *accel_conf, const struct bma400_dev *dev);
+static int8_t get_accel_conf(struct bma400_acc_conf *accel_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API gets the set sensor settings for auto-wakeup timeout feature
@@ -241,9 +275,11 @@ static int8_t get_accel_conf(struct bma400_acc_conf *accel_conf, const struct bm
  * @param[in] dev             : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_autowakeup_timeout(struct bma400_auto_wakeup_conf *wakeup_conf, const struct bma400_dev *dev);
+static int8_t get_autowakeup_timeout(struct bma400_auto_wakeup_conf *wakeup_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API gets the set sensor settings for
@@ -253,9 +289,11 @@ static int8_t get_autowakeup_timeout(struct bma400_auto_wakeup_conf *wakeup_conf
  * @param[in] dev               : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_autowakeup_interrupt(struct bma400_wakeup_conf *wakeup_conf, const struct bma400_dev *dev);
+static int8_t get_autowakeup_interrupt(struct bma400_wakeup_conf *wakeup_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API gets the sensor to get the auto-low
@@ -266,9 +304,11 @@ static int8_t get_autowakeup_interrupt(struct bma400_wakeup_conf *wakeup_conf, c
  * @param[in] dev                : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_auto_low_power(struct bma400_auto_lp_conf *auto_lp_conf, const struct bma400_dev *dev);
+static int8_t get_auto_low_power(struct bma400_auto_lp_conf *auto_lp_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API sets the tap setting parameters
@@ -277,9 +317,11 @@ static int8_t get_auto_low_power(struct bma400_auto_lp_conf *auto_lp_conf, const
  * @param[in] dev         : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_tap_conf(struct bma400_tap_conf *tap_set, const struct bma400_dev *dev);
+static int8_t get_tap_conf(struct bma400_tap_conf *tap_set, struct bma400_dev *dev);
 
 /*
  * @brief This API gets the parameters for activity change detection
@@ -289,9 +331,11 @@ static int8_t get_tap_conf(struct bma400_tap_conf *tap_set, const struct bma400_
  * @param[in] dev            : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_activity_change_conf(struct bma400_act_ch_conf *act_ch_set, const struct bma400_dev *dev);
+static int8_t get_activity_change_conf(struct bma400_act_ch_conf *act_ch_set, struct bma400_dev *dev);
 
 /*
  * @brief This API gets the generic interrupt1 configuration
@@ -301,9 +345,11 @@ static int8_t get_activity_change_conf(struct bma400_act_ch_conf *act_ch_set, co
  * @param[in] dev             : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_gen1_int(struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev);
+static int8_t get_gen1_int(struct bma400_gen_int_conf *gen_int_set, struct bma400_dev *dev);
 
 /*
  * @brief This API gets the generic interrupt2 configuration
@@ -313,9 +359,11 @@ static int8_t get_gen1_int(struct bma400_gen_int_conf *gen_int_set, const struct
  * @param[in] dev             : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_gen2_int(struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev);
+static int8_t get_gen2_int(struct bma400_gen_int_conf *gen_int_set, struct bma400_dev *dev);
 
 /*
  * @brief This API gets the parameters for orientation interrupt
@@ -325,9 +373,11 @@ static int8_t get_gen2_int(struct bma400_gen_int_conf *gen_int_set, const struct
  * @param[in] dev             : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_orient_int(struct bma400_orient_int_conf *orient_conf, const struct bma400_dev *dev);
+static int8_t get_orient_int(struct bma400_orient_int_conf *orient_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API sets the selected interrupt to be mapped to
@@ -375,9 +425,11 @@ static void get_int_pin_map(const uint8_t *data_array, uint8_t int_enable, enum 
  * @param[in] dev          : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, const struct bma400_dev *dev);
+static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API is used to set the interrupt pin configurations
@@ -386,9 +438,11 @@ static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, const struct
  * @param[in] dev              : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, const struct bma400_dev *dev);
+static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API is used to set the FIFO configurations
@@ -398,9 +452,11 @@ static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, const struc
  * @param[in] dev                 : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, const struct bma400_dev *dev);
+static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API is used to get the FIFO configurations
@@ -412,7 +468,7 @@ static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, const stru
  * @return Result of API execution status
  * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
  */
-static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, const struct bma400_dev *dev);
+static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, struct bma400_dev *dev);
 
 /*
  * @brief This API is used to get the number of bytes filled in FIFO
@@ -422,9 +478,11 @@ static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, const struct bma
  * @param[in] dev                 : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t get_fifo_length(uint16_t *fifo_byte_cnt, const struct bma400_dev *dev);
+static int8_t get_fifo_length(uint16_t *fifo_byte_cnt, struct bma400_dev *dev);
 
 /*
  * @brief This API is used to read the FIFO of BMA400
@@ -434,9 +492,11 @@ static int8_t get_fifo_length(uint16_t *fifo_byte_cnt, const struct bma400_dev *
  * @param[in] dev      : Structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success / +ve value -> Warning / -ve value -> Error
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
-static int8_t read_fifo(const struct bma400_fifo_data *fifo, const struct bma400_dev *dev);
+static int8_t read_fifo(struct bma400_fifo_data *fifo, struct bma400_dev *dev);
 
 /*
  * @brief This API is used to unpack the accelerometer frames from the FIFO
@@ -511,7 +571,9 @@ static void unpack_sensortime_frame(struct bma400_fifo_data *fifo, uint16_t *dat
  *@param[in] dev   : structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success  / -ve value -> Error / +ve value -> Self test fail
+ * @retval zero -> Success
+ * @retval +ve value -> Warning
+ * @retval -ve value -> Error
  */
 static int8_t validate_accel_self_test(const struct bma400_sensor_data *accel_pos,
                                        const struct bma400_sensor_data *accel_neg);
@@ -524,9 +586,10 @@ static int8_t validate_accel_self_test(const struct bma400_sensor_data *accel_po
  * @param[in] dev   : structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success  / -ve value -> Error
+ * @retval zero -> Success
+ * @retval -ve value -> Error
  */
-static int8_t positive_excited_accel(struct bma400_sensor_data *accel_pos, const struct bma400_dev *dev);
+static int8_t positive_excited_accel(struct bma400_sensor_data *accel_pos, struct bma400_dev *dev);
 
 /*
  * @brief This API performs self test with negative excitation
@@ -536,9 +599,10 @@ static int8_t positive_excited_accel(struct bma400_sensor_data *accel_pos, const
  * @param[in] dev   : structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success  / -ve value -> Error
+ * @retval zero -> Success
+ * @retval -ve value -> Error
  */
-static int8_t negative_excited_accel(struct bma400_sensor_data *accel_neg, const struct bma400_dev *dev);
+static int8_t negative_excited_accel(struct bma400_sensor_data *accel_neg, struct bma400_dev *dev);
 
 /*
  * @brief This API performs the pre-requisites needed to perform the self test
@@ -546,9 +610,14 @@ static int8_t negative_excited_accel(struct bma400_sensor_data *accel_neg, const
  * @param[in] dev   : structure instance of bma400_dev
  *
  * @return Result of API execution status
- * @retval zero -> Success  / -ve value -> Error
+ * @retval zero -> Success
+ * @retval -ve value -> Error
  */
-static int8_t enable_self_test(const struct bma400_dev *dev);
+static int8_t enable_self_test(struct bma400_dev *dev);
+
+/************************************************************************************/
+/*********************** User function definitions **********************************/
+/************************************************************************************/
 
 int8_t bma400_init(struct bma400_dev *dev)
 {
@@ -562,7 +631,7 @@ int8_t bma400_init(struct bma400_dev *dev)
     if (rslt == BMA400_OK)
     {
         /* Initial power-up time */
-        dev->delay_ms(5);
+        dev->delay_us(5000, dev->intf_ptr);
 
         /* Assigning dummy byte value */
         if (dev->intf == BMA400_SPI_INTF)
@@ -571,16 +640,17 @@ int8_t bma400_init(struct bma400_dev *dev)
             dev->dummy_byte = 1;
 
             /* Dummy read of Chip-ID in SPI mode */
-            rslt = bma400_get_regs(BMA400_CHIP_ID_ADDR, &chip_id, 1, dev);
+            rslt = bma400_get_regs(BMA400_REG_CHIP_ID, &chip_id, 1, dev);
         }
         else
         {
             dev->dummy_byte = 0;
         }
+
         if (rslt == BMA400_OK)
         {
             /* Chip ID of the sensor is read */
-            rslt = bma400_get_regs(BMA400_CHIP_ID_ADDR, &chip_id, 1, dev);
+            rslt = bma400_get_regs(BMA400_REG_CHIP_ID, &chip_id, 1, dev);
 
             /* Proceed if everything is fine until now */
             if (rslt == BMA400_OK)
@@ -602,7 +672,7 @@ int8_t bma400_init(struct bma400_dev *dev)
     return rslt;
 }
 
-int8_t bma400_set_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const struct bma400_dev *dev)
+int8_t bma400_set_regs(uint8_t reg_addr, const uint8_t *reg_data, uint32_t len, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t count;
@@ -620,8 +690,8 @@ int8_t bma400_set_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
          */
         if (len == 1)
         {
-            rslt = dev->write(dev->dev_id, reg_addr, reg_data, len);
-            if (rslt != BMA400_OK)
+            dev->intf_rslt = dev->write(reg_addr, reg_data, len, dev->intf_ptr);
+            if (dev->intf_rslt != BMA400_INTF_RET_SUCCESS)
             {
                 /* Failure case */
                 rslt = BMA400_E_COM_FAIL;
@@ -634,10 +704,15 @@ int8_t bma400_set_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
          */
         if (len > 1)
         {
-            for (count = 0; count < len; count++)
+            for (count = 0; (count < len) && (rslt == BMA400_OK); count++)
             {
-                rslt = dev->write(dev->dev_id, reg_addr, &reg_data[count], 1);
+                dev->intf_rslt = dev->write(reg_addr, &reg_data[count], 1, dev->intf_ptr);
                 reg_addr++;
+                if (dev->intf_rslt != BMA400_INTF_RET_SUCCESS)
+                {
+                    /* Failure case */
+                    rslt = BMA400_E_COM_FAIL;
+                }
             }
         }
     }
@@ -649,12 +724,10 @@ int8_t bma400_set_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
     return rslt;
 }
 
-int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const struct bma400_dev *dev)
+int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint16_t index;
-    uint16_t temp_len = len + dev->dummy_byte;
-    uint8_t temp_buff[temp_len];
 
     /* Check for null pointer in the device structure */
     rslt = null_ptr_check(dev);
@@ -662,6 +735,9 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
     /* Proceed if null check is fine */
     if ((rslt == BMA400_OK) && (reg_data != NULL))
     {
+        uint32_t temp_len = len + dev->dummy_byte;
+        uint8_t temp_buff[temp_len];
+
         if (dev->intf != BMA400_I2C_INTF)
         {
             /* If interface selected is SPI */
@@ -669,8 +745,8 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
         }
 
         /* Read the data from the reg_addr */
-        rslt = dev->read(dev->dev_id, reg_addr, temp_buff, temp_len);
-        if (rslt == BMA400_OK)
+        dev->intf_rslt = dev->read(reg_addr, temp_buff, temp_len, dev->intf_ptr);
+        if (dev->intf_rslt == BMA400_INTF_RET_SUCCESS)
         {
             for (index = 0; index < len; index++)
             {
@@ -681,7 +757,7 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
                 reg_data[index] = temp_buff[index + dev->dummy_byte];
             }
         }
-        if (rslt != BMA400_OK)
+        else
         {
             /* Failure case */
             rslt = BMA400_E_COM_FAIL;
@@ -695,7 +771,7 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint8_t len, const s
     return rslt;
 }
 
-int8_t bma400_soft_reset(const struct bma400_dev *dev)
+int8_t bma400_soft_reset(struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data = BMA400_SOFT_RESET_CMD;
@@ -705,8 +781,8 @@ int8_t bma400_soft_reset(const struct bma400_dev *dev)
     if (rslt == BMA400_OK)
     {
         /* Reset the device */
-        rslt = bma400_set_regs(BMA400_COMMAND_REG_ADDR, &data, 1, dev);
-        dev->delay_ms(BMA400_SOFT_RESET_DELAY_MS);
+        rslt = bma400_set_regs(BMA400_REG_COMMAND, &data, 1, dev);
+        dev->delay_us(BMA400_DELAY_US_SOFT_RESET, dev->intf_ptr);
         if ((rslt == BMA400_OK) && (dev->intf == BMA400_SPI_INTF))
         {
             /* Dummy read of 0x7F register to enable SPI Interface
@@ -719,7 +795,7 @@ int8_t bma400_soft_reset(const struct bma400_dev *dev)
     return rslt;
 }
 
-int8_t bma400_set_power_mode(uint8_t power_mode, const struct bma400_dev *dev)
+int8_t bma400_set_power_mode(uint8_t power_mode, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data = 0;
@@ -727,32 +803,33 @@ int8_t bma400_set_power_mode(uint8_t power_mode, const struct bma400_dev *dev)
     rslt = null_ptr_check(dev);
     if (rslt == BMA400_OK)
     {
-        rslt = bma400_get_regs(BMA400_ACCEL_CONFIG_0_ADDR, &reg_data, 1, dev);
+        rslt = bma400_get_regs(BMA400_REG_ACCEL_CONFIG_0, &reg_data, 1, dev);
     }
+
     if (rslt == BMA400_OK)
     {
         reg_data = BMA400_SET_BITS_POS_0(reg_data, BMA400_POWER_MODE, power_mode);
 
         /* Set the power mode of sensor */
-        rslt = bma400_set_regs(BMA400_ACCEL_CONFIG_0_ADDR, &reg_data, 1, dev);
-        if (power_mode == BMA400_LOW_POWER_MODE)
+        rslt = bma400_set_regs(BMA400_REG_ACCEL_CONFIG_0, &reg_data, 1, dev);
+        if (power_mode == BMA400_MODE_LOW_POWER)
         {
             /* A delay of 1/ODR is required to switch power modes
              * Low power mode has 25Hz frequency and hence it needs
              * 40ms delay to enter low power mode
              */
-            dev->delay_ms(40);
+            dev->delay_us(40000, dev->intf_ptr);
         }
         else
         {
-            dev->delay_ms(10); /* TBC */
+            dev->delay_us(10000, dev->intf_ptr); /* TBC */
         }
     }
 
     return rslt;
 }
 
-int8_t bma400_get_power_mode(uint8_t *power_mode, const struct bma400_dev *dev)
+int8_t bma400_get_power_mode(uint8_t *power_mode, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data;
@@ -761,16 +838,20 @@ int8_t bma400_get_power_mode(uint8_t *power_mode, const struct bma400_dev *dev)
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (power_mode != NULL))
     {
-        rslt = bma400_get_regs(BMA400_STATUS_ADDR, &reg_data, 1, dev);
+        rslt = bma400_get_regs(BMA400_REG_STATUS, &reg_data, 1, dev);
         *power_mode = BMA400_GET_BITS(reg_data, BMA400_POWER_MODE_STATUS);
+    }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
     }
 
     return rslt;
 }
 
-int8_t bma400_get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, const struct bma400_dev *dev)
+int8_t bma400_get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, struct bma400_dev *dev)
 {
     int8_t rslt;
 
@@ -778,7 +859,7 @@ int8_t bma400_get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if ((rslt == BMA400_OK) || (accel != NULL))
+    if ((rslt == BMA400_OK) && (accel != NULL))
     {
         /* Read and store the accel data */
         rslt = get_accel_data(data_sel, accel, dev);
@@ -791,7 +872,7 @@ int8_t bma400_get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
     return rslt;
 }
 
-int8_t bma400_set_sensor_conf(const struct bma400_sensor_conf *conf, uint16_t n_sett, const struct bma400_dev *dev)
+int8_t bma400_set_sensor_conf(const struct bma400_sensor_conf *conf, uint16_t n_sett, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint16_t idx = 0;
@@ -801,252 +882,131 @@ int8_t bma400_set_sensor_conf(const struct bma400_sensor_conf *conf, uint16_t n_
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (conf != NULL))
     {
         /* Read the interrupt pin mapping configurations */
-        rslt = bma400_get_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
+        rslt = bma400_get_regs(BMA400_REG_INT_MAP, data_array, 3, dev);
         if (rslt == BMA400_OK)
         {
-            for (idx = 0; idx < n_sett; idx++)
+            for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
             {
-                switch (conf[idx].type)
-                {
-                    case BMA400_ACCEL:
-
-                        /* Setting Accel configurations */
-                        rslt = set_accel_conf(&conf[idx].param.accel, dev);
-                        if (rslt == BMA400_OK)
-                        {
-                            /* Int pin mapping settings */
-                            map_int_pin(data_array, BMA400_DATA_READY_INT_MAP, conf[idx].param.accel.int_chan);
-                        }
-                        break;
-                    case BMA400_TAP_INT:
-
-                        /* Setting TAP configurations */
-                        rslt = set_tap_conf(&conf[idx].param.tap, dev);
-                        if (rslt == BMA400_OK)
-                        {
-                            /* Int pin mapping settings */
-                            map_int_pin(data_array, BMA400_TAP_INT_MAP, conf[idx].param.tap.int_chan);
-                        }
-                        break;
-                    case BMA400_ACTIVITY_CHANGE_INT:
-
-                        /* Setting activity change config */
-                        rslt = set_activity_change_conf(&conf[idx].param.act_ch, dev);
-                        if (rslt == BMA400_OK)
-                        {
-                            /* Int pin mapping settings */
-                            map_int_pin(data_array, BMA400_ACT_CH_INT_MAP, conf[idx].param.act_ch.int_chan);
-                        }
-                        break;
-                    case BMA400_GEN1_INT:
-
-                        /* Setting Generic int 1 config */
-                        rslt = set_gen1_int(&conf[idx].param.gen_int, dev);
-                        if (rslt == BMA400_OK)
-                        {
-                            /* Int pin mapping settings */
-                            map_int_pin(data_array, BMA400_GEN1_INT_MAP, conf[idx].param.gen_int.int_chan);
-                        }
-                        break;
-                    case BMA400_GEN2_INT:
-
-                        /* Setting Generic int 2 config */
-                        rslt = set_gen2_int(&conf[idx].param.gen_int, dev);
-                        if (rslt == BMA400_OK)
-                        {
-                            /* Int pin mapping settings */
-                            map_int_pin(data_array, BMA400_GEN2_INT_MAP, conf[idx].param.gen_int.int_chan);
-                        }
-                        break;
-                    case BMA400_ORIENT_CHANGE_INT:
-
-                        /* Setting orient int config */
-                        rslt = set_orient_int(&conf[idx].param.orient, dev);
-                        if (rslt == BMA400_OK)
-                        {
-                            /* Int pin mapping settings */
-                            map_int_pin(data_array, BMA400_ORIENT_CH_INT_MAP, conf[idx].param.orient.int_chan);
-                        }
-                        break;
-                    case BMA400_STEP_COUNTER_INT:
-
-                        /* Int pin mapping settings */
-                        map_int_pin(data_array, BMA400_STEP_INT_MAP, conf[idx].param.step_cnt.int_chan);
-                        break;
-                }
+                rslt = set_sensor_conf(data_array, conf + idx, dev);
             }
+
             if (rslt == BMA400_OK)
             {
                 /* Set the interrupt pin mapping configurations */
-                rslt = bma400_set_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
+                rslt = bma400_set_regs(BMA400_REG_INT_MAP, data_array, 3, dev);
             }
         }
+    }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
     }
 
     return rslt;
 }
 
-int8_t bma400_get_sensor_conf(struct bma400_sensor_conf *conf, uint16_t n_sett, const struct bma400_dev *dev)
+int8_t bma400_get_sensor_conf(struct bma400_sensor_conf *conf, uint16_t n_sett, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint16_t idx;
     uint8_t data_array[3] = { 0 };
 
-    if (conf == NULL)
+    /* Check for null pointer in the device structure */
+    rslt = null_ptr_check(dev);
+
+    if ((rslt == BMA400_OK) && (conf != NULL))
+    {
+        /* Read the interrupt pin mapping configurations */
+        rslt = bma400_get_regs(BMA400_REG_INT_MAP, data_array, 3, dev);
+
+        for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
+        {
+            rslt = get_sensor_conf(data_array, conf + idx, dev);
+        }
+    }
+    else
     {
         rslt = BMA400_E_NULL_PTR;
-
-        return rslt;
-    }
-
-    /* Read the interrupt pin mapping configurations */
-    rslt = bma400_get_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
-
-    for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
-    {
-        switch (conf[idx].type)
-        {
-            case BMA400_ACCEL:
-
-                /* Accel configuration settings */
-                rslt = get_accel_conf(&conf[idx].param.accel, dev);
-                if (rslt == BMA400_OK)
-                {
-                    /* Get the INT pin mapping */
-                    get_int_pin_map(data_array, BMA400_DATA_READY_INT_MAP, &conf[idx].param.accel.int_chan);
-                }
-                break;
-            case BMA400_TAP_INT:
-
-                /* TAP configuration settings */
-                rslt = get_tap_conf(&conf[idx].param.tap, dev);
-                if (rslt == BMA400_OK)
-                {
-                    /* Get the INT pin mapping */
-                    get_int_pin_map(data_array, BMA400_TAP_INT_MAP, &conf[idx].param.tap.int_chan);
-                }
-                break;
-            case BMA400_ACTIVITY_CHANGE_INT:
-
-                /* Activity change configurations */
-                rslt = get_activity_change_conf(&conf[idx].param.act_ch, dev);
-                if (rslt == BMA400_OK)
-                {
-                    /* Get the INT pin mapping */
-                    get_int_pin_map(data_array, BMA400_ACT_CH_INT_MAP, &conf[idx].param.act_ch.int_chan);
-                }
-                break;
-            case BMA400_GEN1_INT:
-
-                /* Generic int1 configurations */
-                rslt = get_gen1_int(&conf[idx].param.gen_int, dev);
-                if (rslt == BMA400_OK)
-                {
-                    /* Get the INT pin mapping */
-                    get_int_pin_map(data_array, BMA400_GEN1_INT_MAP, &conf[idx].param.gen_int.int_chan);
-                }
-                break;
-            case BMA400_GEN2_INT:
-
-                /* Generic int2 configurations */
-                rslt = get_gen2_int(&conf[idx].param.gen_int, dev);
-                if (rslt == BMA400_OK)
-                {
-                    /* Get the INT pin mapping */
-                    get_int_pin_map(data_array, BMA400_GEN2_INT_MAP, &conf[idx].param.gen_int.int_chan);
-                }
-                break;
-            case BMA400_ORIENT_CHANGE_INT:
-
-                /* Orient int configurations */
-                rslt = get_orient_int(&conf[idx].param.orient, dev);
-                if (rslt == BMA400_OK)
-                {
-                    /* Get the INT pin mapping */
-                    get_int_pin_map(data_array, BMA400_ORIENT_CH_INT_MAP, &conf[idx].param.orient.int_chan);
-                }
-                break;
-            case BMA400_STEP_COUNTER_INT:
-
-                /* Get int pin mapping settings */
-                get_int_pin_map(data_array, BMA400_STEP_INT_MAP, &conf[idx].param.step_cnt.int_chan);
-                break;
-            default:
-                rslt = BMA400_E_INVALID_CONFIG;
-        }
     }
 
     return rslt;
 }
 
-int8_t bma400_set_device_conf(const struct bma400_device_conf *conf, uint8_t n_sett, const struct bma400_dev *dev)
+int8_t bma400_set_device_conf(const struct bma400_device_conf *conf, uint8_t n_sett, struct bma400_dev *dev)
 {
-    int8_t rslt = BMA400_OK;
+    int8_t rslt;
     uint16_t idx;
     uint8_t data_array[3] = { 0 };
 
-    if (conf == NULL)
+    /* Check for null pointer in the device structure */
+    rslt = null_ptr_check(dev);
+
+    if ((rslt == BMA400_OK) && (conf != NULL))
     {
-        rslt = BMA400_E_NULL_PTR;
 
-        return rslt;
-    }
+        /* Read the interrupt pin mapping configurations */
+        rslt = bma400_get_regs(BMA400_REG_INT_MAP, data_array, 3, dev);
 
-    /* Read the interrupt pin mapping configurations */
-    rslt = bma400_get_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
-
-    for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
-    {
-        switch (conf[idx].type)
+        for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
         {
-            case BMA400_AUTOWAKEUP_TIMEOUT:
-                rslt = set_autowakeup_timeout(&conf[idx].param.auto_wakeup, dev);
-                break;
-            case BMA400_AUTOWAKEUP_INT:
-                rslt = set_autowakeup_interrupt(&conf[idx].param.wakeup, dev);
-                if (rslt == BMA400_OK)
-                {
-                    /* Interrupt pin mapping */
-                    map_int_pin(data_array, BMA400_WAKEUP_INT_MAP, conf[idx].param.wakeup.int_chan);
-                }
-                break;
-            case BMA400_AUTO_LOW_POWER:
-                rslt = set_auto_low_power(&conf[idx].param.auto_lp, dev);
-                break;
-            case BMA400_INT_PIN_CONF:
-                rslt = set_int_pin_conf(conf[idx].param.int_conf, dev);
-                break;
-            case BMA400_INT_OVERRUN_CONF:
+            switch (conf[idx].type)
+            {
+                case BMA400_AUTOWAKEUP_TIMEOUT:
+                    rslt = set_autowakeup_timeout(&conf[idx].param.auto_wakeup, dev);
+                    break;
+                case BMA400_AUTOWAKEUP_INT:
+                    rslt = set_autowakeup_interrupt(&conf[idx].param.wakeup, dev);
+                    if (rslt == BMA400_OK)
+                    {
+                        /* Interrupt pin mapping */
+                        map_int_pin(data_array, BMA400_WAKEUP_INT_MAP, conf[idx].param.wakeup.int_chan);
+                    }
 
-                /* Interrupt pin mapping */
-                map_int_pin(data_array, BMA400_INT_OVERRUN_MAP, conf[idx].param.overrun_int.int_chan);
-                break;
-            case BMA400_FIFO_CONF:
-                rslt = set_fifo_conf(&conf[idx].param.fifo_conf, dev);
-                if (rslt == BMA400_OK)
-                {
+                    break;
+                case BMA400_AUTO_LOW_POWER:
+                    rslt = set_auto_low_power(&conf[idx].param.auto_lp, dev);
+                    break;
+                case BMA400_INT_PIN_CONF:
+                    rslt = set_int_pin_conf(conf[idx].param.int_conf, dev);
+                    break;
+                case BMA400_INT_OVERRUN_CONF:
+
                     /* Interrupt pin mapping */
-                    map_int_pin(data_array, BMA400_FIFO_WM_INT_MAP, conf[idx].param.fifo_conf.fifo_wm_channel);
-                    map_int_pin(data_array, BMA400_FIFO_FULL_INT_MAP, conf[idx].param.fifo_conf.fifo_full_channel);
-                }
-                break;
-            default:
-                rslt = BMA400_E_INVALID_CONFIG;
+                    map_int_pin(data_array, BMA400_INT_OVERRUN_MAP, conf[idx].param.overrun_int.int_chan);
+                    break;
+                case BMA400_FIFO_CONF:
+                    rslt = set_fifo_conf(&conf[idx].param.fifo_conf, dev);
+                    if (rslt == BMA400_OK)
+                    {
+                        /* Interrupt pin mapping */
+                        map_int_pin(data_array, BMA400_FIFO_WM_INT_MAP, conf[idx].param.fifo_conf.fifo_wm_channel);
+                        map_int_pin(data_array, BMA400_FIFO_FULL_INT_MAP, conf[idx].param.fifo_conf.fifo_full_channel);
+                    }
+
+                    break;
+                default:
+                    rslt = BMA400_E_INVALID_CONFIG;
+            }
+        }
+
+        if (rslt == BMA400_OK)
+        {
+            /* Set the interrupt pin mapping configurations */
+            rslt = bma400_set_regs(BMA400_REG_INT_MAP, data_array, 3, dev);
         }
     }
-    if (rslt == BMA400_OK)
+    else
     {
-        /* Set the interrupt pin mapping configurations */
-        rslt = bma400_set_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
+        rslt = BMA400_E_NULL_PTR;
     }
 
     return rslt;
 }
 
-int8_t bma400_get_device_conf(struct bma400_device_conf *conf, uint8_t n_sett, const struct bma400_dev *dev)
+int8_t bma400_get_device_conf(struct bma400_device_conf *conf, uint8_t n_sett, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint16_t idx = 0;
@@ -1056,57 +1016,59 @@ int8_t bma400_get_device_conf(struct bma400_device_conf *conf, uint8_t n_sett, c
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (conf != NULL))
     {
         /* Read the interrupt pin mapping configurations */
-        rslt = bma400_get_regs(BMA400_INT_MAP_ADDR, data_array, 3, dev);
-        if (rslt == BMA400_OK)
+        rslt = bma400_get_regs(BMA400_REG_INT_MAP, data_array, 3, dev);
+
+        for (idx = 0; (idx < n_sett) && (rslt == BMA400_OK); idx++)
         {
-            for (idx = 0; idx < n_sett; idx++)
+            switch (conf[idx].type)
             {
-                switch (conf[idx].type)
-                {
-                    case BMA400_AUTOWAKEUP_TIMEOUT:
-                        rslt = get_autowakeup_timeout(&conf[idx].param.auto_wakeup, dev);
-                        break;
-                    case BMA400_AUTOWAKEUP_INT:
-                        rslt = get_autowakeup_interrupt(&conf[idx].param.wakeup, dev);
-                        if (rslt == BMA400_OK)
-                        {
-                            /* Get the INT pin mapping */
-                            get_int_pin_map(data_array, BMA400_WAKEUP_INT_MAP, &conf[idx].param.wakeup.int_chan);
-                        }
-                        break;
-                    case BMA400_AUTO_LOW_POWER:
-                        rslt = get_auto_low_power(&conf[idx].param.auto_lp, dev);
-                        break;
-                    case BMA400_INT_PIN_CONF:
-                        rslt = get_int_pin_conf(&conf[idx].param.int_conf, dev);
-                        break;
-                    case BMA400_INT_OVERRUN_CONF:
-                        get_int_pin_map(data_array, BMA400_INT_OVERRUN_MAP, &conf[idx].param.overrun_int.int_chan);
-                        break;
-                    case BMA400_FIFO_CONF:
-                        rslt = get_fifo_conf(&conf[idx].param.fifo_conf, dev);
-                        if (rslt == BMA400_OK)
-                        {
-                            get_int_pin_map(data_array,
-                                            BMA400_FIFO_FULL_INT_MAP,
-                                            &conf[idx].param.fifo_conf.fifo_full_channel);
-                            get_int_pin_map(data_array,
-                                            BMA400_FIFO_WM_INT_MAP,
-                                            &conf[idx].param.fifo_conf.fifo_wm_channel);
-                        }
-                        break;
-                }
+                case BMA400_AUTOWAKEUP_TIMEOUT:
+                    rslt = get_autowakeup_timeout(&conf[idx].param.auto_wakeup, dev);
+                    break;
+                case BMA400_AUTOWAKEUP_INT:
+                    rslt = get_autowakeup_interrupt(&conf[idx].param.wakeup, dev);
+                    if (rslt == BMA400_OK)
+                    {
+                        /* Get the INT pin mapping */
+                        get_int_pin_map(data_array, BMA400_WAKEUP_INT_MAP, &conf[idx].param.wakeup.int_chan);
+                    }
+
+                    break;
+                case BMA400_AUTO_LOW_POWER:
+                    rslt = get_auto_low_power(&conf[idx].param.auto_lp, dev);
+                    break;
+                case BMA400_INT_PIN_CONF:
+                    rslt = get_int_pin_conf(&conf[idx].param.int_conf, dev);
+                    break;
+                case BMA400_INT_OVERRUN_CONF:
+                    get_int_pin_map(data_array, BMA400_INT_OVERRUN_MAP, &conf[idx].param.overrun_int.int_chan);
+                    break;
+                case BMA400_FIFO_CONF:
+                    rslt = get_fifo_conf(&conf[idx].param.fifo_conf, dev);
+                    if (rslt == BMA400_OK)
+                    {
+                        get_int_pin_map(data_array,
+                                        BMA400_FIFO_FULL_INT_MAP,
+                                        &conf[idx].param.fifo_conf.fifo_full_channel);
+                        get_int_pin_map(data_array, BMA400_FIFO_WM_INT_MAP, &conf[idx].param.fifo_conf.fifo_wm_channel);
+                    }
+
+                    break;
             }
         }
+    }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
     }
 
     return rslt;
 }
 
-int8_t bma400_get_interrupt_status(uint16_t *int_status, const struct bma400_dev *dev)
+int8_t bma400_get_interrupt_status(uint16_t *int_status, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data[3];
@@ -1115,20 +1077,24 @@ int8_t bma400_get_interrupt_status(uint16_t *int_status, const struct bma400_dev
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (int_status != NULL))
     {
         /* Read the interrupt status registers */
-        rslt = bma400_get_regs(BMA400_INT_STAT0_ADDR, reg_data, 3, dev);
+        rslt = bma400_get_regs(BMA400_REG_INT_STAT0, reg_data, 3, dev);
         reg_data[1] = BMA400_SET_BITS(reg_data[1], BMA400_INT_STATUS, reg_data[2]);
 
         /* Concatenate the interrupt status to the output */
         *int_status = ((uint16_t)reg_data[1] << 8) | reg_data[0];
     }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
+    }
 
     return rslt;
 }
 
-int8_t bma400_set_step_counter_param(uint8_t *sccr_conf, const struct bma400_dev *dev)
+int8_t bma400_set_step_counter_param(const uint8_t *sccr_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
 
@@ -1136,35 +1102,52 @@ int8_t bma400_set_step_counter_param(uint8_t *sccr_conf, const struct bma400_dev
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (sccr_conf != NULL))
     {
         /* Set the step counter parameters in the sensor */
-        rslt = bma400_set_regs(0x59, sccr_conf, 25, dev);
+        rslt = bma400_set_regs(0x59, sccr_conf, 24, dev);
+    }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
     }
 
     return rslt;
 }
 
-int8_t bma400_get_steps_counted(uint32_t *step_count, uint8_t *activity_data, const struct bma400_dev *dev)
+int8_t bma400_get_steps_counted(uint32_t *step_count, uint8_t *activity_data, struct bma400_dev *dev)
 {
     int8_t rslt;
-    uint8_t data_arrray[4];
+    uint8_t data_array[4];
+
+    uint32_t step_count_0 = 0;
+    uint32_t step_count_1 = 0;
+    uint32_t step_count_2 = 0;
 
     /* Check for null pointer in the device structure*/
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (step_count != NULL) && (activity_data != NULL))
     {
-        rslt = bma400_get_regs(BMA400_STEP_CNT_0_ADDR, data_arrray, 4, dev);
-        *step_count = ((uint32_t)data_arrray[2] << 16) | ((uint16_t)data_arrray[1] << 8) | data_arrray[0];
-        *activity_data = data_arrray[3];
+        rslt = bma400_get_regs(BMA400_REG_STEP_CNT_0, data_array, 4, dev);
+
+        step_count_0 = (uint32_t)data_array[0];
+        step_count_1 = (uint32_t)data_array[1] << 8;
+        step_count_2 = (uint32_t)data_array[2] << 16;
+        *step_count = step_count_0 | step_count_1 | step_count_2;
+
+        *activity_data = data_array[3];
+    }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
     }
 
     return rslt;
 }
 
-int8_t bma400_get_temperature_data(int16_t *temperature_data, const struct bma400_dev *dev)
+int8_t bma400_get_temperature_data(int16_t *temperature_data, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data;
@@ -1173,18 +1156,22 @@ int8_t bma400_get_temperature_data(int16_t *temperature_data, const struct bma40
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (temperature_data != NULL))
     {
-        rslt = bma400_get_regs(BMA400_TEMP_DATA_ADDR, &reg_data, 1, dev);
+        rslt = bma400_get_regs(BMA400_REG_TEMP_DATA, &reg_data, 1, dev);
 
         /* Temperature data calculations */
-        *temperature_data = (((int16_t)((int8_t)reg_data)) - 2) * 5 + 250;
+        *temperature_data = (int16_t)(((int8_t)reg_data) * 5) + 230;
+    }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
     }
 
     return rslt;
 }
 
-int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8_t n_sett, const struct bma400_dev *dev)
+int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8_t n_sett, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t idx = 0;
@@ -1195,9 +1182,9 @@ int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (int_select != NULL))
     {
-        rslt = bma400_get_regs(BMA400_INT_CONF_0_ADDR, reg_data, 2, dev);
+        rslt = bma400_get_regs(BMA400_REG_INT_CONF_0, reg_data, 2, dev);
         if (rslt == BMA400_OK)
         {
             for (idx = 0; idx < n_sett; idx++)
@@ -1241,12 +1228,13 @@ int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8
                         int_select[idx].conf = BMA400_GET_BITS_POS_0(reg_data[1], BMA400_EN_STEP_INT);
                         break;
                     case BMA400_AUTO_WAKEUP_EN:
-                        rslt = bma400_get_regs(BMA400_AUTOWAKEUP_1_ADDR, &wkup_int, 1, dev);
+                        rslt = bma400_get_regs(BMA400_REG_AUTOWAKEUP_1, &wkup_int, 1, dev);
                         if (rslt == BMA400_OK)
                         {
                             /* Auto-Wakeup int status */
                             int_select[idx].conf = BMA400_GET_BITS(wkup_int, BMA400_WAKEUP_INTERRUPT);
                         }
+
                         break;
                     default:
                         rslt = BMA400_E_INVALID_CONFIG;
@@ -1255,11 +1243,15 @@ int8_t bma400_get_interrupts_enabled(struct bma400_int_enable *int_select, uint8
             }
         }
     }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
+    }
 
     return rslt;
 }
 
-int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8_t n_sett, const struct bma400_dev *dev)
+int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8_t n_sett, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t conf, idx = 0;
@@ -1269,9 +1261,9 @@ int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (int_select != NULL))
     {
-        rslt = bma400_get_regs(BMA400_INT_CONF_0_ADDR, reg_data, 2, dev);
+        rslt = bma400_get_regs(BMA400_REG_INT_CONF_0, reg_data, 2, dev);
         if (rslt == BMA400_OK)
         {
             for (idx = 0; idx < n_sett; idx++)
@@ -1322,18 +1314,23 @@ int8_t bma400_enable_interrupt(const struct bma400_int_enable *int_select, uint8
                         break;
                 }
             }
+
             if (rslt == BMA400_OK)
             {
                 /* Set the configurations in the sensor */
-                rslt = bma400_set_regs(BMA400_INT_CONF_0_ADDR, reg_data, 2, dev);
+                rslt = bma400_set_regs(BMA400_REG_INT_CONF_0, reg_data, 2, dev);
             }
         }
+    }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
     }
 
     return rslt;
 }
 
-int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, const struct bma400_dev *dev)
+int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data;
@@ -1344,7 +1341,7 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, const struct bma400_d
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (fifo != NULL))
     {
         /* Resetting the FIFO data byte index */
         fifo->accel_byte_start_idx = 0;
@@ -1355,7 +1352,7 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, const struct bma400_d
         {
             /* Get the FIFO configurations
              * from the sensor */
-            rslt = bma400_get_regs(BMA400_FIFO_CONFIG_0_ADDR, &data, 1, dev);
+            rslt = bma400_get_regs(BMA400_REG_FIFO_CONFIG_0, &data, 1, dev);
             if (rslt == BMA400_OK)
             {
                 /* Get the data from FIFO_CONFIG0 register */
@@ -1388,6 +1385,10 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, const struct bma400_d
             }
         }
     }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
+    }
 
     return rslt;
 }
@@ -1403,16 +1404,20 @@ int8_t bma400_extract_accel(struct bma400_fifo_data *fifo,
     rslt = null_ptr_check(dev);
 
     /* Proceed if null check is fine */
-    if (rslt == BMA400_OK)
+    if ((rslt == BMA400_OK) && (fifo != NULL) && (accel_data != NULL) && (frame_count != NULL))
     {
         /* Parse the FIFO data */
         unpack_accel_frame(fifo, accel_data, frame_count, dev);
+    }
+    else
+    {
+        rslt = BMA400_E_NULL_PTR;
     }
 
     return rslt;
 }
 
-int8_t bma400_set_fifo_flush(const struct bma400_dev *dev)
+int8_t bma400_set_fifo_flush(struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data = BMA400_FIFO_FLUSH_CMD;
@@ -1424,13 +1429,13 @@ int8_t bma400_set_fifo_flush(const struct bma400_dev *dev)
     if (rslt == BMA400_OK)
     {
         /* FIFO flush command is set */
-        rslt = bma400_set_regs(BMA400_COMMAND_REG_ADDR, &data, 1, dev);
+        rslt = bma400_set_regs(BMA400_REG_COMMAND, &data, 1, dev);
     }
 
     return rslt;
 }
 
-int8_t bma400_perform_self_test(const struct bma400_dev *dev)
+int8_t bma400_perform_self_test(struct bma400_dev *dev)
 {
     int8_t rslt;
     int8_t self_test_rslt = 0;
@@ -1460,7 +1465,7 @@ int8_t bma400_perform_self_test(const struct bma400_dev *dev)
     }
 
     /* Check to ensure bus error does not occur */
-    if (rslt >= BMA400_OK)
+    if (rslt <= BMA400_OK)
     {
         /* Store the status of self test result */
         self_test_rslt = rslt;
@@ -1479,12 +1484,15 @@ int8_t bma400_perform_self_test(const struct bma400_dev *dev)
     return rslt;
 }
 
-/*****************************INTERNAL APIs***********************************************/
+/************************************************************************************/
+/*********************** Static function definitions **********************************/
+/************************************************************************************/
+
 static int8_t null_ptr_check(const struct bma400_dev *dev)
 {
     int8_t rslt;
 
-    if ((dev == NULL) || (dev->read == NULL) || (dev->write == NULL) || (dev->delay_ms == NULL))
+    if ((dev == NULL) || (dev->read == NULL) || (dev->write == NULL) || (dev->intf_ptr == NULL))
     {
         /* Device structure pointer is not valid */
         rslt = BMA400_E_NULL_PTR;
@@ -1498,7 +1506,147 @@ static int8_t null_ptr_check(const struct bma400_dev *dev)
     return rslt;
 }
 
-static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, const struct bma400_dev *dev)
+static int8_t set_sensor_conf(uint8_t *data, const struct bma400_sensor_conf *conf, struct bma400_dev *dev)
+{
+    int8_t rslt = BMA400_E_INVALID_CONFIG;
+    uint8_t int_enable = 0;
+    enum bma400_int_chan int_map = BMA400_UNMAP_INT_PIN;
+
+    if (BMA400_ACCEL == conf->type)
+    {
+        /* Setting Accel configurations */
+        rslt = set_accel_conf(&conf->param.accel, dev);
+        int_enable = BMA400_DATA_READY_INT_MAP;
+        int_map = conf->param.accel.int_chan;
+    }
+
+    if (BMA400_TAP_INT == conf->type)
+    {
+        /* Setting tap configurations */
+        rslt = set_tap_conf(&conf->param.tap, dev);
+        int_enable = BMA400_TAP_INT_MAP;
+        int_map = conf->param.tap.int_chan;
+    }
+
+    if (BMA400_ACTIVITY_CHANGE_INT == conf->type)
+    {
+        /* Setting activity change configurations */
+        rslt = set_activity_change_conf(&conf->param.act_ch, dev);
+        int_enable = BMA400_ACT_CH_INT_MAP;
+        int_map = conf->param.act_ch.int_chan;
+    }
+
+    if (BMA400_GEN1_INT == conf->type)
+    {
+        /* Setting generic int 1 configurations */
+        rslt = set_gen1_int(&conf->param.gen_int, dev);
+        int_enable = BMA400_GEN1_INT_MAP;
+        int_map = conf->param.gen_int.int_chan;
+    }
+
+    if (BMA400_GEN2_INT == conf->type)
+    {
+        /* Setting generic int 2 configurations */
+        rslt = set_gen2_int(&conf->param.gen_int, dev);
+        int_enable = BMA400_GEN2_INT_MAP;
+        int_map = conf->param.gen_int.int_chan;
+    }
+
+    if (BMA400_ORIENT_CHANGE_INT == conf->type)
+    {
+        /* Setting orient int configurations */
+        rslt = set_orient_int(&conf->param.orient, dev);
+        int_enable = BMA400_ORIENT_CH_INT_MAP;
+        int_map = conf->param.orient.int_chan;
+    }
+
+    if (BMA400_STEP_COUNTER_INT == conf->type)
+    {
+        rslt = BMA400_OK;
+        int_enable = BMA400_STEP_INT_MAP;
+        int_map = conf->param.step_cnt.int_chan;
+    }
+
+    if (rslt == BMA400_OK)
+    {
+        /* Int pin mapping settings */
+        map_int_pin(data, int_enable, int_map);
+    }
+
+    return rslt;
+}
+
+static int8_t get_sensor_conf(const uint8_t *data, struct bma400_sensor_conf *conf, struct bma400_dev *dev)
+{
+    int8_t rslt = BMA400_E_INVALID_CONFIG;
+    uint8_t int_enable = 0;
+    enum bma400_int_chan int_map = BMA400_UNMAP_INT_PIN;
+
+    if (BMA400_ACCEL == conf->type)
+    {
+        /* Get Accel configurations */
+        rslt = get_accel_conf(&conf->param.accel, dev);
+        int_enable = BMA400_DATA_READY_INT_MAP;
+        int_map = conf->param.accel.int_chan;
+    }
+
+    if (BMA400_TAP_INT == conf->type)
+    {
+        /* Get tap configurations */
+        rslt = get_tap_conf(&conf->param.tap, dev);
+        int_enable = BMA400_TAP_INT_MAP;
+        int_map = conf->param.tap.int_chan;
+    }
+
+    if (BMA400_ACTIVITY_CHANGE_INT == conf->type)
+    {
+        /* Get activity change configurations */
+        rslt = get_activity_change_conf(&conf->param.act_ch, dev);
+        int_enable = BMA400_ACT_CH_INT_MAP;
+        int_map = conf->param.act_ch.int_chan;
+    }
+
+    if (BMA400_GEN1_INT == conf->type)
+    {
+        /* Get generic int 1 configurations */
+        rslt = get_gen1_int(&conf->param.gen_int, dev);
+        int_enable = BMA400_GEN1_INT_MAP;
+        int_map = conf->param.gen_int.int_chan;
+    }
+
+    if (BMA400_GEN2_INT == conf->type)
+    {
+        /* Get generic int 2 configurations */
+        rslt = get_gen2_int(&conf->param.gen_int, dev);
+        int_enable = BMA400_GEN2_INT_MAP;
+        int_map = conf->param.gen_int.int_chan;
+    }
+
+    if (BMA400_ORIENT_CHANGE_INT == conf->type)
+    {
+        /* Get orient int configurations */
+        rslt = get_orient_int(&conf->param.orient, dev);
+        int_enable = BMA400_ORIENT_CH_INT_MAP;
+        int_map = conf->param.orient.int_chan;
+    }
+
+    if (BMA400_STEP_COUNTER_INT == conf->type)
+    {
+        rslt = BMA400_OK;
+        int_enable = BMA400_STEP_INT_MAP;
+        int_map = conf->param.step_cnt.int_chan;
+    }
+
+    if (rslt == BMA400_OK)
+    {
+        /* Int pin mapping settings */
+        get_int_pin_map(data, int_enable, &int_map);
+    }
+
+    return rslt;
+}
+
+static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[3] = { 0, 0, 0xE0 };
@@ -1506,7 +1654,7 @@ static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, const str
     /* Update the accel configurations from the user structure
      * accel_conf
      */
-    rslt = bma400_get_regs(BMA400_ACCEL_CONFIG_0_ADDR, data_array, 3, dev);
+    rslt = bma400_get_regs(BMA400_REG_ACCEL_CONFIG_0, data_array, 3, dev);
     if (rslt == BMA400_OK)
     {
         data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_FILT_1_BW, accel_conf->filt1_bw);
@@ -1517,18 +1665,18 @@ static int8_t set_accel_conf(const struct bma400_acc_conf *accel_conf, const str
         data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_DATA_FILTER, accel_conf->data_src);
 
         /* Set the accel configurations in the sensor */
-        rslt = bma400_set_regs(BMA400_ACCEL_CONFIG_0_ADDR, data_array, 3, dev);
+        rslt = bma400_set_regs(BMA400_REG_ACCEL_CONFIG_0, data_array, 3, dev);
     }
 
     return rslt;
 }
 
-static int8_t get_accel_conf(struct bma400_acc_conf *accel_conf, const struct bma400_dev *dev)
+static int8_t get_accel_conf(struct bma400_acc_conf *accel_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[3];
 
-    rslt = bma400_get_regs(BMA400_ACCEL_CONFIG_0_ADDR, data_array, 3, dev);
+    rslt = bma400_get_regs(BMA400_REG_ACCEL_CONFIG_0, data_array, 3, dev);
     if (rslt == BMA400_OK)
     {
         accel_conf->filt1_bw = BMA400_GET_BITS(data_array[0], BMA400_FILT_1_BW);
@@ -1542,7 +1690,7 @@ static int8_t get_accel_conf(struct bma400_acc_conf *accel_conf, const struct bm
     return rslt;
 }
 
-static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, const struct bma400_dev *dev)
+static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[9] = { 0 };
@@ -1555,18 +1703,19 @@ static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
     if (data_sel == BMA400_DATA_ONLY)
     {
         /* Read the sensor data registers only */
-        rslt = bma400_get_regs(BMA400_ACCEL_DATA_ADDR, data_array, 6, dev);
+        rslt = bma400_get_regs(BMA400_REG_ACCEL_DATA, data_array, 6, dev);
     }
     else if (data_sel == BMA400_DATA_SENSOR_TIME)
     {
         /* Read the sensor data along with sensor time */
-        rslt = bma400_get_regs(BMA400_ACCEL_DATA_ADDR, data_array, 9, dev);
+        rslt = bma400_get_regs(BMA400_REG_ACCEL_DATA, data_array, 9, dev);
     }
     else
     {
         /* Invalid use of "data_sel" */
         rslt = BMA400_E_INVALID_CONFIG;
     }
+
     if (rslt == BMA400_OK)
     {
         lsb = data_array[0];
@@ -1579,6 +1728,7 @@ static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
             /* Computing accel data negative value */
             accel->x = accel->x - 4096;
         }
+
         lsb = data_array[2];
         msb = data_array[3];
 
@@ -1589,6 +1739,7 @@ static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
             /* Computing accel data negative value */
             accel->y = accel->y - 4096;
         }
+
         lsb = data_array[4];
         msb = data_array[5];
 
@@ -1599,11 +1750,13 @@ static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
             /* Computing accel data negative value */
             accel->z = accel->z - 4096;
         }
+
         if (data_sel == BMA400_DATA_ONLY)
         {
             /* Update sensortime as 0 */
             accel->sensortime = 0;
         }
+
         if (data_sel == BMA400_DATA_SENSOR_TIME)
         {
             /* Sensor-time data*/
@@ -1617,14 +1770,14 @@ static int8_t get_accel_data(uint8_t data_sel, struct bma400_sensor_data *accel,
     return rslt;
 }
 
-static int8_t set_autowakeup_timeout(const struct bma400_auto_wakeup_conf *wakeup_conf, const struct bma400_dev *dev)
+static int8_t set_autowakeup_timeout(const struct bma400_auto_wakeup_conf *wakeup_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[2];
     uint8_t lsb;
     uint8_t msb;
 
-    rslt = bma400_get_regs(BMA400_AUTOWAKEUP_1_ADDR, &data_array[1], 1, dev);
+    rslt = bma400_get_regs(BMA400_REG_AUTOWAKEUP_1, &data_array[1], 1, dev);
     if (rslt == BMA400_OK)
     {
         data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_WAKEUP_TIMEOUT, wakeup_conf->wakeup_timeout);
@@ -1638,20 +1791,20 @@ static int8_t set_autowakeup_timeout(const struct bma400_auto_wakeup_conf *wakeu
         /* Set the value in the data_array */
         data_array[0] = msb;
         data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_WAKEUP_TIMEOUT_THRES, lsb);
-        rslt = bma400_set_regs(BMA400_AUTOWAKEUP_0_ADDR, data_array, 2, dev);
+        rslt = bma400_set_regs(BMA400_REG_AUTOWAKEUP_0, data_array, 2, dev);
     }
 
     return rslt;
 }
 
-static int8_t get_autowakeup_timeout(struct bma400_auto_wakeup_conf *wakeup_conf, const struct bma400_dev *dev)
+static int8_t get_autowakeup_timeout(struct bma400_auto_wakeup_conf *wakeup_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[2];
     uint8_t lsb;
     uint8_t msb;
 
-    rslt = bma400_get_regs(BMA400_AUTOWAKEUP_0_ADDR, data_array, 2, dev);
+    rslt = bma400_get_regs(BMA400_REG_AUTOWAKEUP_0, data_array, 2, dev);
     if (rslt == BMA400_OK)
     {
         wakeup_conf->wakeup_timeout = BMA400_GET_BITS(data_array[1], BMA400_WAKEUP_TIMEOUT);
@@ -1665,24 +1818,24 @@ static int8_t get_autowakeup_timeout(struct bma400_auto_wakeup_conf *wakeup_conf
     return rslt;
 }
 
-static int8_t set_auto_wakeup(uint8_t conf, const struct bma400_dev *dev)
+static int8_t set_auto_wakeup(uint8_t conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data;
 
-    rslt = bma400_get_regs(BMA400_AUTOWAKEUP_1_ADDR, &reg_data, 1, dev);
+    rslt = bma400_get_regs(BMA400_REG_AUTOWAKEUP_1, &reg_data, 1, dev);
     if (rslt == BMA400_OK)
     {
         reg_data = BMA400_SET_BITS(reg_data, BMA400_WAKEUP_INTERRUPT, conf);
 
         /* Enabling the Auto wakeup interrupt */
-        rslt = bma400_set_regs(BMA400_AUTOWAKEUP_1_ADDR, &reg_data, 1, dev);
+        rslt = bma400_set_regs(BMA400_REG_AUTOWAKEUP_1, &reg_data, 1, dev);
     }
 
     return rslt;
 }
 
-static int8_t set_autowakeup_interrupt(const struct bma400_wakeup_conf *wakeup_conf, const struct bma400_dev *dev)
+static int8_t set_autowakeup_interrupt(const struct bma400_wakeup_conf *wakeup_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[5] = { 0 };
@@ -1709,17 +1862,17 @@ static int8_t set_autowakeup_interrupt(const struct bma400_wakeup_conf *wakeup_c
     data_array[4] = wakeup_conf->int_wkup_ref_z;
 
     /* Set the wakeup interrupt configurations in the sensor */
-    rslt = bma400_set_regs(BMA400_WAKEUP_INT_CONF_0_ADDR, data_array, 5, dev);
+    rslt = bma400_set_regs(BMA400_REG_WAKEUP_INT_CONF_0, data_array, 5, dev);
 
     return rslt;
 }
 
-static int8_t get_autowakeup_interrupt(struct bma400_wakeup_conf *wakeup_conf, const struct bma400_dev *dev)
+static int8_t get_autowakeup_interrupt(struct bma400_wakeup_conf *wakeup_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[5];
 
-    rslt = bma400_get_regs(BMA400_WAKEUP_INT_CONF_0_ADDR, data_array, 5, dev);
+    rslt = bma400_get_regs(BMA400_REG_WAKEUP_INT_CONF_0, data_array, 5, dev);
     if (rslt == BMA400_OK)
     {
         /* get the wakeup reference update */
@@ -1747,14 +1900,14 @@ static int8_t get_autowakeup_interrupt(struct bma400_wakeup_conf *wakeup_conf, c
     return rslt;
 }
 
-static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf, const struct bma400_dev *dev)
+static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data;
     uint8_t timeout_msb;
     uint8_t timeout_lsb;
 
-    rslt = bma400_get_regs(BMA400_AUTO_LOW_POW_1_ADDR, &reg_data, 1, dev);
+    rslt = bma400_get_regs(BMA400_REG_AUTO_LOW_POW_1, &reg_data, 1, dev);
     if (rslt == BMA400_OK)
     {
         reg_data = BMA400_SET_BITS_POS_0(reg_data, BMA400_AUTO_LOW_POW, auto_lp_conf->auto_low_power_trigger);
@@ -1762,7 +1915,7 @@ static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf,
         /* If auto Low power timeout threshold is enabled */
         if (auto_lp_conf->auto_low_power_trigger & 0x0C)
         {
-            rslt = bma400_get_regs(BMA400_AUTO_LOW_POW_0_ADDR, &timeout_msb, 1, dev);
+            rslt = bma400_get_regs(BMA400_REG_AUTO_LOW_POW_0, &timeout_msb, 1, dev);
             if (rslt == BMA400_OK)
             {
                 /* Compute the timeout threshold MSB value */
@@ -1773,27 +1926,28 @@ static int8_t set_auto_low_power(const struct bma400_auto_lp_conf *auto_lp_conf,
                 reg_data = BMA400_SET_BITS(reg_data, BMA400_AUTO_LP_TIMEOUT_LSB, timeout_lsb);
 
                 /* Set the timeout threshold MSB value */
-                rslt = bma400_set_regs(BMA400_AUTO_LOW_POW_0_ADDR, &timeout_msb, 1, dev);
+                rslt = bma400_set_regs(BMA400_REG_AUTO_LOW_POW_0, &timeout_msb, 1, dev);
             }
         }
+
         if (rslt == BMA400_OK)
         {
             /* Set the Auto low power configurations */
-            rslt = bma400_set_regs(BMA400_AUTO_LOW_POW_1_ADDR, &reg_data, 1, dev);
+            rslt = bma400_set_regs(BMA400_REG_AUTO_LOW_POW_1, &reg_data, 1, dev);
         }
     }
 
     return rslt;
 }
 
-static int8_t get_auto_low_power(struct bma400_auto_lp_conf *auto_lp_conf, const struct bma400_dev *dev)
+static int8_t get_auto_low_power(struct bma400_auto_lp_conf *auto_lp_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[2];
     uint8_t timeout_msb;
     uint8_t timeout_lsb;
 
-    rslt = bma400_get_regs(BMA400_AUTO_LOW_POW_0_ADDR, data_array, 2, dev);
+    rslt = bma400_get_regs(BMA400_REG_AUTO_LOW_POW_0, data_array, 2, dev);
     if (rslt == BMA400_OK)
     {
         /* Get the auto low power trigger */
@@ -1808,12 +1962,12 @@ static int8_t get_auto_low_power(struct bma400_auto_lp_conf *auto_lp_conf, const
     return rslt;
 }
 
-static int8_t set_tap_conf(const struct bma400_tap_conf *tap_set, const struct bma400_dev *dev)
+static int8_t set_tap_conf(const struct bma400_tap_conf *tap_set, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data[2] = { 0, 0 };
 
-    rslt = bma400_get_regs(BMA400_TAP_CONFIG_ADDR, reg_data, 2, dev);
+    rslt = bma400_get_regs(BMA400_REG_TAP_CONFIG, reg_data, 2, dev);
     if (rslt == BMA400_OK)
     {
         /* Set the axis to sense for tap */
@@ -1832,18 +1986,18 @@ static int8_t set_tap_conf(const struct bma400_tap_conf *tap_set, const struct b
         reg_data[1] = BMA400_SET_BITS_POS_0(reg_data[1], BMA400_TAP_TICS_TH, tap_set->tics_th);
 
         /* Set the TAP configuration in the sensor*/
-        rslt = bma400_set_regs(BMA400_TAP_CONFIG_ADDR, reg_data, 2, dev);
+        rslt = bma400_set_regs(BMA400_REG_TAP_CONFIG, reg_data, 2, dev);
     }
 
     return rslt;
 }
 
-static int8_t get_tap_conf(struct bma400_tap_conf *tap_set, const struct bma400_dev *dev)
+static int8_t get_tap_conf(struct bma400_tap_conf *tap_set, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data[2];
 
-    rslt = bma400_get_regs(BMA400_TAP_CONFIG_ADDR, reg_data, 2, dev);
+    rslt = bma400_get_regs(BMA400_REG_TAP_CONFIG, reg_data, 2, dev);
     if (rslt == BMA400_OK)
     {
         /* Get the axis enabled for tap sensing */
@@ -1865,7 +2019,7 @@ static int8_t get_tap_conf(struct bma400_tap_conf *tap_set, const struct bma400_
     return rslt;
 }
 
-static int8_t set_activity_change_conf(const struct bma400_act_ch_conf *act_ch_set, const struct bma400_dev *dev)
+static int8_t set_activity_change_conf(const struct bma400_act_ch_conf *act_ch_set, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[2] = { 0 };
@@ -1885,17 +2039,17 @@ static int8_t set_activity_change_conf(const struct bma400_act_ch_conf *act_ch_s
     data_array[1] = BMA400_SET_BITS_POS_0(data_array[1], BMA400_ACT_CH_NPTS, act_ch_set->act_ch_ntps);
 
     /* Set the Activity change configuration in the sensor*/
-    rslt = bma400_set_regs(BMA400_ACT_CH_CONFIG_0_ADDR, data_array, 2, dev);
+    rslt = bma400_set_regs(BMA400_REG_ACT_CH_CONFIG_0, data_array, 2, dev);
 
     return rslt;
 }
 
-static int8_t get_activity_change_conf(struct bma400_act_ch_conf *act_ch_set, const struct bma400_dev *dev)
+static int8_t get_activity_change_conf(struct bma400_act_ch_conf *act_ch_set, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[2];
 
-    rslt = bma400_get_regs(BMA400_ACT_CH_CONFIG_0_ADDR, data_array, 2, dev);
+    rslt = bma400_get_regs(BMA400_REG_ACT_CH_CONFIG_0, data_array, 2, dev);
     if (rslt == BMA400_OK)
     {
         /* Get the activity change threshold */
@@ -1916,7 +2070,7 @@ static int8_t get_activity_change_conf(struct bma400_act_ch_conf *act_ch_set, co
     return rslt;
 }
 
-static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev)
+static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[11] = { 0 };
@@ -1953,7 +2107,7 @@ static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, const 
     data_array[4] = BMA400_GET_LSB(gen_int_set->gen_int_dur);
 
     /* Handling case of manual reference update */
-    if (gen_int_set->ref_update == BMA400_MANUAL_UPDATE)
+    if (gen_int_set->ref_update == BMA400_UPDATE_MANUAL)
     {
         /* Set the LSB of reference x threshold */
         data_array[5] = BMA400_GET_LSB(gen_int_set->int_thres_ref_x);
@@ -1974,23 +2128,23 @@ static int8_t set_gen1_int(const struct bma400_gen_int_conf *gen_int_set, const 
         data_array[10] = BMA400_GET_MSB(gen_int_set->int_thres_ref_z);
 
         /* Set the GEN1 INT configuration in the sensor */
-        rslt = bma400_set_regs(BMA400_GEN1_INT_CONFIG_ADDR, data_array, 11, dev);
+        rslt = bma400_set_regs(BMA400_REG_GEN1_INT_CONFIG, data_array, 11, dev);
     }
     else
     {
         /* Set the GEN1 INT configuration in the sensor */
-        rslt = bma400_set_regs(BMA400_GEN1_INT_CONFIG_ADDR, data_array, 5, dev);
+        rslt = bma400_set_regs(BMA400_REG_GEN1_INT_CONFIG, data_array, 5, dev);
     }
 
     return rslt;
 }
 
-static int8_t get_gen1_int(struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev)
+static int8_t get_gen1_int(struct bma400_gen_int_conf *gen_int_set, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[11];
 
-    rslt = bma400_get_regs(BMA400_GEN1_INT_CONFIG_ADDR, data_array, 11, dev);
+    rslt = bma400_get_regs(BMA400_REG_GEN1_INT_CONFIG, data_array, 11, dev);
     if (rslt == BMA400_OK)
     {
         /* Get the axes to sense for interrupt */
@@ -2029,7 +2183,7 @@ static int8_t get_gen1_int(struct bma400_gen_int_conf *gen_int_set, const struct
     return rslt;
 }
 
-static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev)
+static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[11] = { 0 };
@@ -2066,7 +2220,7 @@ static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, const 
     data_array[4] = BMA400_GET_LSB(gen_int_set->gen_int_dur);
 
     /* Handling case of manual reference update */
-    if (gen_int_set->ref_update == BMA400_MANUAL_UPDATE)
+    if (gen_int_set->ref_update == BMA400_UPDATE_MANUAL)
     {
         /* Set the LSB of reference x threshold */
         data_array[5] = BMA400_GET_LSB(gen_int_set->int_thres_ref_x);
@@ -2087,23 +2241,23 @@ static int8_t set_gen2_int(const struct bma400_gen_int_conf *gen_int_set, const 
         data_array[10] = BMA400_GET_MSB(gen_int_set->int_thres_ref_z);
 
         /* Set the GEN2 INT configuration in the sensor */
-        rslt = bma400_set_regs(BMA400_GEN2_INT_CONFIG_ADDR, data_array, 11, dev);
+        rslt = bma400_set_regs(BMA400_REG_GEN2_INT_CONFIG, data_array, 11, dev);
     }
     else
     {
         /* Set the GEN2 INT configuration in the sensor */
-        rslt = bma400_set_regs(BMA400_GEN2_INT_CONFIG_ADDR, data_array, 5, dev);
+        rslt = bma400_set_regs(BMA400_REG_GEN2_INT_CONFIG, data_array, 5, dev);
     }
 
     return rslt;
 }
 
-static int8_t get_gen2_int(struct bma400_gen_int_conf *gen_int_set, const struct bma400_dev *dev)
+static int8_t get_gen2_int(struct bma400_gen_int_conf *gen_int_set, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[11];
 
-    rslt = bma400_get_regs(BMA400_GEN2_INT_CONFIG_ADDR, data_array, 11, dev);
+    rslt = bma400_get_regs(BMA400_REG_GEN2_INT_CONFIG, data_array, 11, dev);
     if (rslt == BMA400_OK)
     {
         /* Get the axes to sense for interrupt */
@@ -2142,7 +2296,7 @@ static int8_t get_gen2_int(struct bma400_gen_int_conf *gen_int_set, const struct
     return rslt;
 }
 
-static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, const struct bma400_dev *dev)
+static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[10] = { 0 };
@@ -2156,9 +2310,6 @@ static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, c
     /* Set the reference update mode */
     data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_INT_REFU, orient_conf->ref_update);
 
-    /* Set the stability_mode for interrupt calculation */
-    data_array[0] = BMA400_SET_BITS_POS_0(data_array[0], BMA400_STABILITY_MODE, orient_conf->stability_mode);
-
     /* Set the threshold for interrupt calculation */
     data_array[1] = orient_conf->orient_thres;
 
@@ -2169,7 +2320,7 @@ static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, c
     data_array[3] = orient_conf->orient_int_dur;
 
     /* Handling case of manual reference update */
-    if (orient_conf->ref_update == BMA400_MANUAL_UPDATE)
+    if (orient_conf->ref_update == BMA400_UPDATE_MANUAL)
     {
         /* Set the LSB of reference x threshold */
         data_array[4] = BMA400_GET_LSB(orient_conf->orient_ref_x);
@@ -2190,25 +2341,25 @@ static int8_t set_orient_int(const struct bma400_orient_int_conf *orient_conf, c
         data_array[9] = BMA400_GET_MSB(orient_conf->orient_ref_z);
 
         /* Set the orient configurations in the sensor */
-        rslt = bma400_set_regs(BMA400_ORIENTCH_INT_CONFIG_ADDR, data_array, 10, dev);
+        rslt = bma400_set_regs(BMA400_REG_ORIENTCH_INT_CONFIG, data_array, 10, dev);
     }
     else
     {
         /* Set the orient configurations in the sensor excluding
          * reference values of x,y,z
          */
-        rslt = bma400_set_regs(BMA400_ORIENTCH_INT_CONFIG_ADDR, data_array, 4, dev);
+        rslt = bma400_set_regs(BMA400_REG_ORIENTCH_INT_CONFIG, data_array, 4, dev);
     }
 
     return rslt;
 }
 
-static int8_t get_orient_int(struct bma400_orient_int_conf *orient_conf, const struct bma400_dev *dev)
+static int8_t get_orient_int(struct bma400_orient_int_conf *orient_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[10];
 
-    rslt = bma400_get_regs(BMA400_ORIENTCH_INT_CONFIG_ADDR, data_array, 10, dev);
+    rslt = bma400_get_regs(BMA400_REG_ORIENTCH_INT_CONFIG, data_array, 10, dev);
     if (rslt == BMA400_OK)
     {
         /* Get the axes to sense for interrupt */
@@ -2219,9 +2370,6 @@ static int8_t get_orient_int(struct bma400_orient_int_conf *orient_conf, const s
 
         /* Get the reference update mode */
         orient_conf->ref_update = BMA400_GET_BITS(data_array[0], BMA400_INT_REFU);
-
-        /* Get the stability_mode for interrupt calculation */
-        orient_conf->stability_mode = BMA400_GET_BITS_POS_0(data_array[0], BMA400_STABILITY_MODE);
 
         /* Get the threshold for interrupt calculation */
         orient_conf->orient_thres = data_array[1];
@@ -2254,21 +2402,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1*/
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_DRDY, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2*/
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_DRDY, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[0] = BMA400_SET_BIT_VAL_0(data_array[0], BMA400_EN_DRDY);
                 data_array[1] = BMA400_SET_BIT_VAL_0(data_array[1], BMA400_EN_DRDY);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_DRDY, BMA400_ENABLE);
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_DRDY, BMA400_ENABLE);
             }
+
             break;
         case BMA400_FIFO_WM_INT_MAP:
             if (int_map == BMA400_INT_CHANNEL_1)
@@ -2276,21 +2428,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1*/
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_FIFO_WM, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2*/
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_FIFO_WM, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[0] = BMA400_SET_BIT_VAL_0(data_array[0], BMA400_EN_FIFO_WM);
                 data_array[1] = BMA400_SET_BIT_VAL_0(data_array[1], BMA400_EN_FIFO_WM);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_FIFO_WM, BMA400_ENABLE);
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_FIFO_WM, BMA400_ENABLE);
             }
+
             break;
         case BMA400_FIFO_FULL_INT_MAP:
             if (int_map == BMA400_INT_CHANNEL_1)
@@ -2298,21 +2454,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1 */
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_FIFO_FULL, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2 */
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_FIFO_FULL, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[0] = BMA400_SET_BIT_VAL_0(data_array[0], BMA400_EN_FIFO_FULL);
                 data_array[1] = BMA400_SET_BIT_VAL_0(data_array[1], BMA400_EN_FIFO_FULL);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_FIFO_FULL, BMA400_ENABLE);
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_FIFO_FULL, BMA400_ENABLE);
             }
+
             break;
         case BMA400_INT_OVERRUN_MAP:
             if (int_map == BMA400_INT_CHANNEL_1)
@@ -2320,21 +2480,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1 */
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_INT_OVERRUN, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2 */
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_INT_OVERRUN, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[0] = BMA400_SET_BIT_VAL_0(data_array[0], BMA400_EN_INT_OVERRUN);
                 data_array[1] = BMA400_SET_BIT_VAL_0(data_array[1], BMA400_EN_INT_OVERRUN);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_INT_OVERRUN, BMA400_ENABLE);
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_INT_OVERRUN, BMA400_ENABLE);
             }
+
             break;
         case BMA400_GEN2_INT_MAP:
             if (int_map == BMA400_INT_CHANNEL_1)
@@ -2342,21 +2506,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1 */
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_GEN2, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2 */
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_GEN2, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[0] = BMA400_SET_BIT_VAL_0(data_array[0], BMA400_EN_GEN2);
                 data_array[1] = BMA400_SET_BIT_VAL_0(data_array[1], BMA400_EN_GEN2);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_GEN2, BMA400_ENABLE);
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_GEN2, BMA400_ENABLE);
             }
+
             break;
         case BMA400_GEN1_INT_MAP:
             if (int_map == BMA400_INT_CHANNEL_1)
@@ -2364,21 +2532,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1 */
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_GEN1, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2 */
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_GEN1, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[0] = BMA400_SET_BIT_VAL_0(data_array[0], BMA400_EN_GEN1);
                 data_array[1] = BMA400_SET_BIT_VAL_0(data_array[1], BMA400_EN_GEN1);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_GEN1, BMA400_ENABLE);
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_GEN1, BMA400_ENABLE);
             }
+
             break;
         case BMA400_ORIENT_CH_INT_MAP:
             if (int_map == BMA400_INT_CHANNEL_1)
@@ -2386,21 +2558,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1 */
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_ORIENT_CH, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2 */
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_ORIENT_CH, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[0] = BMA400_SET_BIT_VAL_0(data_array[0], BMA400_EN_ORIENT_CH);
                 data_array[1] = BMA400_SET_BIT_VAL_0(data_array[1], BMA400_EN_ORIENT_CH);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[0] = BMA400_SET_BITS(data_array[0], BMA400_EN_ORIENT_CH, BMA400_ENABLE);
                 data_array[1] = BMA400_SET_BITS(data_array[1], BMA400_EN_ORIENT_CH, BMA400_ENABLE);
             }
+
             break;
         case BMA400_WAKEUP_INT_MAP:
             if (int_map == BMA400_INT_CHANNEL_1)
@@ -2408,21 +2584,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1 */
                 data_array[0] = BMA400_SET_BITS_POS_0(data_array[0], BMA400_EN_WAKEUP_INT, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2 */
                 data_array[1] = BMA400_SET_BITS_POS_0(data_array[1], BMA400_EN_WAKEUP_INT, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[0] = BMA400_SET_BIT_VAL_0(data_array[0], BMA400_EN_WAKEUP_INT);
                 data_array[1] = BMA400_SET_BIT_VAL_0(data_array[1], BMA400_EN_WAKEUP_INT);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[0] = BMA400_SET_BITS_POS_0(data_array[0], BMA400_EN_WAKEUP_INT, BMA400_ENABLE);
                 data_array[1] = BMA400_SET_BITS_POS_0(data_array[1], BMA400_EN_WAKEUP_INT, BMA400_ENABLE);
             }
+
             break;
         case BMA400_ACT_CH_INT_MAP:
             if (int_map == BMA400_INT_CHANNEL_1)
@@ -2430,21 +2610,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1 */
                 data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_ACTCH_MAP_INT1, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2 */
                 data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_ACTCH_MAP_INT2, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[2] = BMA400_SET_BIT_VAL_0(data_array[2], BMA400_ACTCH_MAP_INT1);
                 data_array[2] = BMA400_SET_BIT_VAL_0(data_array[2], BMA400_ACTCH_MAP_INT2);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_ACTCH_MAP_INT1, BMA400_ENABLE);
                 data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_ACTCH_MAP_INT2, BMA400_ENABLE);
             }
+
             break;
         case BMA400_TAP_INT_MAP:
             if (int_map == BMA400_INT_CHANNEL_1)
@@ -2452,21 +2636,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1 */
                 data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_TAP_MAP_INT1, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2 */
                 data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_TAP_MAP_INT2, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[2] = BMA400_SET_BIT_VAL_0(data_array[2], BMA400_TAP_MAP_INT1);
                 data_array[2] = BMA400_SET_BIT_VAL_0(data_array[2], BMA400_TAP_MAP_INT2);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_TAP_MAP_INT1, BMA400_ENABLE);
                 data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_TAP_MAP_INT2, BMA400_ENABLE);
             }
+
             break;
         case BMA400_STEP_INT_MAP:
             if (int_map == BMA400_INT_CHANNEL_1)
@@ -2474,21 +2662,25 @@ static void map_int_pin(uint8_t *data_array, uint8_t int_enable, enum bma400_int
                 /* Mapping interrupt to INT pin 1 */
                 data_array[2] = BMA400_SET_BITS_POS_0(data_array[2], BMA400_EN_STEP_INT, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_INT_CHANNEL_2)
             {
                 /* Mapping interrupt to INT pin 2 */
                 data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_STEP_MAP_INT2, BMA400_ENABLE);
             }
+
             if (int_map == BMA400_UNMAP_INT_PIN)
             {
                 data_array[2] = BMA400_SET_BIT_VAL_0(data_array[2], BMA400_EN_STEP_INT);
                 data_array[2] = BMA400_SET_BIT_VAL_0(data_array[2], BMA400_STEP_MAP_INT2);
             }
+
             if (int_map == BMA400_MAP_BOTH_INT_PINS)
             {
                 data_array[2] = BMA400_SET_BITS_POS_0(data_array[2], BMA400_EN_STEP_INT, BMA400_ENABLE);
                 data_array[2] = BMA400_SET_BITS(data_array[2], BMA400_STEP_MAP_INT2, BMA400_ENABLE);
             }
+
             break;
         default:
             break;
@@ -2502,16 +2694,19 @@ static void check_mapped_interrupts(uint8_t int_1_map, uint8_t int_2_map, enum b
         /* INT 1 mapped INT 2 not mapped */
         *int_map = BMA400_INT_CHANNEL_1;
     }
+
     if ((int_1_map == BMA400_DISABLE) && (int_2_map == BMA400_ENABLE))
     {
         /* INT 1 not mapped INT 2 mapped */
         *int_map = BMA400_INT_CHANNEL_2;
     }
+
     if ((int_1_map == BMA400_ENABLE) && (int_2_map == BMA400_ENABLE))
     {
         /* INT 1 ,INT 2 both mapped */
         *int_map = BMA400_MAP_BOTH_INT_PINS;
     }
+
     if ((int_1_map == BMA400_DISABLE) && (int_2_map == BMA400_DISABLE))
     {
         /* INT 1 ,INT 2 not mapped */
@@ -2652,12 +2847,12 @@ static void get_int_pin_map(const uint8_t *data_array, uint8_t int_enable, enum 
     }
 }
 
-static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, const struct bma400_dev *dev)
+static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data;
 
-    rslt = bma400_get_regs(BMA400_INT_12_IO_CTRL_ADDR, &reg_data, 1, dev);
+    rslt = bma400_get_regs(BMA400_REG_INT_12_IO_CTRL, &reg_data, 1, dev);
     if (rslt == BMA400_OK)
     {
         if (int_conf.int_chan == BMA400_INT_CHANNEL_1)
@@ -2665,6 +2860,7 @@ static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, const struct
             /* Setting interrupt pin configurations */
             reg_data = BMA400_SET_BITS(reg_data, BMA400_INT_PIN1_CONF, int_conf.pin_conf);
         }
+
         if (int_conf.int_chan == BMA400_INT_CHANNEL_2)
         {
             /* Setting interrupt pin configurations */
@@ -2672,18 +2868,18 @@ static int8_t set_int_pin_conf(struct bma400_int_pin_conf int_conf, const struct
         }
 
         /* Set the configurations in the sensor */
-        rslt = bma400_set_regs(BMA400_INT_12_IO_CTRL_ADDR, &reg_data, 1, dev);
+        rslt = bma400_set_regs(BMA400_REG_INT_12_IO_CTRL, &reg_data, 1, dev);
     }
 
     return rslt;
 }
 
-static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, const struct bma400_dev *dev)
+static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data;
 
-    rslt = bma400_get_regs(BMA400_INT_12_IO_CTRL_ADDR, &reg_data, 1, dev);
+    rslt = bma400_get_regs(BMA400_REG_INT_12_IO_CTRL, &reg_data, 1, dev);
     if (rslt == BMA400_OK)
     {
         if (int_conf->int_chan == BMA400_INT_CHANNEL_1)
@@ -2691,6 +2887,7 @@ static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, const struc
             /* reading Interrupt pin configurations */
             int_conf->pin_conf = BMA400_GET_BITS(reg_data, BMA400_INT_PIN1_CONF);
         }
+
         if (int_conf->int_chan == BMA400_INT_CHANNEL_2)
         {
             /* Setting interrupt pin configurations */
@@ -2701,7 +2898,7 @@ static int8_t get_int_pin_conf(struct bma400_int_pin_conf *int_conf, const struc
     return rslt;
 }
 
-static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, const struct bma400_dev *dev)
+static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[3];
@@ -2715,7 +2912,7 @@ static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, const struct bma
         /* Get the FIFO configurations and water-mark
          * values from the sensor
          */
-        rslt = bma400_get_regs(BMA400_FIFO_CONFIG_0_ADDR, data_array, 3, dev);
+        rslt = bma400_get_regs(BMA400_REG_FIFO_CONFIG_0, data_array, 3, dev);
         if (rslt == BMA400_OK)
         {
             /* Get the data of FIFO_CONFIG0 register */
@@ -2732,7 +2929,7 @@ static int8_t get_fifo_conf(struct bma400_fifo_conf *fifo_conf, const struct bma
     return rslt;
 }
 
-static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, const struct bma400_dev *dev)
+static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[3];
@@ -2747,7 +2944,7 @@ static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, const stru
         /* Get the FIFO configurations and water-mark
          * values from the sensor
          */
-        rslt = bma400_get_regs(BMA400_FIFO_CONFIG_0_ADDR, sens_data, 3, dev);
+        rslt = bma400_get_regs(BMA400_REG_FIFO_CONFIG_0, sens_data, 3, dev);
         if (rslt == BMA400_OK)
         {
             /* FIFO configurations */
@@ -2767,12 +2964,12 @@ static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, const stru
                 /* Set the FIFO configurations in the
                  * sensor excluding the watermark value
                  */
-                rslt = bma400_set_regs(BMA400_FIFO_CONFIG_0_ADDR, data_array, 1, dev);
+                rslt = bma400_set_regs(BMA400_REG_FIFO_CONFIG_0, data_array, 1, dev);
             }
             else
             {
                 /* Set the FIFO configurations in the sensor*/
-                rslt = bma400_set_regs(BMA400_FIFO_CONFIG_0_ADDR, data_array, 3, dev);
+                rslt = bma400_set_regs(BMA400_REG_FIFO_CONFIG_0, data_array, 3, dev);
             }
         }
     }
@@ -2780,12 +2977,12 @@ static int8_t set_fifo_conf(const struct bma400_fifo_conf *fifo_conf, const stru
     return rslt;
 }
 
-static int8_t get_fifo_length(uint16_t *fifo_byte_cnt, const struct bma400_dev *dev)
+static int8_t get_fifo_length(uint16_t *fifo_byte_cnt, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t data_array[2] = { 0 };
 
-    rslt = bma400_get_regs(BMA400_FIFO_LENGTH_ADDR, data_array, 2, dev);
+    rslt = bma400_get_regs(BMA400_REG_FIFO_LENGTH, data_array, 2, dev);
     if (rslt == BMA400_OK)
     {
         data_array[1] = BMA400_GET_BITS_POS_0(data_array[1], BMA400_FIFO_BYTES_CNT);
@@ -2797,11 +2994,11 @@ static int8_t get_fifo_length(uint16_t *fifo_byte_cnt, const struct bma400_dev *
     return rslt;
 }
 
-static int8_t read_fifo(const struct bma400_fifo_data *fifo, const struct bma400_dev *dev)
+static int8_t read_fifo(struct bma400_fifo_data *fifo, struct bma400_dev *dev)
 {
     int8_t rslt;
     uint8_t reg_data;
-    uint8_t fifo_addr = BMA400_FIFO_DATA_ADDR;
+    uint8_t fifo_addr = BMA400_REG_FIFO_DATA;
 
     if (dev->intf == BMA400_SPI_INTF)
     {
@@ -2809,16 +3006,19 @@ static int8_t read_fifo(const struct bma400_fifo_data *fifo, const struct bma400
         fifo_addr = fifo_addr | BMA400_SPI_RD_MASK;
     }
 
+    /* This update will take care of dummy byte necessity based on interface selection */
+    fifo->length += dev->dummy_byte;
+
     /* Read the FIFO enable bit */
-    rslt = bma400_get_regs(BMA400_FIFO_READ_EN_ADDR, &reg_data, 1, dev);
+    rslt = bma400_get_regs(BMA400_REG_FIFO_READ_EN, &reg_data, 1, dev);
     if (rslt == BMA400_OK)
     {
         /* FIFO read disable bit */
         if (reg_data == 0)
         {
             /* Read FIFO Buffer since FIFO read is enabled */
-            rslt = dev->read(dev->dev_id, fifo_addr, fifo->data, fifo->length);
-            if (rslt != 0)
+            dev->intf_rslt = dev->read(fifo_addr, fifo->data, (uint32_t)fifo->length, dev->intf_ptr);
+            if (dev->intf_rslt != BMA400_INTF_RET_SUCCESS)
             {
                 rslt = BMA400_E_COM_FAIL;
             }
@@ -2827,20 +3027,20 @@ static int8_t read_fifo(const struct bma400_fifo_data *fifo, const struct bma400
         {
             /* Enable FIFO reading */
             reg_data = 0;
-            rslt = bma400_set_regs(BMA400_FIFO_READ_EN_ADDR, &reg_data, 1, dev);
+            rslt = bma400_set_regs(BMA400_REG_FIFO_READ_EN, &reg_data, 1, dev);
             if (rslt == BMA400_OK)
             {
                 /* Delay to enable the FIFO */
-                dev->delay_ms(1);
+                dev->delay_us(1000, dev->intf_ptr);
 
                 /* Read FIFO Buffer since FIFO read is enabled*/
-                rslt = dev->read(dev->dev_id, fifo_addr, fifo->data, fifo->length);
+                dev->intf_rslt = dev->read(fifo_addr, fifo->data, (uint32_t)fifo->length, dev->intf_ptr);
 
-                if (rslt == BMA400_OK)
+                if (dev->intf_rslt == BMA400_OK)
                 {
                     /* Disable FIFO reading */
                     reg_data = 1;
-                    rslt = bma400_set_regs(BMA400_FIFO_READ_EN_ADDR, &reg_data, 1, dev);
+                    rslt = bma400_set_regs(BMA400_REG_FIFO_READ_EN, &reg_data, 1, dev);
                 }
             }
         }
@@ -2877,6 +3077,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
         /* Dummy byte included */
         fifo->accel_byte_start_idx = dev->dummy_byte;
     }
+
     for (data_index = fifo->accel_byte_start_idx; data_index < fifo->length;)
     {
         /*Header byte is stored in the variable frame_header*/
@@ -2900,6 +3101,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                     unpack_accel(fifo, &accel_data[accel_index], &data_index, accel_width, frame_header);
                     accel_index++;
                 }
+
                 break;
             case BMA400_FIFO_X_ENABLE:
                 check_frame_available(fifo, &frame_available, accel_width, BMA400_FIFO_X_ENABLE, &data_index);
@@ -2909,6 +3111,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                     unpack_accel(fifo, &accel_data[accel_index], &data_index, accel_width, frame_header);
                     accel_index++;
                 }
+
                 break;
             case BMA400_FIFO_Y_ENABLE:
                 check_frame_available(fifo, &frame_available, accel_width, BMA400_FIFO_Y_ENABLE, &data_index);
@@ -2918,6 +3121,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                     unpack_accel(fifo, &accel_data[accel_index], &data_index, accel_width, frame_header);
                     accel_index++;
                 }
+
                 break;
             case BMA400_FIFO_Z_ENABLE:
                 check_frame_available(fifo, &frame_available, accel_width, BMA400_FIFO_Z_ENABLE, &data_index);
@@ -2927,6 +3131,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                     unpack_accel(fifo, &accel_data[accel_index], &data_index, accel_width, frame_header);
                     accel_index++;
                 }
+
                 break;
             case BMA400_FIFO_XY_ENABLE:
                 check_frame_available(fifo, &frame_available, accel_width, BMA400_FIFO_XY_ENABLE, &data_index);
@@ -2936,6 +3141,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                     unpack_accel(fifo, &accel_data[accel_index], &data_index, accel_width, frame_header);
                     accel_index++;
                 }
+
                 break;
             case BMA400_FIFO_YZ_ENABLE:
                 check_frame_available(fifo, &frame_available, accel_width, BMA400_FIFO_YZ_ENABLE, &data_index);
@@ -2945,6 +3151,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                     unpack_accel(fifo, &accel_data[accel_index], &data_index, accel_width, frame_header);
                     accel_index++;
                 }
+
                 break;
             case BMA400_FIFO_XZ_ENABLE:
                 check_frame_available(fifo, &frame_available, accel_width, BMA400_FIFO_YZ_ENABLE, &data_index);
@@ -2954,6 +3161,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                     unpack_accel(fifo, &accel_data[accel_index], &data_index, accel_width, frame_header);
                     accel_index++;
                 }
+
                 break;
             case BMA400_FIFO_SENSOR_TIME:
                 check_frame_available(fifo, &frame_available, accel_width, BMA400_FIFO_SENSOR_TIME, &data_index);
@@ -2962,6 +3170,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                     /* Unpack and store the sensor time data */
                     unpack_sensortime_frame(fifo, &data_index);
                 }
+
                 break;
             case BMA400_FIFO_EMPTY_FRAME:
 
@@ -2975,6 +3184,7 @@ static void unpack_accel_frame(struct bma400_fifo_data *fifo,
                     /* Store the configuration change data from FIFO */
                     fifo->conf_change = fifo->data[data_index++];
                 }
+
                 break;
             default:
 
@@ -3022,6 +3232,7 @@ static void check_frame_available(const struct bma400_fifo_data *fifo,
                 *data_index = fifo->length;
                 *frame_available = BMA400_DISABLE;
             }
+
             break;
         case BMA400_FIFO_X_ENABLE:
         case BMA400_FIFO_Y_ENABLE:
@@ -3043,6 +3254,7 @@ static void check_frame_available(const struct bma400_fifo_data *fifo,
                 *data_index = fifo->length;
                 *frame_available = BMA400_DISABLE;
             }
+
             break;
         case BMA400_FIFO_XY_ENABLE:
         case BMA400_FIFO_YZ_ENABLE:
@@ -3064,6 +3276,7 @@ static void check_frame_available(const struct bma400_fifo_data *fifo,
                 *data_index = fifo->length;
                 *frame_available = BMA400_DISABLE;
             }
+
             break;
         case BMA400_FIFO_SENSOR_TIME:
             if ((*data_index + 3) > fifo->length)
@@ -3072,6 +3285,7 @@ static void check_frame_available(const struct bma400_fifo_data *fifo,
                 *data_index = fifo->length;
                 *frame_available = BMA400_DISABLE;
             }
+
             break;
         case BMA400_FIFO_CONTROL_FRAME:
             if ((*data_index + 1) > fifo->length)
@@ -3080,6 +3294,7 @@ static void check_frame_available(const struct bma400_fifo_data *fifo,
                 *data_index = fifo->length;
                 *frame_available = BMA400_DISABLE;
             }
+
             break;
         default:
             break;
@@ -3116,6 +3331,7 @@ static void unpack_accel(const struct bma400_fifo_data *fifo,
             /* Accel x not available */
             accel_data->x = 0;
         }
+
         if (frame_header & BMA400_FIFO_Y_ENABLE)
         {
             /* Accel y data */
@@ -3133,6 +3349,7 @@ static void unpack_accel(const struct bma400_fifo_data *fifo,
             /* Accel y not available */
             accel_data->y = 0;
         }
+
         if (frame_header & BMA400_FIFO_Z_ENABLE)
         {
             /* Accel z data */
@@ -3169,6 +3386,7 @@ static void unpack_accel(const struct bma400_fifo_data *fifo,
             /* Accel x not available */
             accel_data->x = 0;
         }
+
         if (frame_header & BMA400_FIFO_Y_ENABLE)
         {
             /* Accel y data */
@@ -3185,6 +3403,7 @@ static void unpack_accel(const struct bma400_fifo_data *fifo,
             /* Accel y not available */
             accel_data->y = 0;
         }
+
         if (frame_header & BMA400_FIFO_Z_ENABLE)
         {
             /* Accel z data */
@@ -3225,36 +3444,23 @@ static int8_t validate_accel_self_test(const struct bma400_sensor_data *accel_po
 
     int8_t rslt;
 
-    /* Structure for difference of accel values in g */
-    struct selftest_delta_limit accel_data_diff = { 0, 0, 0 };
+    /* Structure for difference of accel values */
+    struct bma400_selftest_delta_limit accel_data_diff = { 0, 0, 0 };
 
-    /* Structure for difference of accel values in mg */
-    struct selftest_delta_limit accel_data_diff_mg = { 0, 0, 0 };
+    /* accel x difference value */
+    accel_data_diff.x = (accel_pos->x - accel_neg->x);
 
-    accel_data_diff.x = accel_pos->x - accel_neg->x;
-    accel_data_diff.y = accel_pos->y - accel_neg->y;
-    accel_data_diff.z = accel_pos->z - accel_neg->z;
+    /* accel y difference value */
+    accel_data_diff.y = (accel_pos->y - accel_neg->y);
 
-    /* Converting LSB of the differences of accel
-     * values to mg
-     */
-    convert_lsb_g(&accel_data_diff, &accel_data_diff_mg);
+    /* accel z difference value */
+    accel_data_diff.z = (accel_pos->z - accel_neg->z);
 
-    /* Validate the results of self test
-     * Self test value of x,y axes should be 800mg
-     * and z axes should be 400 mg
-     */
-
-    if (((accel_data_diff_mg.x) > BMA400_ST_ACC_X_AXIS_SIGNAL_DIFF) &&
-        ((accel_data_diff_mg.y) > BMA400_ST_ACC_Y_AXIS_SIGNAL_DIFF) &&
-        ((accel_data_diff_mg.z) > BMA400_ST_ACC_Z_AXIS_SIGNAL_DIFF))
+    /* Validate the results of self test */
+    if (((accel_data_diff.x) > BMA400_ST_ACC_X_AXIS_SIGNAL_DIFF) &&
+        ((accel_data_diff.y) > BMA400_ST_ACC_Y_AXIS_SIGNAL_DIFF) &&
+        ((accel_data_diff.z) > BMA400_ST_ACC_Z_AXIS_SIGNAL_DIFF))
     {
-
-        /*
-         *   if (((accel_pos->x - accel_neg->x) > 205) && ((accel_pos->y - accel_neg->y) > 205) &&
-         *          ((accel_pos->z - accel_neg->z) > 103))
-         */
-
         /* Self test pass condition */
         rslt = BMA400_OK;
     }
@@ -3267,83 +3473,47 @@ static int8_t validate_accel_self_test(const struct bma400_sensor_data *accel_po
     return rslt;
 }
 
-static void convert_lsb_g(const struct selftest_delta_limit *accel_data_diff,
-                          struct selftest_delta_limit *accel_data_diff_mg)
-{
-    uint32_t lsb_per_g;
-
-    /* Range considered for self-test is 4g */
-    uint8_t range = BMA400_4G_RANGE;
-
-    /* lsb_per_g for the respective resolution and 8g range*/
-    lsb_per_g = (uint32_t)(power(2, 8) / (2 * range));
-
-    /* accel x value in mg */
-    accel_data_diff_mg->x = (accel_data_diff->x / (int32_t)lsb_per_g) * 1000;
-
-    /* accel y value in mg */
-    accel_data_diff_mg->y = (accel_data_diff->y / (int32_t)lsb_per_g) * 1000;
-
-    /* accel z value in mg */
-    accel_data_diff_mg->z = (accel_data_diff->z / (int32_t)lsb_per_g) * 1000;
-}
-
-static int32_t power(int16_t base, uint8_t resolution)
-{
-    uint8_t i = 1;
-
-    /* Initialize variable to store the power of 2 value */
-    int32_t value = 1;
-
-    for (; i <= resolution; i++)
-    {
-        value = (int32_t)(value * base);
-    }
-
-    return value;
-}
-
-static int8_t positive_excited_accel(struct bma400_sensor_data *accel_pos, const struct bma400_dev *dev)
+static int8_t positive_excited_accel(struct bma400_sensor_data *accel_pos, struct bma400_dev *dev)
 {
     int8_t rslt;
-    uint8_t reg_data = BMA400_ENABLE_POSITIVE_SELF_TEST;
+    uint8_t reg_data = BMA400_SELF_TEST_ENABLE_POSITIVE;
 
     /* Enable positive excitation for all 3 axes */
-    rslt = bma400_set_regs(BMA400_SELF_TEST_ADDR, &reg_data, 1, dev);
+    rslt = bma400_set_regs(BMA400_REG_SELF_TEST, &reg_data, 1, dev);
     if (rslt == BMA400_OK)
     {
         /* Read accel data after 50ms delay */
-        dev->delay_ms(BMA400_SELF_TEST_DATA_READ_MS);
+        dev->delay_us(BMA400_DELAY_US_SELF_TEST_DATA_READ, dev->intf_ptr);
         rslt = bma400_get_accel_data(BMA400_DATA_ONLY, accel_pos, dev);
     }
 
     return rslt;
 }
 
-static int8_t negative_excited_accel(struct bma400_sensor_data *accel_neg, const struct bma400_dev *dev)
+static int8_t negative_excited_accel(struct bma400_sensor_data *accel_neg, struct bma400_dev *dev)
 {
     int8_t rslt;
-    uint8_t reg_data = BMA400_ENABLE_NEGATIVE_SELF_TEST;
+    uint8_t reg_data = BMA400_SELF_TEST_ENABLE_NEGATIVE;
 
     /* Enable negative excitation for all 3 axes */
-    rslt = bma400_set_regs(BMA400_SELF_TEST_ADDR, &reg_data, 1, dev);
+    rslt = bma400_set_regs(BMA400_REG_SELF_TEST, &reg_data, 1, dev);
     if (rslt == BMA400_OK)
     {
         /* Read accel data after 50ms delay */
-        dev->delay_ms(BMA400_SELF_TEST_DATA_READ_MS);
+        dev->delay_us(BMA400_DELAY_US_SELF_TEST_DATA_READ, dev->intf_ptr);
         rslt = bma400_get_accel_data(BMA400_DATA_ONLY, accel_neg, dev);
         if (rslt == BMA400_OK)
         {
             /* Disable self test */
-            reg_data = BMA400_DISABLE_SELF_TEST;
-            rslt = bma400_set_regs(BMA400_SELF_TEST_ADDR, &reg_data, 1, dev);
+            reg_data = BMA400_SELF_TEST_DISABLE;
+            rslt = bma400_set_regs(BMA400_REG_SELF_TEST, &reg_data, 1, dev);
         }
     }
 
     return rslt;
 }
 
-static int8_t enable_self_test(const struct bma400_dev *dev)
+static int8_t enable_self_test(struct bma400_dev *dev)
 {
     int8_t rslt;
 
@@ -3360,8 +3530,7 @@ static int8_t enable_self_test(const struct bma400_dev *dev)
         /* Modify to the desired configurations */
         accel_setting.param.accel.odr = BMA400_ODR_100HZ;
 
-        /*accel_setting.param.accel.range = BMA400_8G_RANGE; */
-        accel_setting.param.accel.range = BMA400_4G_RANGE;
+        accel_setting.param.accel.range = BMA400_RANGE_4G;
         accel_setting.param.accel.osr = BMA400_ACCEL_OSR_SETTING_3;
         accel_setting.param.accel.data_src = BMA400_DATA_SRC_ACCEL_FILT_1;
 
@@ -3370,11 +3539,12 @@ static int8_t enable_self_test(const struct bma400_dev *dev)
         if (rslt == BMA400_OK)
         {
             /* self test enabling delay */
-            dev->delay_ms(BMA400_SELF_TEST_DELAY_MS);
+            dev->delay_us(BMA400_DELAY_US_SELF_TEST, dev->intf_ptr);
         }
+
         if (rslt == BMA400_OK)
         {
-            rslt = bma400_set_power_mode(BMA400_NORMAL_MODE, dev);
+            rslt = bma400_set_power_mode(BMA400_MODE_NORMAL, dev);
         }
     }
 
