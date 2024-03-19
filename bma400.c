@@ -31,8 +31,8 @@
 * POSSIBILITY OF SUCH DAMAGE.
 *
 * @file       bma400.c
-* @date       2020-06-05
-* @version    v1.5.8
+* @date       2021-02-22
+* @version    v1.5.9
 *
 */
 
@@ -510,7 +510,7 @@ static int8_t read_fifo(struct bma400_fifo_data *fifo, struct bma400_dev *dev);
  * @return Nothing
  */
 static void unpack_accel_frame(struct bma400_fifo_data *fifo,
-                               struct bma400_sensor_data *accel_data,
+                               struct bma400_fifo_sensor_data *accel_data,
                                uint16_t *frame_count,
                                const struct bma400_dev *dev);
 
@@ -544,7 +544,7 @@ static void check_frame_available(const struct bma400_fifo_data *fifo,
  * @return Nothing
  */
 static void unpack_accel(const struct bma400_fifo_data *fifo,
-                         struct bma400_sensor_data *accel_data,
+                         struct bma400_fifo_sensor_data *accel_data,
                          uint16_t *data_index,
                          uint8_t accel_width,
                          uint8_t frame_header);
@@ -728,6 +728,7 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, struct
 {
     int8_t rslt;
     uint16_t index;
+    uint8_t temp_buff[BMA400_MAX_LEN];
 
     /* Check for null pointer in the device structure */
     rslt = null_ptr_check(dev);
@@ -735,9 +736,6 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, struct
     /* Proceed if null check is fine */
     if ((rslt == BMA400_OK) && (reg_data != NULL))
     {
-        uint32_t temp_len = len + dev->dummy_byte;
-        uint8_t temp_buff[temp_len];
-
         if (dev->intf != BMA400_I2C_INTF)
         {
             /* If interface selected is SPI */
@@ -745,7 +743,7 @@ int8_t bma400_get_regs(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, struct
         }
 
         /* Read the data from the reg_addr */
-        dev->intf_rslt = dev->read(reg_addr, temp_buff, temp_len, dev->intf_ptr);
+        dev->intf_rslt = dev->read(reg_addr, temp_buff, (len + dev->dummy_byte), dev->intf_ptr);
         if (dev->intf_rslt == BMA400_INTF_RET_SUCCESS)
         {
             for (index = 0; index < len; index++)
@@ -1394,7 +1392,7 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, struct bma400_dev *de
 }
 
 int8_t bma400_extract_accel(struct bma400_fifo_data *fifo,
-                            struct bma400_sensor_data *accel_data,
+                            struct bma400_fifo_sensor_data *accel_data,
                             uint16_t *frame_count,
                             const struct bma400_dev *dev)
 {
@@ -3050,7 +3048,7 @@ static int8_t read_fifo(struct bma400_fifo_data *fifo, struct bma400_dev *dev)
 }
 
 static void unpack_accel_frame(struct bma400_fifo_data *fifo,
-                               struct bma400_sensor_data *accel_data,
+                               struct bma400_fifo_sensor_data *accel_data,
                                uint16_t *frame_count,
                                const struct bma400_dev *dev)
 {
@@ -3302,7 +3300,7 @@ static void check_frame_available(const struct bma400_fifo_data *fifo,
 }
 
 static void unpack_accel(const struct bma400_fifo_data *fifo,
-                         struct bma400_sensor_data *accel_data,
+                         struct bma400_fifo_sensor_data *accel_data,
                          uint16_t *data_index,
                          uint8_t accel_width,
                          uint8_t frame_header)

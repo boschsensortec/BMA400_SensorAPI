@@ -31,8 +31,8 @@
 * POSSIBILITY OF SUCH DAMAGE.
 *
 * @file       bma400_defs.h
-* @date       2020-06-05
-* @version    v1.5.8
+* @date       2021-02-22
+* @version    v1.5.9
 *
 */
 
@@ -120,6 +120,9 @@
 /* BMA400 I2C address macros */
 #define BMA400_I2C_ADDRESS_SDO_LOW                UINT8_C(0x14)
 #define BMA400_I2C_ADDRESS_SDO_HIGH               UINT8_C(0x15)
+
+/* Maximum read length */
+#define BMA400_MAX_LEN                            UINT8_C(128)
 
 /* Power mode configurations */
 #define BMA400_MODE_NORMAL                        UINT8_C(0x02)
@@ -430,7 +433,7 @@
 
 /* BMA400 FIFO data masks */
 #define BMA400_FIFO_HEADER_MASK                   UINT8_C(0x3E)
-#define BMA400_FIFO_BYTES_OVERREAD                UINT8_C(25)
+#define BMA400_FIFO_BYTES_OVERREAD                UINT8_C(100)
 #define BMA400_AWIDTH_MASK                        UINT8_C(0xEF)
 #define BMA400_FIFO_DATA_EN_MASK                  UINT8_C(0x0E)
 
@@ -1294,6 +1297,21 @@ struct bma400_sensor_data
 
     /* sensor time */
     uint32_t sensortime;
+};
+
+/*
+ * BMA400 sensor data for FIFO
+ */
+struct bma400_fifo_sensor_data
+{
+    /* X-axis sensor data */
+    int16_t x;
+
+    /* Y-axis sensor data */
+    int16_t y;
+
+    /* Z-axis sensor data */
+    int16_t z;
 };
 
 /*

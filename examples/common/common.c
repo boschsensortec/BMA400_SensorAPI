@@ -14,6 +14,9 @@
 /*! Read write length varies based on user requirement */
 #define READ_WRITE_LENGTH  UINT8_C(46)
 
+/*! BMA400 shuttle board ID */
+#define BMA400_SHUTTLE_ID  UINT16_C(0x1A1)
+
 /* Variable to store the device address */
 static uint8_t dev_addr;
 
@@ -74,19 +77,19 @@ void bma400_check_rslt(const char api_name[], int8_t rslt)
             /* Do nothing */
             break;
         case BMA400_E_NULL_PTR:
-            printf("Error [%d] : Null pointer\r\n", rslt);
+            printf("API : %s Error [%d] : Null pointer\r\n", api_name, rslt);
             break;
         case BMA400_E_COM_FAIL:
-            printf("Error [%d] : Communication failure\r\n", rslt);
+            printf("API : %s Error [%d] : Communication failure\r\n", api_name, rslt);
             break;
         case BMA400_E_INVALID_CONFIG:
-            printf("Error [%d] : Invalid configuration\r\n", rslt);
+            printf("API : %s Error [%d] : Invalid configuration\r\n", api_name, rslt);
             break;
         case BMA400_E_DEV_NOT_FOUND:
-            printf("Error [%d] : Device not found\r\n", rslt);
+            printf("API : %s Error [%d] : Device not found\r\n", api_name, rslt);
             break;
         default:
-            printf("Error [%d] : Unknown error code\r\n", rslt);
+            printf("API : %s Error [%d] : Unknown error code\r\n", api_name, rslt);
             break;
     }
 }
@@ -94,23 +97,33 @@ void bma400_check_rslt(const char api_name[], int8_t rslt)
 int8_t bma400_interface_init(struct bma400_dev *bma400, uint8_t intf)
 {
     int8_t rslt = BMA400_OK;
-
-    /* Switch VDD for sensor off */
-    coines_set_shuttleboard_vdd_vddio_config(0, 0);
-    coines_config_i2c_bus(COINES_I2C_BUS_0, COINES_I2C_FAST_MODE);
-
-    /* Switch VDD for sensor on */
-    coines_set_shuttleboard_vdd_vddio_config(3300, 3300);
+    struct coines_board_info board_info;
 
     if (bma400 != NULL)
     {
         int16_t result = coines_open_comm_intf(COINES_COMM_INTF_USB);
+
         if (result < COINES_SUCCESS)
         {
             printf(
                 "\n Unable to connect with Application Board ! \n" " 1. Check if the board is connected and powered on. \n" " 2. Check if Application Board USB driver is installed. \n"
                 " 3. Check if board is in use by another application. (Insufficient permissions to access USB) \n");
             exit(result);
+        }
+
+        rslt = coines_get_board_info(&board_info);
+
+#if defined(PC)
+        setbuf(stdout, NULL);
+#endif
+
+        if (rslt == COINES_SUCCESS)
+        {
+            if ((board_info.shuttle_id != BMA400_SHUTTLE_ID))
+            {
+                printf("! Warning invalid sensor shuttle \n ," "This application will not support this sensor \n");
+                exit(COINES_E_FAILURE);
+            }
         }
 
         coines_set_shuttleboard_vdd_vddio_config(0, 0);
@@ -159,5 +172,14 @@ int8_t bma400_interface_init(struct bma400_dev *bma400, uint8_t intf)
 
 void bma400_coines_deinit(void)
 {
+    fflush(stdout);
+
+    coines_set_shuttleboard_vdd_vddio_config(0, 0);
+    coines_delay_msec(100);
+
+    /* Coines interface reset */
+    coines_soft_reset();
+    coines_delay_msec(100);
+
     coines_close_comm_intf(COINES_COMM_INTF_USB);
 }

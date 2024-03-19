@@ -31,8 +31,8 @@
 * POSSIBILITY OF SUCH DAMAGE.
 *
 * @file       bma400.h
-* @date       2020-06-05
-* @version    v1.5.8
+* @date       2021-02-22
+* @version    v1.5.9
 *
 */
 
@@ -326,7 +326,7 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, struct bma400_dev *de
  * \ingroup bma400ApiFifo
  * \page bma400_api_bma400_extract_accel bma400_extract_accel
  * \code
- * int8_t bma400_extract_accel(struct bma400_fifo_data *fifo, struct bma400_sensor_data *accel_data,
+ * int8_t bma400_extract_accel(struct bma400_fifo_data *fifo, struct bma400_fifo_sensor_data *accel_data,
  *                             uint16_t *frame_count, const struct bma400_dev *dev);
  * \endcode
  * @details This API parses and extracts the accelerometer frames, FIFO time
@@ -339,7 +339,7 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, struct bma400_dev *de
  *
  * @param[in,out] fifo        : Pointer to the FIFO structure.
  *
- * @param[out] accel_data     : Structure instance of bma400_sensor_data where
+ * @param[out] accel_data     : Structure instance of bma400_fifo_sensor_data where
  *                              the accelerometer data from FIFO is extracted
  *                              and stored after calling this API
  *
@@ -355,7 +355,7 @@ int8_t bma400_get_fifo_data(struct bma400_fifo_data *fifo, struct bma400_dev *de
  * @retval -ve value -> Error
  */
 int8_t bma400_extract_accel(struct bma400_fifo_data *fifo,
-                            struct bma400_sensor_data *accel_data,
+                            struct bma400_fifo_sensor_data *accel_data,
                             uint16_t *frame_count,
                             const struct bma400_dev *dev);
 
