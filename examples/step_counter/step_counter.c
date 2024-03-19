@@ -5,13 +5,6 @@
  *
  */
 
-/*!
- * @ingroup bma400Examples
- * @defgroup bma400ExamplesStepCounter Step counter
- * @brief To showcase step counter feature
- * \include bma400_step_counter.c
- */
-
 #include <stdio.h>
 #include "bma400.h"
 #include "common.h"
@@ -38,11 +31,11 @@ int main(int argc, char const *argv[])
     rslt = bma400_interface_init(&bma, BMA400_I2C_INTF);
     bma400_check_rslt("bma400_interface_init", rslt);
 
-    rslt = bma400_soft_reset(&bma);
-    bma400_check_rslt("bma400_soft_reset", rslt);
-
     rslt = bma400_init(&bma);
     bma400_check_rslt("bma400_init", rslt);
+
+    rslt = bma400_soft_reset(&bma);
+    bma400_check_rslt("bma400_soft_reset", rslt);
 
     accel_settin[0].type = BMA400_STEP_COUNTER_INT;
     accel_settin[1].type = BMA400_ACCEL;
@@ -107,6 +100,7 @@ int main(int argc, char const *argv[])
             }
             if (count == 0)
             {
+                printf("Step counter testing done. Exiting !\n");
                 break;
             }
         }
