@@ -1,0 +1,9 @@
+I2C Interface
+Single and Double Tap interrupts enabled
+Perform single or double tap on the board
+Single tap detected
+Single tap detected
+Single tap detected
+Double tap detected
+Single tap detected
+Tap interrupt testing done. Exiting !

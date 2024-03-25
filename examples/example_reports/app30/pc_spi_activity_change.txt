@@ -1,0 +1,104 @@
+SPI Interface
+Functionality test for Activity change interrupt
+Show activity on x y z axes of the board
+Activity change interrupt asserted on X axis
+Accel Data :  Raw_X : -664    Raw_Y : 610    Raw_Z : -227    SENSOR_TIME(s) : 1.6559
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -201    Raw_Y : -809    Raw_Z : 456    SENSOR_TIME(s) : 2.1122
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -143    Raw_Y : -885    Raw_Z : 670    SENSOR_TIME(s) : 2.1434
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -122    Raw_Y : -979    Raw_Z : 289    SENSOR_TIME(s) : 2.2641
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -11    Raw_Y : -1024    Raw_Z : 321    SENSOR_TIME(s) : 2.5462
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -372    Raw_Y : -457    Raw_Z : 1037    SENSOR_TIME(s) : 2.8962
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -689    Raw_Y : 652    Raw_Z : -417    SENSOR_TIME(s) : 3.1656
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -735    Raw_Y : 660    Raw_Z : -208    SENSOR_TIME(s) : 3.3362
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -15    Raw_Y : -886    Raw_Z : 617    SENSOR_TIME(s) : 3.8862
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -59    Raw_Y : -1058    Raw_Z : 243    SENSOR_TIME(s) : 3.9556
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -709    Raw_Y : 360    Raw_Z : 1074    SENSOR_TIME(s) : 4.7453
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -377    Raw_Y : -231    Raw_Z : 955    SENSOR_TIME(s) : 5.1334
+Activity change interrupt asserted on X axis
+Accel Data :  Raw_X : -618    Raw_Y : -378    Raw_Z : 894    SENSOR_TIME(s) : 5.2650
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -445    Raw_Y : -186    Raw_Z : 176    SENSOR_TIME(s) : 5.3316
+Activity change interrupt asserted on X axis
+Accel Data :  Raw_X : -554    Raw_Y : -394    Raw_Z : 85    SENSOR_TIME(s) : 5.7162
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -452    Raw_Y : -701    Raw_Z : 723    SENSOR_TIME(s) : 5.8550
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -193    Raw_Y : -908    Raw_Z : -106    SENSOR_TIME(s) : 6.1425
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : 83    Raw_Y : -1408    Raw_Z : 741    SENSOR_TIME(s) : 6.3062
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -213    Raw_Y : -871    Raw_Z : 1024    SENSOR_TIME(s) : 6.4762
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -576    Raw_Y : 590    Raw_Z : -411    SENSOR_TIME(s) : 6.8259
+Activity change interrupt asserted on X axis
+Accel Data :  Raw_X : -583    Raw_Y : 567    Raw_Z : -694    SENSOR_TIME(s) : 7.0962
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -7    Raw_Y : -1561    Raw_Z : 723    SENSOR_TIME(s) : 7.6150
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -168    Raw_Y : -1295    Raw_Z : 625    SENSOR_TIME(s) : 7.8862
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -839    Raw_Y : 747    Raw_Z : -210    SENSOR_TIME(s) : 8.5366
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -448    Raw_Y : -749    Raw_Z : 732    SENSOR_TIME(s) : 9.0631
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -932    Raw_Y : -64    Raw_Z : 188    SENSOR_TIME(s) : 9.7466
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -859    Raw_Y : 237    Raw_Z : -544    SENSOR_TIME(s) : 9.8150
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -392    Raw_Y : -863    Raw_Z : 886    SENSOR_TIME(s) : 10.2731
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -449    Raw_Y : -424    Raw_Z : 599    SENSOR_TIME(s) : 10.5053
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -347    Raw_Y : -828    Raw_Z : 578    SENSOR_TIME(s) : 10.8550
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -475    Raw_Y : -675    Raw_Z : 782    SENSOR_TIME(s) : 11.1262
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -391    Raw_Y : -1048    Raw_Z : 684    SENSOR_TIME(s) : 11.4622
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -472    Raw_Y : -368    Raw_Z : 307    SENSOR_TIME(s) : 11.6459
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -358    Raw_Y : 140    Raw_Z : -143    SENSOR_TIME(s) : 12.4841
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -362    Raw_Y : -361    Raw_Z : 113    SENSOR_TIME(s) : 12.5553
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -133    Raw_Y : -1534    Raw_Z : 838    SENSOR_TIME(s) : 12.6550
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -378    Raw_Y : -847    Raw_Z : 493    SENSOR_TIME(s) : 12.8559
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -208    Raw_Y : -112    Raw_Z : -785    SENSOR_TIME(s) : 13.4759
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : 156    Raw_Y : 21    Raw_Z : -989    SENSOR_TIME(s) : 13.6459
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : 124    Raw_Y : 82    Raw_Z : -1133    SENSOR_TIME(s) : 13.7462
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : 296    Raw_Y : -703    Raw_Z : -1565    SENSOR_TIME(s) : 14.1022
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : 564    Raw_Y : 288    Raw_Z : -886    SENSOR_TIME(s) : 14.1494
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -289    Raw_Y : -1294    Raw_Z : -1166    SENSOR_TIME(s) : 14.2659
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : 52    Raw_Y : -1079    Raw_Z : -798    SENSOR_TIME(s) : 14.3666
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -160    Raw_Y : -1178    Raw_Z : 529    SENSOR_TIME(s) : 14.5344
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -742    Raw_Y : 539    Raw_Z : -337    SENSOR_TIME(s) : 14.8859
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -467    Raw_Y : -576    Raw_Z : 1249    SENSOR_TIME(s) : 15.1262
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -524    Raw_Y : -436    Raw_Z : 741    SENSOR_TIME(s) : 15.4759
+Activity change interrupt asserted on X axis
+Accel Data :  Raw_X : -646    Raw_Y : -585    Raw_Z : 459    SENSOR_TIME(s) : 15.5534
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -508    Raw_Y : -467    Raw_Z : 1518    SENSOR_TIME(s) : 15.7462
+Activity change interrupt test done !

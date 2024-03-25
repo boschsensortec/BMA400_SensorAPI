@@ -1,0 +1,107 @@
+SPI Interface
+
+Get accel data - BMA400_DATA_SENSOR_TIME
+Accel Gravity data in m/s^2
+Acc_Raw_X : 17   Acc_Raw_Y : -28   Acc_Raw_Z : 993      Acc_ms2_X : 0.16,   Acc_ms2_Y : -0.27,  Acc_ms2_Z :  9.51,   t(s) : 0.0422
+Acc_Raw_X : 12   Acc_Raw_Y : -23   Acc_Raw_Z : 1000     Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.22,  Acc_ms2_Z :  9.58,   t(s) : 0.2122
+Acc_Raw_X : 6   Acc_Raw_Y : -9   Acc_Raw_Z : 987        Acc_ms2_X : 0.06,   Acc_ms2_Y : -0.09,  Acc_ms2_Z :  9.45,   t(s) : 0.2425
+Acc_Raw_X : 11   Acc_Raw_Y : -20   Acc_Raw_Z : 999      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.57,   t(s) : 0.2625
+Acc_Raw_X : 23   Acc_Raw_Y : -19   Acc_Raw_Z : 998      Acc_ms2_X : 0.22,   Acc_ms2_Y : -0.18,  Acc_ms2_Z :  9.56,   t(s) : 0.3234
+Acc_Raw_X : 7   Acc_Raw_Y : -22   Acc_Raw_Z : 1000      Acc_ms2_X : 0.07,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.58,   t(s) : 0.3822
+Acc_Raw_X : 7   Acc_Raw_Y : -15   Acc_Raw_Z : 999       Acc_ms2_X : 0.07,   Acc_ms2_Y : -0.14,  Acc_ms2_Z :  9.57,   t(s) : 0.5028
+Acc_Raw_X : 19   Acc_Raw_Y : -26   Acc_Raw_Z : 984      Acc_ms2_X : 0.18,   Acc_ms2_Y : -0.25,  Acc_ms2_Z :  9.42,   t(s) : 0.6831
+Acc_Raw_X : 18   Acc_Raw_Y : -17   Acc_Raw_Z : 992      Acc_ms2_X : 0.17,   Acc_ms2_Y : -0.16,  Acc_ms2_Z :  9.50,   t(s) : 0.7125
+Acc_Raw_X : 10   Acc_Raw_Y : -16   Acc_Raw_Z : 995      Acc_ms2_X : 0.10,   Acc_ms2_Y : -0.15,  Acc_ms2_Z :  9.53,   t(s) : 0.7922
+Acc_Raw_X : 20   Acc_Raw_Y : -23   Acc_Raw_Z : 991      Acc_ms2_X : 0.19,   Acc_ms2_Y : -0.22,  Acc_ms2_Z :  9.49,   t(s) : 0.8522
+Acc_Raw_X : 14   Acc_Raw_Y : -24   Acc_Raw_Z : 1000     Acc_ms2_X : 0.13,   Acc_ms2_Y : -0.23,  Acc_ms2_Z :  9.58,   t(s) : 0.8725
+Acc_Raw_X : 14   Acc_Raw_Y : -21   Acc_Raw_Z : 998      Acc_ms2_X : 0.13,   Acc_ms2_Y : -0.20,  Acc_ms2_Z :  9.56,   t(s) : 0.8922
+Acc_Raw_X : 10   Acc_Raw_Y : -29   Acc_Raw_Z : 987      Acc_ms2_X : 0.10,   Acc_ms2_Y : -0.28,  Acc_ms2_Z :  9.45,   t(s) : 0.9341
+Acc_Raw_X : 9   Acc_Raw_Y : -15   Acc_Raw_Z : 997       Acc_ms2_X : 0.09,   Acc_ms2_Y : -0.14,  Acc_ms2_Z :  9.55,   t(s) : 1.0322
+Acc_Raw_X : 20   Acc_Raw_Y : -27   Acc_Raw_Z : 1006     Acc_ms2_X : 0.19,   Acc_ms2_Y : -0.26,  Acc_ms2_Z :  9.63,   t(s) : 1.0916
+Acc_Raw_X : 21   Acc_Raw_Y : -22   Acc_Raw_Z : 987      Acc_ms2_X : 0.20,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.45,   t(s) : 1.1119
+Acc_Raw_X : 21   Acc_Raw_Y : -10   Acc_Raw_Z : 993      Acc_ms2_X : 0.20,   Acc_ms2_Y : -0.10,  Acc_ms2_Z :  9.51,   t(s) : 1.1319
+Acc_Raw_X : 12   Acc_Raw_Y : -22   Acc_Raw_Z : 993      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.51,   t(s) : 1.1922
+Acc_Raw_X : 12   Acc_Raw_Y : -21   Acc_Raw_Z : 987      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.20,  Acc_ms2_Z :  9.45,   t(s) : 1.2537
+Acc_Raw_X : 10   Acc_Raw_Y : -20   Acc_Raw_Z : 993      Acc_ms2_X : 0.10,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.51,   t(s) : 1.2919
+Acc_Raw_X : 3   Acc_Raw_Y : -19   Acc_Raw_Z : 998       Acc_ms2_X : 0.03,   Acc_ms2_Y : -0.18,  Acc_ms2_Z :  9.56,   t(s) : 1.5838
+Acc_Raw_X : 12   Acc_Raw_Y : -11   Acc_Raw_Z : 992      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.11,  Acc_ms2_Z :  9.50,   t(s) : 1.7319
+Acc_Raw_X : 16   Acc_Raw_Y : -22   Acc_Raw_Z : 1003     Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.61,   t(s) : 1.7519
+Acc_Raw_X : 18   Acc_Raw_Y : -22   Acc_Raw_Z : 990      Acc_ms2_X : 0.17,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.48,   t(s) : 1.9019
+Acc_Raw_X : 20   Acc_Raw_Y : -22   Acc_Raw_Z : 1011     Acc_ms2_X : 0.19,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.68,   t(s) : 1.9222
+Acc_Raw_X : 20   Acc_Raw_Y : -18   Acc_Raw_Z : 993      Acc_ms2_X : 0.19,   Acc_ms2_Y : -0.17,  Acc_ms2_Z :  9.51,   t(s) : 2.3019
+Acc_Raw_X : 15   Acc_Raw_Y : -24   Acc_Raw_Z : 993      Acc_ms2_X : 0.14,   Acc_ms2_Y : -0.23,  Acc_ms2_Z :  9.51,   t(s) : 2.7719
+Acc_Raw_X : 10   Acc_Raw_Y : -15   Acc_Raw_Z : 997      Acc_ms2_X : 0.10,   Acc_ms2_Y : -0.14,  Acc_ms2_Z :  9.55,   t(s) : 2.8019
+Acc_Raw_X : 15   Acc_Raw_Y : -22   Acc_Raw_Z : 997      Acc_ms2_X : 0.14,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.55,   t(s) : 2.8219
+Acc_Raw_X : 10   Acc_Raw_Y : -19   Acc_Raw_Z : 1004     Acc_ms2_X : 0.10,   Acc_ms2_Y : -0.18,  Acc_ms2_Z :  9.62,   t(s) : 2.8419
+Acc_Raw_X : 15   Acc_Raw_Y : -25   Acc_Raw_Z : 998      Acc_ms2_X : 0.14,   Acc_ms2_Y : -0.24,  Acc_ms2_Z :  9.56,   t(s) : 3.6216
+Acc_Raw_X : 15   Acc_Raw_Y : -18   Acc_Raw_Z : 996      Acc_ms2_X : 0.14,   Acc_ms2_Y : -0.17,  Acc_ms2_Z :  9.54,   t(s) : 3.6519
+Acc_Raw_X : 17   Acc_Raw_Y : -25   Acc_Raw_Z : 1001     Acc_ms2_X : 0.16,   Acc_ms2_Y : -0.24,  Acc_ms2_Z :  9.59,   t(s) : 4.9122
+Acc_Raw_X : 19   Acc_Raw_Y : -26   Acc_Raw_Z : 988      Acc_ms2_X : 0.18,   Acc_ms2_Y : -0.25,  Acc_ms2_Z :  9.46,   t(s) : 4.9322
+Acc_Raw_X : 16   Acc_Raw_Y : -19   Acc_Raw_Z : 994      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.18,  Acc_ms2_Z :  9.52,   t(s) : 5.1234
+Acc_Raw_X : 16   Acc_Raw_Y : -24   Acc_Raw_Z : 996      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.23,  Acc_ms2_Z :  9.54,   t(s) : 5.1525
+Acc_Raw_X : 7   Acc_Raw_Y : -19   Acc_Raw_Z : 989       Acc_ms2_X : 0.07,   Acc_ms2_Y : -0.18,  Acc_ms2_Z :  9.47,   t(s) : 5.2125
+Acc_Raw_X : 16   Acc_Raw_Y : -24   Acc_Raw_Z : 988      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.23,  Acc_ms2_Z :  9.46,   t(s) : 5.2325
+Acc_Raw_X : 21   Acc_Raw_Y : -21   Acc_Raw_Z : 989      Acc_ms2_X : 0.20,   Acc_ms2_Y : -0.20,  Acc_ms2_Z :  9.47,   t(s) : 5.2622
+Acc_Raw_X : 20   Acc_Raw_Y : -11   Acc_Raw_Z : 983      Acc_ms2_X : 0.19,   Acc_ms2_Y : -0.11,  Acc_ms2_Z :  9.41,   t(s) : 5.2822
+Acc_Raw_X : 15   Acc_Raw_Y : -18   Acc_Raw_Z : 1007     Acc_ms2_X : 0.14,   Acc_ms2_Y : -0.17,  Acc_ms2_Z :  9.64,   t(s) : 5.3834
+Acc_Raw_X : 12   Acc_Raw_Y : -22   Acc_Raw_Z : 986      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.44,   t(s) : 5.4219
+Acc_Raw_X : 16   Acc_Raw_Y : -24   Acc_Raw_Z : 988      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.23,  Acc_ms2_Z :  9.46,   t(s) : 5.4422
+Acc_Raw_X : 7   Acc_Raw_Y : -18   Acc_Raw_Z : 986       Acc_ms2_X : 0.07,   Acc_ms2_Y : -0.17,  Acc_ms2_Z :  9.44,   t(s) : 5.4822
+Acc_Raw_X : 18   Acc_Raw_Y : -21   Acc_Raw_Z : 1003     Acc_ms2_X : 0.17,   Acc_ms2_Y : -0.20,  Acc_ms2_Z :  9.61,   t(s) : 5.5222
+Acc_Raw_X : 22   Acc_Raw_Y : -20   Acc_Raw_Z : 995      Acc_ms2_X : 0.21,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.53,   t(s) : 5.6625
+Acc_Raw_X : 11   Acc_Raw_Y : -17   Acc_Raw_Z : 986      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.16,  Acc_ms2_Z :  9.44,   t(s) : 5.7438
+Acc_Raw_X : 16   Acc_Raw_Y : -24   Acc_Raw_Z : 996      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.23,  Acc_ms2_Z :  9.54,   t(s) : 5.9722
+Acc_Raw_X : 14   Acc_Raw_Y : -17   Acc_Raw_Z : 998      Acc_ms2_X : 0.13,   Acc_ms2_Y : -0.16,  Acc_ms2_Z :  9.56,   t(s) : 6.0328
+
+Get accel data - BMA400_DATA_ONLY
+Accel Gravity data in m/s^2
+Acc_Raw_X : 15   Acc_Raw_Y : -18   Acc_Raw_Z : 990      Acc_ms2_X : 0.14,   Acc_ms2_Y : -0.17,  Acc_ms2_Z :  9.48
+Acc_Raw_X : 13   Acc_Raw_Y : -20   Acc_Raw_Z : 988      Acc_ms2_X : 0.12,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.46
+Acc_Raw_X : 23   Acc_Raw_Y : -20   Acc_Raw_Z : 1000     Acc_ms2_X : 0.22,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.58
+Acc_Raw_X : 17   Acc_Raw_Y : -31   Acc_Raw_Z : 1010     Acc_ms2_X : 0.16,   Acc_ms2_Y : -0.30,  Acc_ms2_Z :  9.67
+Acc_Raw_X : 19   Acc_Raw_Y : -25   Acc_Raw_Z : 995      Acc_ms2_X : 0.18,   Acc_ms2_Y : -0.24,  Acc_ms2_Z :  9.53
+Acc_Raw_X : 14   Acc_Raw_Y : -17   Acc_Raw_Z : 994      Acc_ms2_X : 0.13,   Acc_ms2_Y : -0.16,  Acc_ms2_Z :  9.52
+Acc_Raw_X : 19   Acc_Raw_Y : -27   Acc_Raw_Z : 1002     Acc_ms2_X : 0.18,   Acc_ms2_Y : -0.26,  Acc_ms2_Z :  9.60
+Acc_Raw_X : 16   Acc_Raw_Y : -15   Acc_Raw_Z : 994      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.14,  Acc_ms2_Z :  9.52
+Acc_Raw_X : 13   Acc_Raw_Y : -24   Acc_Raw_Z : 990      Acc_ms2_X : 0.12,   Acc_ms2_Y : -0.23,  Acc_ms2_Z :  9.48
+Acc_Raw_X : 16   Acc_Raw_Y : -17   Acc_Raw_Z : 1003     Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.16,  Acc_ms2_Z :  9.61
+Acc_Raw_X : 11   Acc_Raw_Y : -22   Acc_Raw_Z : 985      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.43
+Acc_Raw_X : 12   Acc_Raw_Y : -20   Acc_Raw_Z : 999      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.57
+Acc_Raw_X : 17   Acc_Raw_Y : -14   Acc_Raw_Z : 994      Acc_ms2_X : 0.16,   Acc_ms2_Y : -0.13,  Acc_ms2_Z :  9.52
+Acc_Raw_X : 17   Acc_Raw_Y : -20   Acc_Raw_Z : 997      Acc_ms2_X : 0.16,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.55
+Acc_Raw_X : 5   Acc_Raw_Y : -27   Acc_Raw_Z : 993       Acc_ms2_X : 0.05,   Acc_ms2_Y : -0.26,  Acc_ms2_Z :  9.51
+Acc_Raw_X : 17   Acc_Raw_Y : -21   Acc_Raw_Z : 982      Acc_ms2_X : 0.16,   Acc_ms2_Y : -0.20,  Acc_ms2_Z :  9.40
+Acc_Raw_X : 21   Acc_Raw_Y : -20   Acc_Raw_Z : 999      Acc_ms2_X : 0.20,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.57
+Acc_Raw_X : 12   Acc_Raw_Y : -15   Acc_Raw_Z : 991      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.14,  Acc_ms2_Z :  9.49
+Acc_Raw_X : 16   Acc_Raw_Y : -20   Acc_Raw_Z : 990      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.48
+Acc_Raw_X : 11   Acc_Raw_Y : -18   Acc_Raw_Z : 993      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.17,  Acc_ms2_Z :  9.51
+Acc_Raw_X : 16   Acc_Raw_Y : -21   Acc_Raw_Z : 972      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.20,  Acc_ms2_Z :  9.31
+Acc_Raw_X : 15   Acc_Raw_Y : -14   Acc_Raw_Z : 990      Acc_ms2_X : 0.14,   Acc_ms2_Y : -0.13,  Acc_ms2_Z :  9.48
+Acc_Raw_X : 17   Acc_Raw_Y : -23   Acc_Raw_Z : 990      Acc_ms2_X : 0.16,   Acc_ms2_Y : -0.22,  Acc_ms2_Z :  9.48
+Acc_Raw_X : 9   Acc_Raw_Y : -20   Acc_Raw_Z : 999       Acc_ms2_X : 0.09,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.57
+Acc_Raw_X : 20   Acc_Raw_Y : -14   Acc_Raw_Z : 987      Acc_ms2_X : 0.19,   Acc_ms2_Y : -0.13,  Acc_ms2_Z :  9.45
+Acc_Raw_X : 16   Acc_Raw_Y : -20   Acc_Raw_Z : 995      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.53
+Acc_Raw_X : 18   Acc_Raw_Y : -18   Acc_Raw_Z : 992      Acc_ms2_X : 0.17,   Acc_ms2_Y : -0.17,  Acc_ms2_Z :  9.50
+Acc_Raw_X : 18   Acc_Raw_Y : -19   Acc_Raw_Z : 991      Acc_ms2_X : 0.17,   Acc_ms2_Y : -0.18,  Acc_ms2_Z :  9.49
+Acc_Raw_X : 12   Acc_Raw_Y : -20   Acc_Raw_Z : 990      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.48
+Acc_Raw_X : 13   Acc_Raw_Y : -17   Acc_Raw_Z : 996      Acc_ms2_X : 0.12,   Acc_ms2_Y : -0.16,  Acc_ms2_Z :  9.54
+Acc_Raw_X : 19   Acc_Raw_Y : -21   Acc_Raw_Z : 1000     Acc_ms2_X : 0.18,   Acc_ms2_Y : -0.20,  Acc_ms2_Z :  9.58
+Acc_Raw_X : 13   Acc_Raw_Y : -22   Acc_Raw_Z : 994      Acc_ms2_X : 0.12,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.52
+Acc_Raw_X : 16   Acc_Raw_Y : -19   Acc_Raw_Z : 992      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.18,  Acc_ms2_Z :  9.50
+Acc_Raw_X : 12   Acc_Raw_Y : -17   Acc_Raw_Z : 984      Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.16,  Acc_ms2_Z :  9.42
+Acc_Raw_X : 9   Acc_Raw_Y : -16   Acc_Raw_Z : 1004      Acc_ms2_X : 0.09,   Acc_ms2_Y : -0.15,  Acc_ms2_Z :  9.62
+Acc_Raw_X : 19   Acc_Raw_Y : -17   Acc_Raw_Z : 997      Acc_ms2_X : 0.18,   Acc_ms2_Y : -0.16,  Acc_ms2_Z :  9.55
+Acc_Raw_X : 16   Acc_Raw_Y : -20   Acc_Raw_Z : 994      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.19,  Acc_ms2_Z :  9.52
+Acc_Raw_X : 8   Acc_Raw_Y : -16   Acc_Raw_Z : 994       Acc_ms2_X : 0.08,   Acc_ms2_Y : -0.15,  Acc_ms2_Z :  9.52
+Acc_Raw_X : 11   Acc_Raw_Y : -17   Acc_Raw_Z : 1008     Acc_ms2_X : 0.11,   Acc_ms2_Y : -0.16,  Acc_ms2_Z :  9.65
+Acc_Raw_X : 14   Acc_Raw_Y : -23   Acc_Raw_Z : 1002     Acc_ms2_X : 0.13,   Acc_ms2_Y : -0.22,  Acc_ms2_Z :  9.60
+Acc_Raw_X : 17   Acc_Raw_Y : -23   Acc_Raw_Z : 995      Acc_ms2_X : 0.16,   Acc_ms2_Y : -0.22,  Acc_ms2_Z :  9.53
+Acc_Raw_X : 16   Acc_Raw_Y : -22   Acc_Raw_Z : 992      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.50
+Acc_Raw_X : 17   Acc_Raw_Y : -19   Acc_Raw_Z : 985      Acc_ms2_X : 0.16,   Acc_ms2_Y : -0.18,  Acc_ms2_Z :  9.43
+Acc_Raw_X : 18   Acc_Raw_Y : -14   Acc_Raw_Z : 990      Acc_ms2_X : 0.17,   Acc_ms2_Y : -0.13,  Acc_ms2_Z :  9.48
+Acc_Raw_X : 16   Acc_Raw_Y : -28   Acc_Raw_Z : 992      Acc_ms2_X : 0.15,   Acc_ms2_Y : -0.27,  Acc_ms2_Z :  9.50
+Acc_Raw_X : 13   Acc_Raw_Y : -22   Acc_Raw_Z : 984      Acc_ms2_X : 0.12,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.42
+Acc_Raw_X : 15   Acc_Raw_Y : -22   Acc_Raw_Z : 995      Acc_ms2_X : 0.14,   Acc_ms2_Y : -0.21,  Acc_ms2_Z :  9.53
+Acc_Raw_X : 17   Acc_Raw_Y : -11   Acc_Raw_Z : 990      Acc_ms2_X : 0.16,   Acc_ms2_Y : -0.11,  Acc_ms2_Z :  9.48
+Acc_Raw_X : 15   Acc_Raw_Y : -21   Acc_Raw_Z : 995      Acc_ms2_X : 0.14,   Acc_ms2_Y : -0.20,  Acc_ms2_Z :  9.53
+Acc_Raw_X : 19   Acc_Raw_Y : -16   Acc_Raw_Z : 1001     Acc_ms2_X : 0.18,   Acc_ms2_Y : -0.15,  Acc_ms2_Z :  9.59

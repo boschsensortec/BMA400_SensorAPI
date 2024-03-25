@@ -1,0 +1,85 @@
+I2C Interface 
+Combination 1 : Orient change interrupt with XYZ Axes enabled
+
+Shake board for Orientation change interrupt
+Orientation interrupt detected
+Reference  : X: 63     Y : 3920     Z : 1007
+Accel data : X : -424   Y : -1396    Z : -2
+Orientation interrupt detected
+Accel data : X : -696   Y : 1027    Z : -468
+Orientation interrupt detected
+Accel data : X : -1   Y : 12    Z : 852
+Orientation interrupt detected
+Accel data : X : -507   Y : 1288    Z : -55
+Orientation interrupt detected
+Accel data : X : -1181   Y : 930    Z : -1099
+
+Orientation interrupt test for Combination 1 done
+
+Combination 2 : Orient change interrupt with Y Axis enabled
+
+Shake board for Orientation change interrupt
+Orientation interrupt detected
+Reference  : X: 3613     Y : 554     Z : 4089
+Accel data : X : -903   Y : 533    Z : -879
+Orientation interrupt detected
+Accel data : X : -477   Y : 648    Z : -506
+Orientation interrupt detected
+Accel data : X : -13   Y : -187    Z : 384
+Orientation interrupt detected
+Accel data : X : -311   Y : -419    Z : 325
+Orientation interrupt detected
+Accel data : X : 310   Y : -990    Z : 2002
+
+Orientation interrupt test for Combination 2 done
+
+Combination 3 : Orient change interrupt with X Axis enabled
+
+Shake board for Orientation change interrupt
+Orientation interrupt detected
+Reference  : X: 189     Y : 3885     Z : 4089
+Accel data : X : 155   Y : -1004    Z : 1838
+Orientation interrupt detected
+Accel data : X : 373   Y : -959    Z : 1468
+Orientation interrupt detected
+Accel data : X : 810   Y : -476    Z : 217
+Orientation interrupt detected
+Accel data : X : 139   Y : 489    Z : -126
+Orientation interrupt detected
+Accel data : X : 182   Y : 1404    Z : -469
+
+Orientation interrupt test for Combination 3 done
+
+Combination 4 : Orient change interrupt with Z Axis enabled
+
+Shake board for Orientation change interrupt
+Orientation interrupt detected
+Reference  : X: 34     Y : 3885     Z : 3667
+Accel data : X : 68   Y : 21    Z : 1448
+Orientation interrupt detected
+Accel data : X : -117   Y : -1422    Z : -1866
+Orientation interrupt detected
+Accel data : X : -422   Y : 1151    Z : 907
+Orientation interrupt detected
+Accel data : X : -136   Y : -2048    Z : -1351
+Orientation interrupt detected
+Accel data : X : -129   Y : 1314    Z : 725
+
+Orientation interrupt test for Combination 4 done
+
+Combination 5 : Orient change interrupt with Z Axis enabled and manual update
+
+Shake board for Orientation change interrupt
+Orientation interrupt detected
+Reference  : X: 34     Y : 3885     Z : 2000
+Accel data : X : -3   Y : 194    Z : -552
+Orientation interrupt detected
+Accel data : X : 162   Y : -2048    Z : -1699
+Orientation interrupt detected
+Accel data : X : 317   Y : -1314    Z : -995
+Orientation interrupt detected
+Accel data : X : -572   Y : -459    Z : -733
+Orientation interrupt detected
+Accel data : X : 640   Y : 2047    Z : 1042
+
+Orientation interrupt test for Combination 5 done

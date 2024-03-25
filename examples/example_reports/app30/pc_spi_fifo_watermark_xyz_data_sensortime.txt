@@ -1,0 +1,1052 @@
+SPI Interface 
+Read FIFO watermark interrupt XYZ data with sensortime
+
+
+Iteration : 1
+
+Watermark level : 650
+Requested FIFO length : 1124
+Available FIFO length : 754
+Requested FIFO frames : 150
+Extracted FIFO frames : 93
+Accel[0] Raw_X : 96     Raw_Y : -131     Raw_Z : 997 
+Accel[1] Raw_X : 93     Raw_Y : -131     Raw_Z : 995 
+Accel[2] Raw_X : 94     Raw_Y : -137     Raw_Z : 999 
+Accel[3] Raw_X : 96     Raw_Y : -132     Raw_Z : 994 
+Accel[4] Raw_X : 85     Raw_Y : -144     Raw_Z : 968 
+Accel[5] Raw_X : 98     Raw_Y : -143     Raw_Z : 1003 
+Accel[6] Raw_X : 96     Raw_Y : -142     Raw_Z : 1016 
+Accel[7] Raw_X : 83     Raw_Y : -139     Raw_Z : 1000 
+Accel[8] Raw_X : 89     Raw_Y : -127     Raw_Z : 1006 
+Accel[9] Raw_X : 98     Raw_Y : -151     Raw_Z : 968 
+Accel[10] Raw_X : 95     Raw_Y : -144     Raw_Z : 974 
+Accel[11] Raw_X : 88     Raw_Y : -123     Raw_Z : 1019 
+Accel[12] Raw_X : 83     Raw_Y : -141     Raw_Z : 1011 
+Accel[13] Raw_X : 94     Raw_Y : -145     Raw_Z : 986 
+Accel[14] Raw_X : 94     Raw_Y : -134     Raw_Z : 999 
+Accel[15] Raw_X : 86     Raw_Y : -129     Raw_Z : 998 
+Accel[16] Raw_X : 81     Raw_Y : -130     Raw_Z : 973 
+Accel[17] Raw_X : 93     Raw_Y : -137     Raw_Z : 979 
+Accel[18] Raw_X : 99     Raw_Y : -146     Raw_Z : 981 
+Accel[19] Raw_X : 89     Raw_Y : -130     Raw_Z : 995 
+Accel[20] Raw_X : 102     Raw_Y : -150     Raw_Z : 976 
+Accel[21] Raw_X : 96     Raw_Y : -136     Raw_Z : 1012 
+Accel[22] Raw_X : 81     Raw_Y : -142     Raw_Z : 982 
+Accel[23] Raw_X : 90     Raw_Y : -145     Raw_Z : 991 
+Accel[24] Raw_X : 94     Raw_Y : -141     Raw_Z : 991 
+Accel[25] Raw_X : 97     Raw_Y : -153     Raw_Z : 973 
+Accel[26] Raw_X : 102     Raw_Y : -141     Raw_Z : 977 
+Accel[27] Raw_X : 91     Raw_Y : -136     Raw_Z : 1004 
+Accel[28] Raw_X : 97     Raw_Y : -145     Raw_Z : 986 
+Accel[29] Raw_X : 87     Raw_Y : -130     Raw_Z : 996 
+Accel[30] Raw_X : 79     Raw_Y : -135     Raw_Z : 1033 
+Accel[31] Raw_X : 97     Raw_Y : -138     Raw_Z : 999 
+Accel[32] Raw_X : 88     Raw_Y : -135     Raw_Z : 973 
+Accel[33] Raw_X : 97     Raw_Y : -148     Raw_Z : 976 
+Accel[34] Raw_X : 101     Raw_Y : -136     Raw_Z : 1009 
+Accel[35] Raw_X : 79     Raw_Y : -137     Raw_Z : 1007 
+Accel[36] Raw_X : 92     Raw_Y : -139     Raw_Z : 1012 
+Accel[37] Raw_X : 94     Raw_Y : -137     Raw_Z : 1010 
+Accel[38] Raw_X : 85     Raw_Y : -128     Raw_Z : 1009 
+Accel[39] Raw_X : 89     Raw_Y : -134     Raw_Z : 1018 
+Accel[40] Raw_X : 94     Raw_Y : -139     Raw_Z : 996 
+Accel[41] Raw_X : 97     Raw_Y : -134     Raw_Z : 1039 
+Accel[42] Raw_X : 90     Raw_Y : -142     Raw_Z : 1005 
+Accel[43] Raw_X : 75     Raw_Y : -134     Raw_Z : 995 
+Accel[44] Raw_X : 86     Raw_Y : -136     Raw_Z : 996 
+Accel[45] Raw_X : 88     Raw_Y : -136     Raw_Z : 1013 
+Accel[46] Raw_X : 88     Raw_Y : -132     Raw_Z : 1001 
+Accel[47] Raw_X : 97     Raw_Y : -145     Raw_Z : 961 
+Accel[48] Raw_X : 99     Raw_Y : -138     Raw_Z : 982 
+Accel[49] Raw_X : 83     Raw_Y : -124     Raw_Z : 1026 
+Accel[50] Raw_X : 94     Raw_Y : -137     Raw_Z : 1000 
+Accel[51] Raw_X : 95     Raw_Y : -151     Raw_Z : 956 
+Accel[52] Raw_X : 88     Raw_Y : -127     Raw_Z : 985 
+Accel[53] Raw_X : 96     Raw_Y : -148     Raw_Z : 979 
+Accel[54] Raw_X : 80     Raw_Y : -132     Raw_Z : 989 
+Accel[55] Raw_X : 90     Raw_Y : -128     Raw_Z : 1004 
+Accel[56] Raw_X : 88     Raw_Y : -143     Raw_Z : 1010 
+Accel[57] Raw_X : 91     Raw_Y : -141     Raw_Z : 968 
+Accel[58] Raw_X : 87     Raw_Y : -131     Raw_Z : 980 
+Accel[59] Raw_X : 94     Raw_Y : -131     Raw_Z : 973 
+Accel[60] Raw_X : 85     Raw_Y : -142     Raw_Z : 1003 
+Accel[61] Raw_X : 81     Raw_Y : -144     Raw_Z : 995 
+Accel[62] Raw_X : 88     Raw_Y : -138     Raw_Z : 981 
+Accel[63] Raw_X : 94     Raw_Y : -141     Raw_Z : 980 
+Accel[64] Raw_X : 88     Raw_Y : -134     Raw_Z : 991 
+Accel[65] Raw_X : 90     Raw_Y : -149     Raw_Z : 976 
+Accel[66] Raw_X : 82     Raw_Y : -130     Raw_Z : 1016 
+Accel[67] Raw_X : 81     Raw_Y : -135     Raw_Z : 989 
+Accel[68] Raw_X : 76     Raw_Y : -134     Raw_Z : 992 
+Accel[69] Raw_X : 76     Raw_Y : -132     Raw_Z : 980 
+Accel[70] Raw_X : 98     Raw_Y : -128     Raw_Z : 1025 
+Accel[71] Raw_X : 76     Raw_Y : -134     Raw_Z : 982 
+Accel[72] Raw_X : 90     Raw_Y : -135     Raw_Z : 1009 
+Accel[73] Raw_X : 90     Raw_Y : -136     Raw_Z : 1003 
+Accel[74] Raw_X : 85     Raw_Y : -130     Raw_Z : 1002 
+Accel[75] Raw_X : 89     Raw_Y : -138     Raw_Z : 985 
+Accel[76] Raw_X : 92     Raw_Y : -155     Raw_Z : 1006 
+Accel[77] Raw_X : 90     Raw_Y : -147     Raw_Z : 968 
+Accel[78] Raw_X : 82     Raw_Y : -135     Raw_Z : 995 
+Accel[79] Raw_X : 84     Raw_Y : -123     Raw_Z : 1014 
+Accel[80] Raw_X : 91     Raw_Y : -138     Raw_Z : 981 
+Accel[81] Raw_X : 90     Raw_Y : -133     Raw_Z : 1009 
+Accel[82] Raw_X : 94     Raw_Y : -141     Raw_Z : 957 
+Accel[83] Raw_X : 92     Raw_Y : -133     Raw_Z : 1017 
+Accel[84] Raw_X : 98     Raw_Y : -148     Raw_Z : 977 
+Accel[85] Raw_X : 98     Raw_Y : -150     Raw_Z : 958 
+Accel[86] Raw_X : 85     Raw_Y : -151     Raw_Z : 985 
+Accel[87] Raw_X : 90     Raw_Y : -139     Raw_Z : 956 
+Accel[88] Raw_X : 85     Raw_Y : -148     Raw_Z : 963 
+Accel[89] Raw_X : 90     Raw_Y : -134     Raw_Z : 1003 
+Accel[90] Raw_X : 82     Raw_Y : -139     Raw_Z : 991 
+Accel[91] Raw_X : 84     Raw_Y : -152     Raw_Z : 1007 
+Accel[92] Raw_X : 86     Raw_Y : -140     Raw_Z : 989 
+FIFO sensor time : 0.9322s
+FIFO configuration change: 0x4
+Accel odr/osr/range configuration changed
+
+
+Iteration : 2
+
+Watermark level : 650
+Requested FIFO length : 1124
+Available FIFO length : 752
+Requested FIFO frames : 150
+Extracted FIFO frames : 93
+Accel[0] Raw_X : 92     Raw_Y : -141     Raw_Z : 1011 
+Accel[1] Raw_X : 91     Raw_Y : -138     Raw_Z : 993 
+Accel[2] Raw_X : 91     Raw_Y : -136     Raw_Z : 986 
+Accel[3] Raw_X : 94     Raw_Y : -136     Raw_Z : 1007 
+Accel[4] Raw_X : 91     Raw_Y : -139     Raw_Z : 1007 
+Accel[5] Raw_X : 86     Raw_Y : -136     Raw_Z : 1003 
+Accel[6] Raw_X : 93     Raw_Y : -134     Raw_Z : 989 
+Accel[7] Raw_X : 72     Raw_Y : -128     Raw_Z : 1001 
+Accel[8] Raw_X : 80     Raw_Y : -137     Raw_Z : 1008 
+Accel[9] Raw_X : 95     Raw_Y : -139     Raw_Z : 989 
+Accel[10] Raw_X : 90     Raw_Y : -144     Raw_Z : 983 
+Accel[11] Raw_X : 93     Raw_Y : -128     Raw_Z : 1015 
+Accel[12] Raw_X : 104     Raw_Y : -142     Raw_Z : 984 
+Accel[13] Raw_X : 91     Raw_Y : -136     Raw_Z : 990 
+Accel[14] Raw_X : 87     Raw_Y : -137     Raw_Z : 989 
+Accel[15] Raw_X : 90     Raw_Y : -151     Raw_Z : 995 
+Accel[16] Raw_X : 95     Raw_Y : -150     Raw_Z : 974 
+Accel[17] Raw_X : 89     Raw_Y : -138     Raw_Z : 1003 
+Accel[18] Raw_X : 77     Raw_Y : -132     Raw_Z : 997 
+Accel[19] Raw_X : 86     Raw_Y : -125     Raw_Z : 1020 
+Accel[20] Raw_X : 88     Raw_Y : -146     Raw_Z : 980 
+Accel[21] Raw_X : 91     Raw_Y : -134     Raw_Z : 1000 
+Accel[22] Raw_X : 79     Raw_Y : -139     Raw_Z : 977 
+Accel[23] Raw_X : 86     Raw_Y : -138     Raw_Z : 1019 
+Accel[24] Raw_X : 99     Raw_Y : -141     Raw_Z : 1000 
+Accel[25] Raw_X : 86     Raw_Y : -127     Raw_Z : 1001 
+Accel[26] Raw_X : 86     Raw_Y : -148     Raw_Z : 990 
+Accel[27] Raw_X : 97     Raw_Y : -148     Raw_Z : 1005 
+Accel[28] Raw_X : 82     Raw_Y : -128     Raw_Z : 1013 
+Accel[29] Raw_X : 86     Raw_Y : -140     Raw_Z : 995 
+Accel[30] Raw_X : 91     Raw_Y : -136     Raw_Z : 1007 
+Accel[31] Raw_X : 105     Raw_Y : -154     Raw_Z : 1009 
+Accel[32] Raw_X : 88     Raw_Y : -142     Raw_Z : 992 
+Accel[33] Raw_X : 101     Raw_Y : -134     Raw_Z : 1011 
+Accel[34] Raw_X : 90     Raw_Y : -134     Raw_Z : 979 
+Accel[35] Raw_X : 92     Raw_Y : -137     Raw_Z : 983 
+Accel[36] Raw_X : 94     Raw_Y : -145     Raw_Z : 996 
+Accel[37] Raw_X : 92     Raw_Y : -127     Raw_Z : 1019 
+Accel[38] Raw_X : 85     Raw_Y : -136     Raw_Z : 967 
+Accel[39] Raw_X : 97     Raw_Y : -151     Raw_Z : 966 
+Accel[40] Raw_X : 87     Raw_Y : -134     Raw_Z : 1018 
+Accel[41] Raw_X : 97     Raw_Y : -137     Raw_Z : 998 
+Accel[42] Raw_X : 93     Raw_Y : -139     Raw_Z : 1000 
+Accel[43] Raw_X : 88     Raw_Y : -140     Raw_Z : 1001 
+Accel[44] Raw_X : 97     Raw_Y : -138     Raw_Z : 975 
+Accel[45] Raw_X : 101     Raw_Y : -136     Raw_Z : 980 
+Accel[46] Raw_X : 85     Raw_Y : -134     Raw_Z : 977 
+Accel[47] Raw_X : 84     Raw_Y : -132     Raw_Z : 1013 
+Accel[48] Raw_X : 89     Raw_Y : -139     Raw_Z : 985 
+Accel[49] Raw_X : 94     Raw_Y : -127     Raw_Z : 999 
+Accel[50] Raw_X : 89     Raw_Y : -144     Raw_Z : 961 
+Accel[51] Raw_X : 104     Raw_Y : -141     Raw_Z : 988 
+Accel[52] Raw_X : 90     Raw_Y : -141     Raw_Z : 987 
+Accel[53] Raw_X : 103     Raw_Y : -148     Raw_Z : 984 
+Accel[54] Raw_X : 102     Raw_Y : -154     Raw_Z : 968 
+Accel[55] Raw_X : 99     Raw_Y : -140     Raw_Z : 1011 
+Accel[56] Raw_X : 85     Raw_Y : -130     Raw_Z : 999 
+Accel[57] Raw_X : 87     Raw_Y : -136     Raw_Z : 1025 
+Accel[58] Raw_X : 96     Raw_Y : -128     Raw_Z : 992 
+Accel[59] Raw_X : 83     Raw_Y : -131     Raw_Z : 990 
+Accel[60] Raw_X : 86     Raw_Y : -143     Raw_Z : 977 
+Accel[61] Raw_X : 85     Raw_Y : -128     Raw_Z : 986 
+Accel[62] Raw_X : 104     Raw_Y : -156     Raw_Z : 949 
+Accel[63] Raw_X : 88     Raw_Y : -132     Raw_Z : 998 
+Accel[64] Raw_X : 89     Raw_Y : -140     Raw_Z : 997 
+Accel[65] Raw_X : 91     Raw_Y : -152     Raw_Z : 985 
+Accel[66] Raw_X : 91     Raw_Y : -143     Raw_Z : 993 
+Accel[67] Raw_X : 88     Raw_Y : -133     Raw_Z : 1003 
+Accel[68] Raw_X : 98     Raw_Y : -136     Raw_Z : 1008 
+Accel[69] Raw_X : 84     Raw_Y : -142     Raw_Z : 968 
+Accel[70] Raw_X : 90     Raw_Y : -136     Raw_Z : 996 
+Accel[71] Raw_X : 90     Raw_Y : -141     Raw_Z : 997 
+Accel[72] Raw_X : 89     Raw_Y : -128     Raw_Z : 991 
+Accel[73] Raw_X : 81     Raw_Y : -135     Raw_Z : 1010 
+Accel[74] Raw_X : 89     Raw_Y : -132     Raw_Z : 1000 
+Accel[75] Raw_X : 88     Raw_Y : -135     Raw_Z : 980 
+Accel[76] Raw_X : 97     Raw_Y : -139     Raw_Z : 983 
+Accel[77] Raw_X : 83     Raw_Y : -137     Raw_Z : 1004 
+Accel[78] Raw_X : 93     Raw_Y : -131     Raw_Z : 1000 
+Accel[79] Raw_X : 89     Raw_Y : -138     Raw_Z : 1005 
+Accel[80] Raw_X : 87     Raw_Y : -142     Raw_Z : 988 
+Accel[81] Raw_X : 85     Raw_Y : -141     Raw_Z : 1010 
+Accel[82] Raw_X : 75     Raw_Y : -131     Raw_Z : 1003 
+Accel[83] Raw_X : 89     Raw_Y : -141     Raw_Z : 993 
+Accel[84] Raw_X : 94     Raw_Y : -142     Raw_Z : 999 
+Accel[85] Raw_X : 91     Raw_Y : -146     Raw_Z : 995 
+Accel[86] Raw_X : 95     Raw_Y : -142     Raw_Z : 992 
+Accel[87] Raw_X : 83     Raw_Y : -140     Raw_Z : 994 
+Accel[88] Raw_X : 79     Raw_Y : -135     Raw_Z : 1016 
+Accel[89] Raw_X : 104     Raw_Y : -141     Raw_Z : 1003 
+Accel[90] Raw_X : 88     Raw_Y : -135     Raw_Z : 1005 
+Accel[91] Raw_X : 100     Raw_Y : -141     Raw_Z : 989 
+Accel[92] Raw_X : 95     Raw_Y : -143     Raw_Z : 971 
+FIFO sensor time : 1.8619s
+FIFO configuration change: 0x4
+Accel odr/osr/range configuration changed
+
+
+Iteration : 3
+
+Watermark level : 650
+Requested FIFO length : 1124
+Available FIFO length : 752
+Requested FIFO frames : 150
+Extracted FIFO frames : 93
+Accel[0] Raw_X : 88     Raw_Y : -133     Raw_Z : 992 
+Accel[1] Raw_X : 89     Raw_Y : -133     Raw_Z : 1003 
+Accel[2] Raw_X : 85     Raw_Y : -133     Raw_Z : 1001 
+Accel[3] Raw_X : 89     Raw_Y : -143     Raw_Z : 1040 
+Accel[4] Raw_X : 93     Raw_Y : -128     Raw_Z : 997 
+Accel[5] Raw_X : 92     Raw_Y : -143     Raw_Z : 970 
+Accel[6] Raw_X : 85     Raw_Y : -124     Raw_Z : 1022 
+Accel[7] Raw_X : 86     Raw_Y : -132     Raw_Z : 1007 
+Accel[8] Raw_X : 91     Raw_Y : -132     Raw_Z : 985 
+Accel[9] Raw_X : 88     Raw_Y : -144     Raw_Z : 1009 
+Accel[10] Raw_X : 104     Raw_Y : -151     Raw_Z : 1012 
+Accel[11] Raw_X : 79     Raw_Y : -132     Raw_Z : 992 
+Accel[12] Raw_X : 85     Raw_Y : -147     Raw_Z : 974 
+Accel[13] Raw_X : 89     Raw_Y : -134     Raw_Z : 975 
+Accel[14] Raw_X : 82     Raw_Y : -129     Raw_Z : 1003 
+Accel[15] Raw_X : 93     Raw_Y : -137     Raw_Z : 1015 
+Accel[16] Raw_X : 90     Raw_Y : -139     Raw_Z : 986 
+Accel[17] Raw_X : 94     Raw_Y : -133     Raw_Z : 983 
+Accel[18] Raw_X : 93     Raw_Y : -129     Raw_Z : 1012 
+Accel[19] Raw_X : 90     Raw_Y : -143     Raw_Z : 971 
+Accel[20] Raw_X : 93     Raw_Y : -133     Raw_Z : 971 
+Accel[21] Raw_X : 98     Raw_Y : -136     Raw_Z : 992 
+Accel[22] Raw_X : 97     Raw_Y : -147     Raw_Z : 976 
+Accel[23] Raw_X : 97     Raw_Y : -149     Raw_Z : 967 
+Accel[24] Raw_X : 84     Raw_Y : -133     Raw_Z : 1010 
+Accel[25] Raw_X : 87     Raw_Y : -135     Raw_Z : 997 
+Accel[26] Raw_X : 82     Raw_Y : -139     Raw_Z : 1015 
+Accel[27] Raw_X : 91     Raw_Y : -131     Raw_Z : 1024 
+Accel[28] Raw_X : 95     Raw_Y : -146     Raw_Z : 997 
+Accel[29] Raw_X : 89     Raw_Y : -132     Raw_Z : 988 
+Accel[30] Raw_X : 86     Raw_Y : -141     Raw_Z : 1012 
+Accel[31] Raw_X : 85     Raw_Y : -132     Raw_Z : 985 
+Accel[32] Raw_X : 88     Raw_Y : -136     Raw_Z : 982 
+Accel[33] Raw_X : 91     Raw_Y : -144     Raw_Z : 999 
+Accel[34] Raw_X : 85     Raw_Y : -140     Raw_Z : 1013 
+Accel[35] Raw_X : 90     Raw_Y : -137     Raw_Z : 1008 
+Accel[36] Raw_X : 95     Raw_Y : -147     Raw_Z : 1004 
+Accel[37] Raw_X : 90     Raw_Y : -143     Raw_Z : 977 
+Accel[38] Raw_X : 101     Raw_Y : -137     Raw_Z : 1008 
+Accel[39] Raw_X : 97     Raw_Y : -139     Raw_Z : 985 
+Accel[40] Raw_X : 97     Raw_Y : -144     Raw_Z : 1002 
+Accel[41] Raw_X : 94     Raw_Y : -137     Raw_Z : 976 
+Accel[42] Raw_X : 85     Raw_Y : -133     Raw_Z : 1002 
+Accel[43] Raw_X : 83     Raw_Y : -137     Raw_Z : 993 
+Accel[44] Raw_X : 88     Raw_Y : -138     Raw_Z : 997 
+Accel[45] Raw_X : 81     Raw_Y : -130     Raw_Z : 1033 
+Accel[46] Raw_X : 81     Raw_Y : -133     Raw_Z : 1020 
+Accel[47] Raw_X : 85     Raw_Y : -125     Raw_Z : 1007 
+Accel[48] Raw_X : 94     Raw_Y : -143     Raw_Z : 1001 
+Accel[49] Raw_X : 89     Raw_Y : -131     Raw_Z : 1012 
+Accel[50] Raw_X : 77     Raw_Y : -145     Raw_Z : 1008 
+Accel[51] Raw_X : 98     Raw_Y : -145     Raw_Z : 977 
+Accel[52] Raw_X : 83     Raw_Y : -127     Raw_Z : 1020 
+Accel[53] Raw_X : 91     Raw_Y : -141     Raw_Z : 961 
+Accel[54] Raw_X : 85     Raw_Y : -148     Raw_Z : 1003 
+Accel[55] Raw_X : 79     Raw_Y : -125     Raw_Z : 1009 
+Accel[56] Raw_X : 98     Raw_Y : -130     Raw_Z : 1026 
+Accel[57] Raw_X : 96     Raw_Y : -145     Raw_Z : 979 
+Accel[58] Raw_X : 86     Raw_Y : -141     Raw_Z : 996 
+Accel[59] Raw_X : 81     Raw_Y : -136     Raw_Z : 998 
+Accel[60] Raw_X : 85     Raw_Y : -127     Raw_Z : 1009 
+Accel[61] Raw_X : 85     Raw_Y : -150     Raw_Z : 974 
+Accel[62] Raw_X : 94     Raw_Y : -144     Raw_Z : 989 
+Accel[63] Raw_X : 87     Raw_Y : -149     Raw_Z : 989 
+Accel[64] Raw_X : 83     Raw_Y : -133     Raw_Z : 995 
+Accel[65] Raw_X : 95     Raw_Y : -134     Raw_Z : 987 
+Accel[66] Raw_X : 97     Raw_Y : -146     Raw_Z : 949 
+Accel[67] Raw_X : 96     Raw_Y : -150     Raw_Z : 973 
+Accel[68] Raw_X : 90     Raw_Y : -136     Raw_Z : 1019 
+Accel[69] Raw_X : 102     Raw_Y : -152     Raw_Z : 992 
+Accel[70] Raw_X : 94     Raw_Y : -146     Raw_Z : 989 
+Accel[71] Raw_X : 96     Raw_Y : -139     Raw_Z : 1026 
+Accel[72] Raw_X : 93     Raw_Y : -134     Raw_Z : 1021 
+Accel[73] Raw_X : 89     Raw_Y : -139     Raw_Z : 989 
+Accel[74] Raw_X : 91     Raw_Y : -127     Raw_Z : 1027 
+Accel[75] Raw_X : 95     Raw_Y : -140     Raw_Z : 976 
+Accel[76] Raw_X : 94     Raw_Y : -139     Raw_Z : 997 
+Accel[77] Raw_X : 94     Raw_Y : -143     Raw_Z : 1006 
+Accel[78] Raw_X : 83     Raw_Y : -145     Raw_Z : 992 
+Accel[79] Raw_X : 101     Raw_Y : -140     Raw_Z : 985 
+Accel[80] Raw_X : 91     Raw_Y : -125     Raw_Z : 994 
+Accel[81] Raw_X : 85     Raw_Y : -128     Raw_Z : 1034 
+Accel[82] Raw_X : 79     Raw_Y : -128     Raw_Z : 1015 
+Accel[83] Raw_X : 89     Raw_Y : -137     Raw_Z : 1000 
+Accel[84] Raw_X : 97     Raw_Y : -141     Raw_Z : 977 
+Accel[85] Raw_X : 91     Raw_Y : -136     Raw_Z : 976 
+Accel[86] Raw_X : 85     Raw_Y : -130     Raw_Z : 1025 
+Accel[87] Raw_X : 82     Raw_Y : -148     Raw_Z : 979 
+Accel[88] Raw_X : 85     Raw_Y : -137     Raw_Z : 976 
+Accel[89] Raw_X : 87     Raw_Y : -126     Raw_Z : 1005 
+Accel[90] Raw_X : 92     Raw_Y : -151     Raw_Z : 978 
+Accel[91] Raw_X : 88     Raw_Y : -132     Raw_Z : 1017 
+Accel[92] Raw_X : 90     Raw_Y : -133     Raw_Z : 1030 
+FIFO sensor time : 2.7922s
+FIFO configuration change: 0x4
+Accel odr/osr/range configuration changed
+
+
+Iteration : 4
+
+Watermark level : 650
+Requested FIFO length : 1124
+Available FIFO length : 752
+Requested FIFO frames : 150
+Extracted FIFO frames : 93
+Accel[0] Raw_X : 86     Raw_Y : -141     Raw_Z : 1009 
+Accel[1] Raw_X : 94     Raw_Y : -143     Raw_Z : 982 
+Accel[2] Raw_X : 94     Raw_Y : -139     Raw_Z : 960 
+Accel[3] Raw_X : 100     Raw_Y : -130     Raw_Z : 1012 
+Accel[4] Raw_X : 95     Raw_Y : -152     Raw_Z : 1001 
+Accel[5] Raw_X : 91     Raw_Y : -131     Raw_Z : 1017 
+Accel[6] Raw_X : 90     Raw_Y : -129     Raw_Z : 988 
+Accel[7] Raw_X : 93     Raw_Y : -143     Raw_Z : 979 
+Accel[8] Raw_X : 88     Raw_Y : -133     Raw_Z : 995 
+Accel[9] Raw_X : 90     Raw_Y : -137     Raw_Z : 1010 
+Accel[10] Raw_X : 94     Raw_Y : -146     Raw_Z : 999 
+Accel[11] Raw_X : 83     Raw_Y : -143     Raw_Z : 982 
+Accel[12] Raw_X : 88     Raw_Y : -137     Raw_Z : 977 
+Accel[13] Raw_X : 89     Raw_Y : -143     Raw_Z : 973 
+Accel[14] Raw_X : 76     Raw_Y : -127     Raw_Z : 998 
+Accel[15] Raw_X : 87     Raw_Y : -131     Raw_Z : 1002 
+Accel[16] Raw_X : 92     Raw_Y : -135     Raw_Z : 1001 
+Accel[17] Raw_X : 91     Raw_Y : -147     Raw_Z : 975 
+Accel[18] Raw_X : 88     Raw_Y : -135     Raw_Z : 1013 
+Accel[19] Raw_X : 85     Raw_Y : -133     Raw_Z : 1008 
+Accel[20] Raw_X : 92     Raw_Y : -136     Raw_Z : 1015 
+Accel[21] Raw_X : 87     Raw_Y : -135     Raw_Z : 998 
+Accel[22] Raw_X : 92     Raw_Y : -146     Raw_Z : 987 
+Accel[23] Raw_X : 90     Raw_Y : -146     Raw_Z : 991 
+Accel[24] Raw_X : 91     Raw_Y : -125     Raw_Z : 1035 
+Accel[25] Raw_X : 80     Raw_Y : -129     Raw_Z : 1004 
+Accel[26] Raw_X : 94     Raw_Y : -139     Raw_Z : 1005 
+Accel[27] Raw_X : 91     Raw_Y : -130     Raw_Z : 1013 
+Accel[28] Raw_X : 94     Raw_Y : -134     Raw_Z : 991 
+Accel[29] Raw_X : 92     Raw_Y : -139     Raw_Z : 975 
+Accel[30] Raw_X : 88     Raw_Y : -144     Raw_Z : 969 
+Accel[31] Raw_X : 94     Raw_Y : -152     Raw_Z : 1004 
+Accel[32] Raw_X : 104     Raw_Y : -144     Raw_Z : 968 
+Accel[33] Raw_X : 93     Raw_Y : -135     Raw_Z : 1018 
+Accel[34] Raw_X : 86     Raw_Y : -136     Raw_Z : 970 
+Accel[35] Raw_X : 91     Raw_Y : -138     Raw_Z : 986 
+Accel[36] Raw_X : 84     Raw_Y : -121     Raw_Z : 1021 
+Accel[37] Raw_X : 91     Raw_Y : -139     Raw_Z : 989 
+Accel[38] Raw_X : 90     Raw_Y : -132     Raw_Z : 985 
+Accel[39] Raw_X : 83     Raw_Y : -137     Raw_Z : 988 
+Accel[40] Raw_X : 88     Raw_Y : -141     Raw_Z : 1003 
+Accel[41] Raw_X : 96     Raw_Y : -144     Raw_Z : 1015 
+Accel[42] Raw_X : 98     Raw_Y : -139     Raw_Z : 972 
+Accel[43] Raw_X : 88     Raw_Y : -153     Raw_Z : 990 
+Accel[44] Raw_X : 80     Raw_Y : -138     Raw_Z : 979 
+Accel[45] Raw_X : 81     Raw_Y : -138     Raw_Z : 1005 
+Accel[46] Raw_X : 82     Raw_Y : -130     Raw_Z : 996 
+Accel[47] Raw_X : 87     Raw_Y : -144     Raw_Z : 983 
+Accel[48] Raw_X : 85     Raw_Y : -140     Raw_Z : 983 
+Accel[49] Raw_X : 82     Raw_Y : -136     Raw_Z : 982 
+Accel[50] Raw_X : 88     Raw_Y : -135     Raw_Z : 988 
+Accel[51] Raw_X : 85     Raw_Y : -135     Raw_Z : 1007 
+Accel[52] Raw_X : 90     Raw_Y : -134     Raw_Z : 1006 
+Accel[53] Raw_X : 96     Raw_Y : -148     Raw_Z : 965 
+Accel[54] Raw_X : 94     Raw_Y : -142     Raw_Z : 997 
+Accel[55] Raw_X : 89     Raw_Y : -130     Raw_Z : 1006 
+Accel[56] Raw_X : 105     Raw_Y : -138     Raw_Z : 980 
+Accel[57] Raw_X : 88     Raw_Y : -143     Raw_Z : 985 
+Accel[58] Raw_X : 100     Raw_Y : -144     Raw_Z : 1003 
+Accel[59] Raw_X : 82     Raw_Y : -126     Raw_Z : 1026 
+Accel[60] Raw_X : 88     Raw_Y : -132     Raw_Z : 1001 
+Accel[61] Raw_X : 91     Raw_Y : -128     Raw_Z : 980 
+Accel[62] Raw_X : 90     Raw_Y : -133     Raw_Z : 999 
+Accel[63] Raw_X : 91     Raw_Y : -144     Raw_Z : 980 
+Accel[64] Raw_X : 86     Raw_Y : -143     Raw_Z : 987 
+Accel[65] Raw_X : 91     Raw_Y : -138     Raw_Z : 982 
+Accel[66] Raw_X : 92     Raw_Y : -130     Raw_Z : 973 
+Accel[67] Raw_X : 90     Raw_Y : -141     Raw_Z : 997 
+Accel[68] Raw_X : 81     Raw_Y : -134     Raw_Z : 1011 
+Accel[69] Raw_X : 96     Raw_Y : -135     Raw_Z : 1001 
+Accel[70] Raw_X : 94     Raw_Y : -132     Raw_Z : 1005 
+Accel[71] Raw_X : 91     Raw_Y : -138     Raw_Z : 984 
+Accel[72] Raw_X : 99     Raw_Y : -139     Raw_Z : 984 
+Accel[73] Raw_X : 104     Raw_Y : -135     Raw_Z : 1007 
+Accel[74] Raw_X : 87     Raw_Y : -140     Raw_Z : 1000 
+Accel[75] Raw_X : 92     Raw_Y : -137     Raw_Z : 989 
+Accel[76] Raw_X : 91     Raw_Y : -138     Raw_Z : 988 
+Accel[77] Raw_X : 89     Raw_Y : -131     Raw_Z : 1007 
+Accel[78] Raw_X : 90     Raw_Y : -140     Raw_Z : 998 
+Accel[79] Raw_X : 86     Raw_Y : -143     Raw_Z : 985 
+Accel[80] Raw_X : 93     Raw_Y : -137     Raw_Z : 980 
+Accel[81] Raw_X : 90     Raw_Y : -134     Raw_Z : 989 
+Accel[82] Raw_X : 80     Raw_Y : -134     Raw_Z : 1009 
+Accel[83] Raw_X : 82     Raw_Y : -137     Raw_Z : 998 
+Accel[84] Raw_X : 91     Raw_Y : -136     Raw_Z : 997 
+Accel[85] Raw_X : 91     Raw_Y : -144     Raw_Z : 963 
+Accel[86] Raw_X : 89     Raw_Y : -138     Raw_Z : 984 
+Accel[87] Raw_X : 85     Raw_Y : -136     Raw_Z : 992 
+Accel[88] Raw_X : 104     Raw_Y : -141     Raw_Z : 989 
+Accel[89] Raw_X : 96     Raw_Y : -127     Raw_Z : 990 
+Accel[90] Raw_X : 95     Raw_Y : -141     Raw_Z : 1013 
+Accel[91] Raw_X : 92     Raw_Y : -139     Raw_Z : 997 
+Accel[92] Raw_X : 94     Raw_Y : -140     Raw_Z : 982 
+FIFO sensor time : 3.7222s
+FIFO configuration change: 0x4
+Accel odr/osr/range configuration changed
+
+
+Iteration : 5
+
+Watermark level : 650
+Requested FIFO length : 1124
+Available FIFO length : 752
+Requested FIFO frames : 150
+Extracted FIFO frames : 93
+Accel[0] Raw_X : 88     Raw_Y : -142     Raw_Z : 1011 
+Accel[1] Raw_X : 90     Raw_Y : -130     Raw_Z : 1030 
+Accel[2] Raw_X : 96     Raw_Y : -141     Raw_Z : 975 
+Accel[3] Raw_X : 93     Raw_Y : -142     Raw_Z : 976 
+Accel[4] Raw_X : 93     Raw_Y : -145     Raw_Z : 980 
+Accel[5] Raw_X : 85     Raw_Y : -125     Raw_Z : 995 
+Accel[6] Raw_X : 88     Raw_Y : -143     Raw_Z : 986 
+Accel[7] Raw_X : 92     Raw_Y : -142     Raw_Z : 995 
+Accel[8] Raw_X : 96     Raw_Y : -139     Raw_Z : 971 
+Accel[9] Raw_X : 96     Raw_Y : -135     Raw_Z : 1005 
+Accel[10] Raw_X : 87     Raw_Y : -134     Raw_Z : 965 
+Accel[11] Raw_X : 77     Raw_Y : -132     Raw_Z : 1004 
+Accel[12] Raw_X : 81     Raw_Y : -134     Raw_Z : 1004 
+Accel[13] Raw_X : 91     Raw_Y : -135     Raw_Z : 994 
+Accel[14] Raw_X : 92     Raw_Y : -144     Raw_Z : 973 
+Accel[15] Raw_X : 95     Raw_Y : -142     Raw_Z : 972 
+Accel[16] Raw_X : 89     Raw_Y : -135     Raw_Z : 1002 
+Accel[17] Raw_X : 101     Raw_Y : -144     Raw_Z : 979 
+Accel[18] Raw_X : 83     Raw_Y : -128     Raw_Z : 1005 
+Accel[19] Raw_X : 93     Raw_Y : -136     Raw_Z : 995 
+Accel[20] Raw_X : 95     Raw_Y : -132     Raw_Z : 1024 
+Accel[21] Raw_X : 90     Raw_Y : -141     Raw_Z : 985 
+Accel[22] Raw_X : 91     Raw_Y : -141     Raw_Z : 1006 
+Accel[23] Raw_X : 91     Raw_Y : -147     Raw_Z : 988 
+Accel[24] Raw_X : 90     Raw_Y : -135     Raw_Z : 973 
+Accel[25] Raw_X : 86     Raw_Y : -136     Raw_Z : 1020 
+Accel[26] Raw_X : 81     Raw_Y : -139     Raw_Z : 1004 
+Accel[27] Raw_X : 93     Raw_Y : -134     Raw_Z : 992 
+Accel[28] Raw_X : 93     Raw_Y : -137     Raw_Z : 1013 
+Accel[29] Raw_X : 85     Raw_Y : -139     Raw_Z : 968 
+Accel[30] Raw_X : 85     Raw_Y : -135     Raw_Z : 998 
+Accel[31] Raw_X : 94     Raw_Y : -136     Raw_Z : 990 
+Accel[32] Raw_X : 81     Raw_Y : -137     Raw_Z : 995 
+Accel[33] Raw_X : 85     Raw_Y : -140     Raw_Z : 1015 
+Accel[34] Raw_X : 91     Raw_Y : -144     Raw_Z : 1000 
+Accel[35] Raw_X : 91     Raw_Y : -135     Raw_Z : 1006 
+Accel[36] Raw_X : 84     Raw_Y : -134     Raw_Z : 1003 
+Accel[37] Raw_X : 99     Raw_Y : -135     Raw_Z : 1018 
+Accel[38] Raw_X : 90     Raw_Y : -134     Raw_Z : 988 
+Accel[39] Raw_X : 86     Raw_Y : -141     Raw_Z : 966 
+Accel[40] Raw_X : 93     Raw_Y : -139     Raw_Z : 980 
+Accel[41] Raw_X : 104     Raw_Y : -147     Raw_Z : 949 
+Accel[42] Raw_X : 91     Raw_Y : -136     Raw_Z : 994 
+Accel[43] Raw_X : 87     Raw_Y : -134     Raw_Z : 1013 
+Accel[44] Raw_X : 94     Raw_Y : -135     Raw_Z : 1015 
+Accel[45] Raw_X : 91     Raw_Y : -137     Raw_Z : 994 
+Accel[46] Raw_X : 99     Raw_Y : -140     Raw_Z : 976 
+Accel[47] Raw_X : 92     Raw_Y : -142     Raw_Z : 974 
+Accel[48] Raw_X : 85     Raw_Y : -140     Raw_Z : 1004 
+Accel[49] Raw_X : 96     Raw_Y : -131     Raw_Z : 1008 
+Accel[50] Raw_X : 87     Raw_Y : -139     Raw_Z : 965 
+Accel[51] Raw_X : 94     Raw_Y : -142     Raw_Z : 995 
+Accel[52] Raw_X : 97     Raw_Y : -134     Raw_Z : 988 
+Accel[53] Raw_X : 88     Raw_Y : -130     Raw_Z : 1005 
+Accel[54] Raw_X : 92     Raw_Y : -144     Raw_Z : 975 
+Accel[55] Raw_X : 83     Raw_Y : -143     Raw_Z : 998 
+Accel[56] Raw_X : 86     Raw_Y : -135     Raw_Z : 1007 
+Accel[57] Raw_X : 92     Raw_Y : -137     Raw_Z : 1000 
+Accel[58] Raw_X : 95     Raw_Y : -135     Raw_Z : 989 
+Accel[59] Raw_X : 88     Raw_Y : -132     Raw_Z : 1015 
+Accel[60] Raw_X : 94     Raw_Y : -142     Raw_Z : 976 
+Accel[61] Raw_X : 90     Raw_Y : -142     Raw_Z : 994 
+Accel[62] Raw_X : 86     Raw_Y : -147     Raw_Z : 996 
+Accel[63] Raw_X : 86     Raw_Y : -140     Raw_Z : 968 
+Accel[64] Raw_X : 79     Raw_Y : -138     Raw_Z : 981 
+Accel[65] Raw_X : 90     Raw_Y : -141     Raw_Z : 1020 
+Accel[66] Raw_X : 86     Raw_Y : -125     Raw_Z : 1013 
+Accel[67] Raw_X : 88     Raw_Y : -129     Raw_Z : 1000 
+Accel[68] Raw_X : 88     Raw_Y : -141     Raw_Z : 980 
+Accel[69] Raw_X : 83     Raw_Y : -133     Raw_Z : 986 
+Accel[70] Raw_X : 87     Raw_Y : -136     Raw_Z : 1014 
+Accel[71] Raw_X : 102     Raw_Y : -149     Raw_Z : 984 
+Accel[72] Raw_X : 95     Raw_Y : -132     Raw_Z : 992 
+Accel[73] Raw_X : 85     Raw_Y : -134     Raw_Z : 1004 
+Accel[74] Raw_X : 85     Raw_Y : -141     Raw_Z : 968 
+Accel[75] Raw_X : 89     Raw_Y : -135     Raw_Z : 1013 
+Accel[76] Raw_X : 85     Raw_Y : -137     Raw_Z : 1005 
+Accel[77] Raw_X : 93     Raw_Y : -137     Raw_Z : 988 
+Accel[78] Raw_X : 86     Raw_Y : -125     Raw_Z : 988 
+Accel[79] Raw_X : 90     Raw_Y : -140     Raw_Z : 999 
+Accel[80] Raw_X : 86     Raw_Y : -134     Raw_Z : 986 
+Accel[81] Raw_X : 83     Raw_Y : -128     Raw_Z : 1001 
+Accel[82] Raw_X : 86     Raw_Y : -128     Raw_Z : 988 
+Accel[83] Raw_X : 85     Raw_Y : -140     Raw_Z : 999 
+Accel[84] Raw_X : 93     Raw_Y : -136     Raw_Z : 1000 
+Accel[85] Raw_X : 94     Raw_Y : -138     Raw_Z : 996 
+Accel[86] Raw_X : 101     Raw_Y : -131     Raw_Z : 1010 
+Accel[87] Raw_X : 91     Raw_Y : -142     Raw_Z : 989 
+Accel[88] Raw_X : 95     Raw_Y : -133     Raw_Z : 985 
+Accel[89] Raw_X : 88     Raw_Y : -131     Raw_Z : 994 
+Accel[90] Raw_X : 91     Raw_Y : -139     Raw_Z : 987 
+Accel[91] Raw_X : 84     Raw_Y : -135     Raw_Z : 1019 
+Accel[92] Raw_X : 99     Raw_Y : -139     Raw_Z : 985 
+FIFO sensor time : 4.6522s
+FIFO configuration change: 0x4
+Accel odr/osr/range configuration changed
+
+
+Iteration : 6
+
+Watermark level : 650
+Requested FIFO length : 1124
+Available FIFO length : 752
+Requested FIFO frames : 150
+Extracted FIFO frames : 93
+Accel[0] Raw_X : 92     Raw_Y : -141     Raw_Z : 985 
+Accel[1] Raw_X : 88     Raw_Y : -134     Raw_Z : 1016 
+Accel[2] Raw_X : 81     Raw_Y : -135     Raw_Z : 985 
+Accel[3] Raw_X : 92     Raw_Y : -144     Raw_Z : 977 
+Accel[4] Raw_X : 92     Raw_Y : -144     Raw_Z : 960 
+Accel[5] Raw_X : 92     Raw_Y : -136     Raw_Z : 1019 
+Accel[6] Raw_X : 83     Raw_Y : -128     Raw_Z : 1006 
+Accel[7] Raw_X : 95     Raw_Y : -143     Raw_Z : 970 
+Accel[8] Raw_X : 93     Raw_Y : -145     Raw_Z : 1003 
+Accel[9] Raw_X : 92     Raw_Y : -139     Raw_Z : 985 
+Accel[10] Raw_X : 87     Raw_Y : -141     Raw_Z : 999 
+Accel[11] Raw_X : 92     Raw_Y : -140     Raw_Z : 1000 
+Accel[12] Raw_X : 81     Raw_Y : -142     Raw_Z : 989 
+Accel[13] Raw_X : 84     Raw_Y : -137     Raw_Z : 1023 
+Accel[14] Raw_X : 89     Raw_Y : -140     Raw_Z : 985 
+Accel[15] Raw_X : 85     Raw_Y : -137     Raw_Z : 996 
+Accel[16] Raw_X : 92     Raw_Y : -145     Raw_Z : 988 
+Accel[17] Raw_X : 85     Raw_Y : -147     Raw_Z : 1001 
+Accel[18] Raw_X : 93     Raw_Y : -142     Raw_Z : 985 
+Accel[19] Raw_X : 87     Raw_Y : -139     Raw_Z : 985 
+Accel[20] Raw_X : 87     Raw_Y : -130     Raw_Z : 988 
+Accel[21] Raw_X : 90     Raw_Y : -143     Raw_Z : 977 
+Accel[22] Raw_X : 90     Raw_Y : -135     Raw_Z : 997 
+Accel[23] Raw_X : 92     Raw_Y : -130     Raw_Z : 1005 
+Accel[24] Raw_X : 83     Raw_Y : -128     Raw_Z : 998 
+Accel[25] Raw_X : 81     Raw_Y : -135     Raw_Z : 974 
+Accel[26] Raw_X : 89     Raw_Y : -140     Raw_Z : 998 
+Accel[27] Raw_X : 90     Raw_Y : -144     Raw_Z : 984 
+Accel[28] Raw_X : 93     Raw_Y : -136     Raw_Z : 1000 
+Accel[29] Raw_X : 86     Raw_Y : -132     Raw_Z : 991 
+Accel[30] Raw_X : 87     Raw_Y : -133     Raw_Z : 1006 
+Accel[31] Raw_X : 86     Raw_Y : -136     Raw_Z : 985 
+Accel[32] Raw_X : 92     Raw_Y : -146     Raw_Z : 983 
+Accel[33] Raw_X : 94     Raw_Y : -147     Raw_Z : 996 
+Accel[34] Raw_X : 92     Raw_Y : -138     Raw_Z : 1016 
+Accel[35] Raw_X : 90     Raw_Y : -137     Raw_Z : 997 
+Accel[36] Raw_X : 93     Raw_Y : -135     Raw_Z : 1017 
+Accel[37] Raw_X : 92     Raw_Y : -131     Raw_Z : 984 
+Accel[38] Raw_X : 88     Raw_Y : -133     Raw_Z : 1012 
+Accel[39] Raw_X : 93     Raw_Y : -138     Raw_Z : 987 
+Accel[40] Raw_X : 82     Raw_Y : -138     Raw_Z : 992 
+Accel[41] Raw_X : 88     Raw_Y : -137     Raw_Z : 999 
+Accel[42] Raw_X : 91     Raw_Y : -142     Raw_Z : 1004 
+Accel[43] Raw_X : 87     Raw_Y : -140     Raw_Z : 1008 
+Accel[44] Raw_X : 81     Raw_Y : -130     Raw_Z : 1015 
+Accel[45] Raw_X : 92     Raw_Y : -131     Raw_Z : 982 
+Accel[46] Raw_X : 93     Raw_Y : -139     Raw_Z : 983 
+Accel[47] Raw_X : 94     Raw_Y : -134     Raw_Z : 994 
+Accel[48] Raw_X : 94     Raw_Y : -141     Raw_Z : 984 
+Accel[49] Raw_X : 102     Raw_Y : -136     Raw_Z : 988 
+Accel[50] Raw_X : 71     Raw_Y : -124     Raw_Z : 1004 
+Accel[51] Raw_X : 95     Raw_Y : -147     Raw_Z : 983 
+Accel[52] Raw_X : 90     Raw_Y : -134     Raw_Z : 1002 
+Accel[53] Raw_X : 90     Raw_Y : -132     Raw_Z : 1011 
+Accel[54] Raw_X : 87     Raw_Y : -143     Raw_Z : 975 
+Accel[55] Raw_X : 83     Raw_Y : -133     Raw_Z : 1000 
+Accel[56] Raw_X : 85     Raw_Y : -132     Raw_Z : 984 
+Accel[57] Raw_X : 90     Raw_Y : -131     Raw_Z : 1020 
+Accel[58] Raw_X : 101     Raw_Y : -143     Raw_Z : 988 
+Accel[59] Raw_X : 95     Raw_Y : -132     Raw_Z : 1003 
+Accel[60] Raw_X : 79     Raw_Y : -139     Raw_Z : 1012 
+Accel[61] Raw_X : 88     Raw_Y : -144     Raw_Z : 1000 
+Accel[62] Raw_X : 88     Raw_Y : -146     Raw_Z : 979 
+Accel[63] Raw_X : 86     Raw_Y : -138     Raw_Z : 965 
+Accel[64] Raw_X : 90     Raw_Y : -135     Raw_Z : 1002 
+Accel[65] Raw_X : 87     Raw_Y : -142     Raw_Z : 995 
+Accel[66] Raw_X : 94     Raw_Y : -130     Raw_Z : 1011 
+Accel[67] Raw_X : 88     Raw_Y : -136     Raw_Z : 1001 
+Accel[68] Raw_X : 88     Raw_Y : -126     Raw_Z : 1007 
+Accel[69] Raw_X : 84     Raw_Y : -141     Raw_Z : 984 
+Accel[70] Raw_X : 92     Raw_Y : -129     Raw_Z : 987 
+Accel[71] Raw_X : 95     Raw_Y : -143     Raw_Z : 988 
+Accel[72] Raw_X : 86     Raw_Y : -135     Raw_Z : 981 
+Accel[73] Raw_X : 83     Raw_Y : -134     Raw_Z : 983 
+Accel[74] Raw_X : 84     Raw_Y : -145     Raw_Z : 989 
+Accel[75] Raw_X : 94     Raw_Y : -139     Raw_Z : 988 
+Accel[76] Raw_X : 90     Raw_Y : -148     Raw_Z : 972 
+Accel[77] Raw_X : 88     Raw_Y : -140     Raw_Z : 1013 
+Accel[78] Raw_X : 83     Raw_Y : -146     Raw_Z : 971 
+Accel[79] Raw_X : 90     Raw_Y : -131     Raw_Z : 1025 
+Accel[80] Raw_X : 89     Raw_Y : -135     Raw_Z : 989 
+Accel[81] Raw_X : 93     Raw_Y : -133     Raw_Z : 1004 
+Accel[82] Raw_X : 84     Raw_Y : -139     Raw_Z : 1004 
+Accel[83] Raw_X : 86     Raw_Y : -141     Raw_Z : 996 
+Accel[84] Raw_X : 89     Raw_Y : -131     Raw_Z : 1005 
+Accel[85] Raw_X : 96     Raw_Y : -129     Raw_Z : 1011 
+Accel[86] Raw_X : 91     Raw_Y : -143     Raw_Z : 996 
+Accel[87] Raw_X : 95     Raw_Y : -139     Raw_Z : 982 
+Accel[88] Raw_X : 98     Raw_Y : -137     Raw_Z : 1002 
+Accel[89] Raw_X : 84     Raw_Y : -140     Raw_Z : 1011 
+Accel[90] Raw_X : 90     Raw_Y : -140     Raw_Z : 993 
+Accel[91] Raw_X : 85     Raw_Y : -143     Raw_Z : 998 
+Accel[92] Raw_X : 85     Raw_Y : -135     Raw_Z : 997 
+FIFO sensor time : 5.5819s
+FIFO configuration change: 0x4
+Accel odr/osr/range configuration changed
+
+
+Iteration : 7
+
+Watermark level : 650
+Requested FIFO length : 1124
+Available FIFO length : 752
+Requested FIFO frames : 150
+Extracted FIFO frames : 93
+Accel[0] Raw_X : 86     Raw_Y : -137     Raw_Z : 1000 
+Accel[1] Raw_X : 88     Raw_Y : -129     Raw_Z : 988 
+Accel[2] Raw_X : 86     Raw_Y : -141     Raw_Z : 992 
+Accel[3] Raw_X : 85     Raw_Y : -137     Raw_Z : 989 
+Accel[4] Raw_X : 85     Raw_Y : -143     Raw_Z : 1003 
+Accel[5] Raw_X : 99     Raw_Y : -135     Raw_Z : 990 
+Accel[6] Raw_X : 97     Raw_Y : -132     Raw_Z : 983 
+Accel[7] Raw_X : 91     Raw_Y : -143     Raw_Z : 1002 
+Accel[8] Raw_X : 92     Raw_Y : -141     Raw_Z : 997 
+Accel[9] Raw_X : 87     Raw_Y : -139     Raw_Z : 977 
+Accel[10] Raw_X : 100     Raw_Y : -137     Raw_Z : 959 
+Accel[11] Raw_X : 94     Raw_Y : -148     Raw_Z : 970 
+Accel[12] Raw_X : 93     Raw_Y : -135     Raw_Z : 986 
+Accel[13] Raw_X : 92     Raw_Y : -134     Raw_Z : 1000 
+Accel[14] Raw_X : 79     Raw_Y : -141     Raw_Z : 1002 
+Accel[15] Raw_X : 100     Raw_Y : -146     Raw_Z : 986 
+Accel[16] Raw_X : 91     Raw_Y : -137     Raw_Z : 963 
+Accel[17] Raw_X : 98     Raw_Y : -144     Raw_Z : 994 
+Accel[18] Raw_X : 94     Raw_Y : -138     Raw_Z : 997 
+Accel[19] Raw_X : 88     Raw_Y : -132     Raw_Z : 1010 
+Accel[20] Raw_X : 92     Raw_Y : -140     Raw_Z : 962 
+Accel[21] Raw_X : 88     Raw_Y : -144     Raw_Z : 969 
+Accel[22] Raw_X : 92     Raw_Y : -143     Raw_Z : 1008 
+Accel[23] Raw_X : 87     Raw_Y : -133     Raw_Z : 999 
+Accel[24] Raw_X : 99     Raw_Y : -147     Raw_Z : 948 
+Accel[25] Raw_X : 104     Raw_Y : -146     Raw_Z : 993 
+Accel[26] Raw_X : 81     Raw_Y : -130     Raw_Z : 985 
+Accel[27] Raw_X : 88     Raw_Y : -126     Raw_Z : 1003 
+Accel[28] Raw_X : 90     Raw_Y : -130     Raw_Z : 992 
+Accel[29] Raw_X : 92     Raw_Y : -142     Raw_Z : 992 
+Accel[30] Raw_X : 95     Raw_Y : -143     Raw_Z : 983 
+Accel[31] Raw_X : 92     Raw_Y : -134     Raw_Z : 999 
+Accel[32] Raw_X : 97     Raw_Y : -132     Raw_Z : 991 
+Accel[33] Raw_X : 98     Raw_Y : -143     Raw_Z : 969 
+Accel[34] Raw_X : 86     Raw_Y : -133     Raw_Z : 982 
+Accel[35] Raw_X : 90     Raw_Y : -134     Raw_Z : 1001 
+Accel[36] Raw_X : 86     Raw_Y : -141     Raw_Z : 1004 
+Accel[37] Raw_X : 88     Raw_Y : -138     Raw_Z : 970 
+Accel[38] Raw_X : 91     Raw_Y : -139     Raw_Z : 1016 
+Accel[39] Raw_X : 96     Raw_Y : -143     Raw_Z : 962 
+Accel[40] Raw_X : 86     Raw_Y : -141     Raw_Z : 981 
+Accel[41] Raw_X : 90     Raw_Y : -138     Raw_Z : 1008 
+Accel[42] Raw_X : 88     Raw_Y : -136     Raw_Z : 998 
+Accel[43] Raw_X : 85     Raw_Y : -137     Raw_Z : 1004 
+Accel[44] Raw_X : 87     Raw_Y : -152     Raw_Z : 998 
+Accel[45] Raw_X : 98     Raw_Y : -144     Raw_Z : 974 
+Accel[46] Raw_X : 107     Raw_Y : -142     Raw_Z : 994 
+Accel[47] Raw_X : 82     Raw_Y : -129     Raw_Z : 1058 
+Accel[48] Raw_X : 91     Raw_Y : -141     Raw_Z : 975 
+Accel[49] Raw_X : 89     Raw_Y : -134     Raw_Z : 986 
+Accel[50] Raw_X : 96     Raw_Y : -135     Raw_Z : 1004 
+Accel[51] Raw_X : 84     Raw_Y : -137     Raw_Z : 1012 
+Accel[52] Raw_X : 106     Raw_Y : -146     Raw_Z : 938 
+Accel[53] Raw_X : 95     Raw_Y : -124     Raw_Z : 1021 
+Accel[54] Raw_X : 94     Raw_Y : -148     Raw_Z : 985 
+Accel[55] Raw_X : 92     Raw_Y : -138     Raw_Z : 979 
+Accel[56] Raw_X : 94     Raw_Y : -137     Raw_Z : 967 
+Accel[57] Raw_X : 91     Raw_Y : -128     Raw_Z : 1012 
+Accel[58] Raw_X : 88     Raw_Y : -138     Raw_Z : 992 
+Accel[59] Raw_X : 87     Raw_Y : -136     Raw_Z : 997 
+Accel[60] Raw_X : 86     Raw_Y : -141     Raw_Z : 992 
+Accel[61] Raw_X : 91     Raw_Y : -139     Raw_Z : 1018 
+Accel[62] Raw_X : 89     Raw_Y : -137     Raw_Z : 985 
+Accel[63] Raw_X : 91     Raw_Y : -139     Raw_Z : 969 
+Accel[64] Raw_X : 88     Raw_Y : -141     Raw_Z : 995 
+Accel[65] Raw_X : 85     Raw_Y : -128     Raw_Z : 988 
+Accel[66] Raw_X : 90     Raw_Y : -142     Raw_Z : 1016 
+Accel[67] Raw_X : 85     Raw_Y : -130     Raw_Z : 1007 
+Accel[68] Raw_X : 87     Raw_Y : -136     Raw_Z : 997 
+Accel[69] Raw_X : 87     Raw_Y : -137     Raw_Z : 1032 
+Accel[70] Raw_X : 92     Raw_Y : -139     Raw_Z : 996 
+Accel[71] Raw_X : 89     Raw_Y : -136     Raw_Z : 1002 
+Accel[72] Raw_X : 88     Raw_Y : -139     Raw_Z : 986 
+Accel[73] Raw_X : 91     Raw_Y : -140     Raw_Z : 975 
+Accel[74] Raw_X : 94     Raw_Y : -135     Raw_Z : 974 
+Accel[75] Raw_X : 93     Raw_Y : -156     Raw_Z : 968 
+Accel[76] Raw_X : 93     Raw_Y : -146     Raw_Z : 980 
+Accel[77] Raw_X : 90     Raw_Y : -141     Raw_Z : 992 
+Accel[78] Raw_X : 89     Raw_Y : -142     Raw_Z : 959 
+Accel[79] Raw_X : 89     Raw_Y : -143     Raw_Z : 973 
+Accel[80] Raw_X : 98     Raw_Y : -146     Raw_Z : 958 
+Accel[81] Raw_X : 97     Raw_Y : -148     Raw_Z : 1006 
+Accel[82] Raw_X : 101     Raw_Y : -135     Raw_Z : 1033 
+Accel[83] Raw_X : 88     Raw_Y : -136     Raw_Z : 976 
+Accel[84] Raw_X : 103     Raw_Y : -147     Raw_Z : 985 
+Accel[85] Raw_X : 98     Raw_Y : -141     Raw_Z : 1012 
+Accel[86] Raw_X : 83     Raw_Y : -135     Raw_Z : 989 
+Accel[87] Raw_X : 77     Raw_Y : -122     Raw_Z : 1021 
+Accel[88] Raw_X : 90     Raw_Y : -135     Raw_Z : 1012 
+Accel[89] Raw_X : 101     Raw_Y : -143     Raw_Z : 969 
+Accel[90] Raw_X : 69     Raw_Y : -122     Raw_Z : 1001 
+Accel[91] Raw_X : 88     Raw_Y : -132     Raw_Z : 1014 
+Accel[92] Raw_X : 79     Raw_Y : -136     Raw_Z : 997 
+FIFO sensor time : 6.5122s
+FIFO configuration change: 0x4
+Accel odr/osr/range configuration changed
+
+
+Iteration : 8
+
+Watermark level : 650
+Requested FIFO length : 1124
+Available FIFO length : 752
+Requested FIFO frames : 150
+Extracted FIFO frames : 93
+Accel[0] Raw_X : 93     Raw_Y : -141     Raw_Z : 987 
+Accel[1] Raw_X : 99     Raw_Y : -137     Raw_Z : 985 
+Accel[2] Raw_X : 82     Raw_Y : -130     Raw_Z : 997 
+Accel[3] Raw_X : 92     Raw_Y : -130     Raw_Z : 990 
+Accel[4] Raw_X : 85     Raw_Y : -142     Raw_Z : 990 
+Accel[5] Raw_X : 94     Raw_Y : -151     Raw_Z : 982 
+Accel[6] Raw_X : 89     Raw_Y : -147     Raw_Z : 988 
+Accel[7] Raw_X : 85     Raw_Y : -134     Raw_Z : 1012 
+Accel[8] Raw_X : 93     Raw_Y : -129     Raw_Z : 994 
+Accel[9] Raw_X : 84     Raw_Y : -146     Raw_Z : 998 
+Accel[10] Raw_X : 92     Raw_Y : -141     Raw_Z : 977 
+Accel[11] Raw_X : 85     Raw_Y : -137     Raw_Z : 1002 
+Accel[12] Raw_X : 95     Raw_Y : -134     Raw_Z : 998 
+Accel[13] Raw_X : 89     Raw_Y : -136     Raw_Z : 1012 
+Accel[14] Raw_X : 94     Raw_Y : -149     Raw_Z : 967 
+Accel[15] Raw_X : 96     Raw_Y : -135     Raw_Z : 1028 
+Accel[16] Raw_X : 89     Raw_Y : -126     Raw_Z : 1009 
+Accel[17] Raw_X : 89     Raw_Y : -142     Raw_Z : 990 
+Accel[18] Raw_X : 83     Raw_Y : -136     Raw_Z : 1004 
+Accel[19] Raw_X : 97     Raw_Y : -140     Raw_Z : 1005 
+Accel[20] Raw_X : 90     Raw_Y : -130     Raw_Z : 1009 
+Accel[21] Raw_X : 91     Raw_Y : -137     Raw_Z : 974 
+Accel[22] Raw_X : 84     Raw_Y : -128     Raw_Z : 1003 
+Accel[23] Raw_X : 86     Raw_Y : -133     Raw_Z : 982 
+Accel[24] Raw_X : 89     Raw_Y : -144     Raw_Z : 1003 
+Accel[25] Raw_X : 94     Raw_Y : -148     Raw_Z : 994 
+Accel[26] Raw_X : 88     Raw_Y : -140     Raw_Z : 987 
+Accel[27] Raw_X : 81     Raw_Y : -139     Raw_Z : 995 
+Accel[28] Raw_X : 87     Raw_Y : -132     Raw_Z : 984 
+Accel[29] Raw_X : 91     Raw_Y : -143     Raw_Z : 1013 
+Accel[30] Raw_X : 93     Raw_Y : -146     Raw_Z : 992 
+Accel[31] Raw_X : 94     Raw_Y : -137     Raw_Z : 976 
+Accel[32] Raw_X : 91     Raw_Y : -137     Raw_Z : 982 
+Accel[33] Raw_X : 91     Raw_Y : -137     Raw_Z : 997 
+Accel[34] Raw_X : 88     Raw_Y : -137     Raw_Z : 982 
+Accel[35] Raw_X : 95     Raw_Y : -134     Raw_Z : 1019 
+Accel[36] Raw_X : 88     Raw_Y : -141     Raw_Z : 980 
+Accel[37] Raw_X : 97     Raw_Y : -142     Raw_Z : 998 
+Accel[38] Raw_X : 87     Raw_Y : -125     Raw_Z : 1031 
+Accel[39] Raw_X : 101     Raw_Y : -139     Raw_Z : 973 
+Accel[40] Raw_X : 92     Raw_Y : -134     Raw_Z : 1008 
+Accel[41] Raw_X : 91     Raw_Y : -141     Raw_Z : 986 
+Accel[42] Raw_X : 93     Raw_Y : -144     Raw_Z : 1013 
+Accel[43] Raw_X : 84     Raw_Y : -139     Raw_Z : 990 
+Accel[44] Raw_X : 87     Raw_Y : -135     Raw_Z : 992 
+Accel[45] Raw_X : 89     Raw_Y : -132     Raw_Z : 988 
+Accel[46] Raw_X : 93     Raw_Y : -138     Raw_Z : 980 
+Accel[47] Raw_X : 84     Raw_Y : -138     Raw_Z : 992 
+Accel[48] Raw_X : 95     Raw_Y : -135     Raw_Z : 983 
+Accel[49] Raw_X : 90     Raw_Y : -146     Raw_Z : 992 
+Accel[50] Raw_X : 94     Raw_Y : -135     Raw_Z : 1025 
+Accel[51] Raw_X : 92     Raw_Y : -144     Raw_Z : 995 
+Accel[52] Raw_X : 84     Raw_Y : -142     Raw_Z : 1004 
+Accel[53] Raw_X : 83     Raw_Y : -141     Raw_Z : 994 
+Accel[54] Raw_X : 85     Raw_Y : -146     Raw_Z : 980 
+Accel[55] Raw_X : 85     Raw_Y : -142     Raw_Z : 980 
+Accel[56] Raw_X : 85     Raw_Y : -137     Raw_Z : 1015 
+Accel[57] Raw_X : 91     Raw_Y : -144     Raw_Z : 992 
+Accel[58] Raw_X : 90     Raw_Y : -139     Raw_Z : 989 
+Accel[59] Raw_X : 92     Raw_Y : -134     Raw_Z : 983 
+Accel[60] Raw_X : 92     Raw_Y : -132     Raw_Z : 985 
+Accel[61] Raw_X : 96     Raw_Y : -140     Raw_Z : 977 
+Accel[62] Raw_X : 101     Raw_Y : -139     Raw_Z : 1000 
+Accel[63] Raw_X : 90     Raw_Y : -141     Raw_Z : 994 
+Accel[64] Raw_X : 101     Raw_Y : -141     Raw_Z : 1002 
+Accel[65] Raw_X : 90     Raw_Y : -136     Raw_Z : 1001 
+Accel[66] Raw_X : 76     Raw_Y : -134     Raw_Z : 989 
+Accel[67] Raw_X : 79     Raw_Y : -135     Raw_Z : 1010 
+Accel[68] Raw_X : 97     Raw_Y : -139     Raw_Z : 989 
+Accel[69] Raw_X : 95     Raw_Y : -135     Raw_Z : 992 
+Accel[70] Raw_X : 88     Raw_Y : -135     Raw_Z : 991 
+Accel[71] Raw_X : 89     Raw_Y : -130     Raw_Z : 994 
+Accel[72] Raw_X : 86     Raw_Y : -135     Raw_Z : 1000 
+Accel[73] Raw_X : 96     Raw_Y : -146     Raw_Z : 990 
+Accel[74] Raw_X : 97     Raw_Y : -139     Raw_Z : 984 
+Accel[75] Raw_X : 88     Raw_Y : -143     Raw_Z : 978 
+Accel[76] Raw_X : 89     Raw_Y : -141     Raw_Z : 979 
+Accel[77] Raw_X : 88     Raw_Y : -139     Raw_Z : 1002 
+Accel[78] Raw_X : 88     Raw_Y : -138     Raw_Z : 992 
+Accel[79] Raw_X : 86     Raw_Y : -142     Raw_Z : 973 
+Accel[80] Raw_X : 90     Raw_Y : -138     Raw_Z : 1014 
+Accel[81] Raw_X : 95     Raw_Y : -131     Raw_Z : 992 
+Accel[82] Raw_X : 94     Raw_Y : -135     Raw_Z : 989 
+Accel[83] Raw_X : 87     Raw_Y : -136     Raw_Z : 995 
+Accel[84] Raw_X : 91     Raw_Y : -137     Raw_Z : 973 
+Accel[85] Raw_X : 99     Raw_Y : -146     Raw_Z : 997 
+Accel[86] Raw_X : 95     Raw_Y : -137     Raw_Z : 983 
+Accel[87] Raw_X : 90     Raw_Y : -135     Raw_Z : 1004 
+Accel[88] Raw_X : 88     Raw_Y : -136     Raw_Z : 999 
+Accel[89] Raw_X : 99     Raw_Y : -143     Raw_Z : 992 
+Accel[90] Raw_X : 90     Raw_Y : -141     Raw_Z : 981 
+Accel[91] Raw_X : 91     Raw_Y : -137     Raw_Z : 993 
+Accel[92] Raw_X : 94     Raw_Y : -149     Raw_Z : 979 
+FIFO sensor time : 7.4422s
+FIFO configuration change: 0x4
+Accel odr/osr/range configuration changed
+
+
+Iteration : 9
+
+Watermark level : 650
+Requested FIFO length : 1124
+Available FIFO length : 752
+Requested FIFO frames : 150
+Extracted FIFO frames : 93
+Accel[0] Raw_X : 94     Raw_Y : -134     Raw_Z : 992 
+Accel[1] Raw_X : 90     Raw_Y : -136     Raw_Z : 1003 
+Accel[2] Raw_X : 82     Raw_Y : -125     Raw_Z : 993 
+Accel[3] Raw_X : 91     Raw_Y : -132     Raw_Z : 959 
+Accel[4] Raw_X : 96     Raw_Y : -136     Raw_Z : 982 
+Accel[5] Raw_X : 94     Raw_Y : -135     Raw_Z : 1018 
+Accel[6] Raw_X : 94     Raw_Y : -143     Raw_Z : 1006 
+Accel[7] Raw_X : 98     Raw_Y : -137     Raw_Z : 1007 
+Accel[8] Raw_X : 79     Raw_Y : -133     Raw_Z : 1022 
+Accel[9] Raw_X : 87     Raw_Y : -140     Raw_Z : 1002 
+Accel[10] Raw_X : 89     Raw_Y : -135     Raw_Z : 979 
+Accel[11] Raw_X : 88     Raw_Y : -141     Raw_Z : 994 
+Accel[12] Raw_X : 87     Raw_Y : -132     Raw_Z : 988 
+Accel[13] Raw_X : 90     Raw_Y : -137     Raw_Z : 989 
+Accel[14] Raw_X : 82     Raw_Y : -131     Raw_Z : 1003 
+Accel[15] Raw_X : 88     Raw_Y : -134     Raw_Z : 1004 
+Accel[16] Raw_X : 95     Raw_Y : -127     Raw_Z : 983 
+Accel[17] Raw_X : 95     Raw_Y : -143     Raw_Z : 1005 
+Accel[18] Raw_X : 89     Raw_Y : -137     Raw_Z : 970 
+Accel[19] Raw_X : 98     Raw_Y : -139     Raw_Z : 993 
+Accel[20] Raw_X : 94     Raw_Y : -135     Raw_Z : 1007 
+Accel[21] Raw_X : 83     Raw_Y : -139     Raw_Z : 993 
+Accel[22] Raw_X : 89     Raw_Y : -136     Raw_Z : 990 
+Accel[23] Raw_X : 90     Raw_Y : -144     Raw_Z : 995 
+Accel[24] Raw_X : 93     Raw_Y : -138     Raw_Z : 1005 
+Accel[25] Raw_X : 86     Raw_Y : -139     Raw_Z : 984 
+Accel[26] Raw_X : 88     Raw_Y : -146     Raw_Z : 993 
+Accel[27] Raw_X : 90     Raw_Y : -147     Raw_Z : 1007 
+Accel[28] Raw_X : 99     Raw_Y : -139     Raw_Z : 982 
+Accel[29] Raw_X : 91     Raw_Y : -147     Raw_Z : 995 
+Accel[30] Raw_X : 87     Raw_Y : -131     Raw_Z : 991 
+Accel[31] Raw_X : 92     Raw_Y : -140     Raw_Z : 992 
+Accel[32] Raw_X : 82     Raw_Y : -135     Raw_Z : 990 
+Accel[33] Raw_X : 86     Raw_Y : -129     Raw_Z : 999 
+Accel[34] Raw_X : 94     Raw_Y : -134     Raw_Z : 996 
+Accel[35] Raw_X : 87     Raw_Y : -135     Raw_Z : 979 
+Accel[36] Raw_X : 90     Raw_Y : -144     Raw_Z : 1007 
+Accel[37] Raw_X : 85     Raw_Y : -149     Raw_Z : 979 
+Accel[38] Raw_X : 94     Raw_Y : -138     Raw_Z : 995 
+Accel[39] Raw_X : 85     Raw_Y : -142     Raw_Z : 977 
+Accel[40] Raw_X : 94     Raw_Y : -139     Raw_Z : 1006 
+Accel[41] Raw_X : 85     Raw_Y : -141     Raw_Z : 973 
+Accel[42] Raw_X : 90     Raw_Y : -132     Raw_Z : 990 
+Accel[43] Raw_X : 90     Raw_Y : -133     Raw_Z : 1016 
+Accel[44] Raw_X : 87     Raw_Y : -135     Raw_Z : 995 
+Accel[45] Raw_X : 88     Raw_Y : -136     Raw_Z : 1012 
+Accel[46] Raw_X : 91     Raw_Y : -135     Raw_Z : 994 
+Accel[47] Raw_X : 89     Raw_Y : -128     Raw_Z : 1011 
+Accel[48] Raw_X : 95     Raw_Y : -146     Raw_Z : 979 
+Accel[49] Raw_X : 89     Raw_Y : -135     Raw_Z : 1000 
+Accel[50] Raw_X : 89     Raw_Y : -129     Raw_Z : 1007 
+Accel[51] Raw_X : 92     Raw_Y : -133     Raw_Z : 986 
+Accel[52] Raw_X : 94     Raw_Y : -146     Raw_Z : 974 
+Accel[53] Raw_X : 94     Raw_Y : -143     Raw_Z : 1011 
+Accel[54] Raw_X : 95     Raw_Y : -143     Raw_Z : 988 
+Accel[55] Raw_X : 97     Raw_Y : -141     Raw_Z : 994 
+Accel[56] Raw_X : 90     Raw_Y : -141     Raw_Z : 988 
+Accel[57] Raw_X : 91     Raw_Y : -141     Raw_Z : 996 
+Accel[58] Raw_X : 92     Raw_Y : -141     Raw_Z : 983 
+Accel[59] Raw_X : 89     Raw_Y : -138     Raw_Z : 993 
+Accel[60] Raw_X : 86     Raw_Y : -144     Raw_Z : 972 
+Accel[61] Raw_X : 97     Raw_Y : -145     Raw_Z : 998 
+Accel[62] Raw_X : 97     Raw_Y : -133     Raw_Z : 999 
+Accel[63] Raw_X : 97     Raw_Y : -140     Raw_Z : 986 
+Accel[64] Raw_X : 97     Raw_Y : -138     Raw_Z : 996 
+Accel[65] Raw_X : 88     Raw_Y : -144     Raw_Z : 978 
+Accel[66] Raw_X : 75     Raw_Y : -135     Raw_Z : 1013 
+Accel[67] Raw_X : 84     Raw_Y : -134     Raw_Z : 1010 
+Accel[68] Raw_X : 86     Raw_Y : -142     Raw_Z : 1004 
+Accel[69] Raw_X : 103     Raw_Y : -139     Raw_Z : 982 
+Accel[70] Raw_X : 82     Raw_Y : -135     Raw_Z : 991 
+Accel[71] Raw_X : 89     Raw_Y : -134     Raw_Z : 981 
+Accel[72] Raw_X : 86     Raw_Y : -136     Raw_Z : 1016 
+Accel[73] Raw_X : 97     Raw_Y : -140     Raw_Z : 1002 
+Accel[74] Raw_X : 90     Raw_Y : -131     Raw_Z : 983 
+Accel[75] Raw_X : 94     Raw_Y : -140     Raw_Z : 995 
+Accel[76] Raw_X : 93     Raw_Y : -134     Raw_Z : 995 
+Accel[77] Raw_X : 93     Raw_Y : -141     Raw_Z : 978 
+Accel[78] Raw_X : 86     Raw_Y : -141     Raw_Z : 1014 
+Accel[79] Raw_X : 78     Raw_Y : -141     Raw_Z : 980 
+Accel[80] Raw_X : 91     Raw_Y : -137     Raw_Z : 1007 
+Accel[81] Raw_X : 92     Raw_Y : -128     Raw_Z : 1003 
+Accel[82] Raw_X : 104     Raw_Y : -142     Raw_Z : 972 
+Accel[83] Raw_X : 92     Raw_Y : -143     Raw_Z : 988 
+Accel[84] Raw_X : 92     Raw_Y : -147     Raw_Z : 983 
+Accel[85] Raw_X : 86     Raw_Y : -143     Raw_Z : 985 
+Accel[86] Raw_X : 79     Raw_Y : -141     Raw_Z : 997 
+Accel[87] Raw_X : 86     Raw_Y : -137     Raw_Z : 977 
+Accel[88] Raw_X : 90     Raw_Y : -137     Raw_Z : 1007 
+Accel[89] Raw_X : 91     Raw_Y : -137     Raw_Z : 979 
+Accel[90] Raw_X : 84     Raw_Y : -138     Raw_Z : 980 
+Accel[91] Raw_X : 81     Raw_Y : -130     Raw_Z : 973 
+Accel[92] Raw_X : 90     Raw_Y : -140     Raw_Z : 1032 
+FIFO sensor time : 8.3722s
+FIFO configuration change: 0x4
+Accel odr/osr/range configuration changed
+
+
+Iteration : 10
+
+Watermark level : 650
+Requested FIFO length : 1124
+Available FIFO length : 752
+Requested FIFO frames : 150
+Extracted FIFO frames : 93
+Accel[0] Raw_X : 89     Raw_Y : -135     Raw_Z : 992 
+Accel[1] Raw_X : 90     Raw_Y : -137     Raw_Z : 993 
+Accel[2] Raw_X : 85     Raw_Y : -137     Raw_Z : 996 
+Accel[3] Raw_X : 90     Raw_Y : -134     Raw_Z : 983 
+Accel[4] Raw_X : 84     Raw_Y : -138     Raw_Z : 989 
+Accel[5] Raw_X : 92     Raw_Y : -149     Raw_Z : 972 
+Accel[6] Raw_X : 85     Raw_Y : -140     Raw_Z : 1003 
+Accel[7] Raw_X : 91     Raw_Y : -128     Raw_Z : 1008 
+Accel[8] Raw_X : 96     Raw_Y : -139     Raw_Z : 976 
+Accel[9] Raw_X : 92     Raw_Y : -136     Raw_Z : 1006 
+Accel[10] Raw_X : 88     Raw_Y : -133     Raw_Z : 1001 
+Accel[11] Raw_X : 101     Raw_Y : -133     Raw_Z : 996 
+Accel[12] Raw_X : 82     Raw_Y : -130     Raw_Z : 1001 
+Accel[13] Raw_X : 101     Raw_Y : -138     Raw_Z : 1012 
+Accel[14] Raw_X : 99     Raw_Y : -137     Raw_Z : 980 
+Accel[15] Raw_X : 88     Raw_Y : -136     Raw_Z : 1013 
+Accel[16] Raw_X : 84     Raw_Y : -133     Raw_Z : 988 
+Accel[17] Raw_X : 82     Raw_Y : -139     Raw_Z : 985 
+Accel[18] Raw_X : 77     Raw_Y : -134     Raw_Z : 995 
+Accel[19] Raw_X : 84     Raw_Y : -139     Raw_Z : 980 
+Accel[20] Raw_X : 92     Raw_Y : -138     Raw_Z : 990 
+Accel[21] Raw_X : 99     Raw_Y : -132     Raw_Z : 1005 
+Accel[22] Raw_X : 88     Raw_Y : -126     Raw_Z : 974 
+Accel[23] Raw_X : 89     Raw_Y : -135     Raw_Z : 1004 
+Accel[24] Raw_X : 86     Raw_Y : -134     Raw_Z : 993 
+Accel[25] Raw_X : 108     Raw_Y : -139     Raw_Z : 991 
+Accel[26] Raw_X : 90     Raw_Y : -137     Raw_Z : 999 
+Accel[27] Raw_X : 93     Raw_Y : -141     Raw_Z : 977 
+Accel[28] Raw_X : 90     Raw_Y : -146     Raw_Z : 994 
+Accel[29] Raw_X : 90     Raw_Y : -152     Raw_Z : 988 
+Accel[30] Raw_X : 94     Raw_Y : -138     Raw_Z : 999 
+Accel[31] Raw_X : 92     Raw_Y : -141     Raw_Z : 984 
+Accel[32] Raw_X : 90     Raw_Y : -136     Raw_Z : 979 
+Accel[33] Raw_X : 81     Raw_Y : -140     Raw_Z : 975 
+Accel[34] Raw_X : 94     Raw_Y : -130     Raw_Z : 1019 
+Accel[35] Raw_X : 102     Raw_Y : -142     Raw_Z : 997 
+Accel[36] Raw_X : 94     Raw_Y : -139     Raw_Z : 997 
+Accel[37] Raw_X : 93     Raw_Y : -131     Raw_Z : 998 
+Accel[38] Raw_X : 92     Raw_Y : -133     Raw_Z : 995 
+Accel[39] Raw_X : 97     Raw_Y : -143     Raw_Z : 967 
+Accel[40] Raw_X : 88     Raw_Y : -132     Raw_Z : 995 
+Accel[41] Raw_X : 90     Raw_Y : -142     Raw_Z : 995 
+Accel[42] Raw_X : 92     Raw_Y : -145     Raw_Z : 958 
+Accel[43] Raw_X : 89     Raw_Y : -141     Raw_Z : 1000 
+Accel[44] Raw_X : 78     Raw_Y : -131     Raw_Z : 994 
+Accel[45] Raw_X : 86     Raw_Y : -140     Raw_Z : 974 
+Accel[46] Raw_X : 99     Raw_Y : -151     Raw_Z : 985 
+Accel[47] Raw_X : 93     Raw_Y : -135     Raw_Z : 973 
+Accel[48] Raw_X : 105     Raw_Y : -138     Raw_Z : 992 
+Accel[49] Raw_X : 88     Raw_Y : -143     Raw_Z : 1015 
+Accel[50] Raw_X : 81     Raw_Y : -134     Raw_Z : 995 
+Accel[51] Raw_X : 102     Raw_Y : -126     Raw_Z : 971 
+Accel[52] Raw_X : 84     Raw_Y : -136     Raw_Z : 1000 
+Accel[53] Raw_X : 92     Raw_Y : -140     Raw_Z : 986 
+Accel[54] Raw_X : 83     Raw_Y : -127     Raw_Z : 1014 
+Accel[55] Raw_X : 91     Raw_Y : -134     Raw_Z : 1007 
+Accel[56] Raw_X : 85     Raw_Y : -143     Raw_Z : 1000 
+Accel[57] Raw_X : 86     Raw_Y : -130     Raw_Z : 1002 
+Accel[58] Raw_X : 87     Raw_Y : -138     Raw_Z : 1000 
+Accel[59] Raw_X : 82     Raw_Y : -137     Raw_Z : 976 
+Accel[60] Raw_X : 94     Raw_Y : -134     Raw_Z : 986 
+Accel[61] Raw_X : 92     Raw_Y : -134     Raw_Z : 996 
+Accel[62] Raw_X : 86     Raw_Y : -135     Raw_Z : 972 
+Accel[63] Raw_X : 92     Raw_Y : -140     Raw_Z : 985 
+Accel[64] Raw_X : 91     Raw_Y : -145     Raw_Z : 1014 
+Accel[65] Raw_X : 92     Raw_Y : -134     Raw_Z : 995 
+Accel[66] Raw_X : 97     Raw_Y : -145     Raw_Z : 970 
+Accel[67] Raw_X : 81     Raw_Y : -140     Raw_Z : 993 
+Accel[68] Raw_X : 95     Raw_Y : -148     Raw_Z : 997 
+Accel[69] Raw_X : 94     Raw_Y : -147     Raw_Z : 993 
+Accel[70] Raw_X : 92     Raw_Y : -142     Raw_Z : 980 
+Accel[71] Raw_X : 98     Raw_Y : -145     Raw_Z : 989 
+Accel[72] Raw_X : 85     Raw_Y : -138     Raw_Z : 993 
+Accel[73] Raw_X : 88     Raw_Y : -141     Raw_Z : 977 
+Accel[74] Raw_X : 94     Raw_Y : -141     Raw_Z : 1007 
+Accel[75] Raw_X : 89     Raw_Y : -137     Raw_Z : 1016 
+Accel[76] Raw_X : 93     Raw_Y : -131     Raw_Z : 1004 
+Accel[77] Raw_X : 92     Raw_Y : -144     Raw_Z : 989 
+Accel[78] Raw_X : 93     Raw_Y : -136     Raw_Z : 1009 
+Accel[79] Raw_X : 85     Raw_Y : -139     Raw_Z : 990 
+Accel[80] Raw_X : 84     Raw_Y : -140     Raw_Z : 984 
+Accel[81] Raw_X : 96     Raw_Y : -137     Raw_Z : 990 
+Accel[82] Raw_X : 88     Raw_Y : -134     Raw_Z : 995 
+Accel[83] Raw_X : 89     Raw_Y : -134     Raw_Z : 1008 
+Accel[84] Raw_X : 100     Raw_Y : -138     Raw_Z : 1001 
+Accel[85] Raw_X : 90     Raw_Y : -137     Raw_Z : 1010 
+Accel[86] Raw_X : 91     Raw_Y : -147     Raw_Z : 966 
+Accel[87] Raw_X : 91     Raw_Y : -146     Raw_Z : 984 
+Accel[88] Raw_X : 79     Raw_Y : -135     Raw_Z : 989 
+Accel[89] Raw_X : 90     Raw_Y : -135     Raw_Z : 1002 
+Accel[90] Raw_X : 89     Raw_Y : -136     Raw_Z : 988 
+Accel[91] Raw_X : 92     Raw_Y : -141     Raw_Z : 982 
+Accel[92] Raw_X : 95     Raw_Y : -132     Raw_Z : 1017 
+FIFO sensor time : 9.3019s
+FIFO configuration change: 0x4
+Accel odr/osr/range configuration changed

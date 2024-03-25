@@ -1,0 +1,33 @@
+I2C Interface
+Shake the board in terms of steps
+Step counter interrupt received
+Steps counted : 0
+Still Activity detected
+Step counter interrupt received
+Steps counted : 0
+Still Activity detected
+Step counter interrupt received
+Steps counted : 0
+Still Activity detected
+Step counter interrupt received
+Steps counted : 7
+Running Activity detected
+Step counter interrupt received
+Steps counted : 9
+Running Activity detected
+Step counter interrupt received
+Steps counted : 11
+Running Activity detected
+Step counter interrupt received
+Steps counted : 13
+Running Activity detected
+Step counter interrupt received
+Steps counted : 15
+Running Activity detected
+Step counter interrupt received
+Steps counted : 17
+Running Activity detected
+Step counter interrupt received
+Steps counted : 19
+Running Activity detected
+Step counter testing done. Exiting !

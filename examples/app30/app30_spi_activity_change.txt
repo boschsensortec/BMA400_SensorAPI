@@ -1,0 +1,34 @@
+SPI Interface
+Functionality test for Activity change interrupt
+Show activity on x y z axes of the board
+Activity change interrupt asserted on X axis
+Accel Data :  Raw_X : -435    Raw_Y : 215    Raw_Z : -1155    SENSOR_TIME(s) : 1.2800
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -390    Raw_Y : 255    Raw_Z : -1131    SENSOR_TIME(s) : 1.2897
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -390    Raw_Y : 255    Raw_Z : -1131    SENSOR_TIME(s) : 1.2903
+Activity change interrupt asserted on X axis
+Accel Data :  Raw_X : -361    Raw_Y : 274    Raw_Z : -1110    SENSOR_TIME(s) : 1.2997
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -361    Raw_Y : 274    Raw_Z : -1110    SENSOR_TIME(s) : 1.3003
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -420    Raw_Y : 358    Raw_Z : -1185    SENSOR_TIME(s) : 1.3097
+Activity change interrupt asserted on X axis
+Accel Data :  Raw_X : -420    Raw_Y : 358    Raw_Z : -1185    SENSOR_TIME(s) : 1.3103
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -476    Raw_Y : 442    Raw_Z : -1093    SENSOR_TIME(s) : 1.3197
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -476    Raw_Y : 442    Raw_Z : -1093    SENSOR_TIME(s) : 1.3203
+Activity change interrupt asserted on X axis
+Accel Data :  Raw_X : -540    Raw_Y : 487    Raw_Z : -1048    SENSOR_TIME(s) : 1.3297
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -540    Raw_Y : 487    Raw_Z : -1048    SENSOR_TIME(s) : 1.3303
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -524    Raw_Y : 619    Raw_Z : -1073    SENSOR_TIME(s) : 1.3397
+Activity change interrupt asserted on X axis
+Accel Data :  Raw_X : -524    Raw_Y : 619    Raw_Z : -1073    SENSOR_TIME(s) : 1.3403
+Activity change interrupt asserted on Y axis
+Accel Data :  Raw_X : -504    Raw_Y : 682    Raw_Z : -1115    SENSOR_TIME(s) : 1.3497
+Activity change interrupt asserted on Z axis
+Accel Data :  Raw_X : -504    Raw_Y : 682    Raw_Z : -1115    SENSOR_TIME(s) : 1.3503
+Activity change interrupt test done !
