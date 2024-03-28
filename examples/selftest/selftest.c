@@ -5,13 +5,6 @@
  *
  */
 
-/*!
- * @ingroup bma400Examples
- * @defgroup bma400ExamplesSelfTest Self test
- * @brief Perform accelerometer self test
- * \include selftest.c
- */
-
 #include <stdio.h>
 #include "bma400.h"
 #include "common.h"
