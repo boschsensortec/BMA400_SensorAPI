@@ -5,13 +5,6 @@
  *
  */
 
-/*!
- * @ingroup bma400Examples
- * @defgroup bma400ExamplesTapDetection Tap detection
- * @brief To showcase tap detection feature
- * \include tap_detection.c
- */
-
 #include <stdio.h>
 #include "bma400.h"
 #include "common.h"
@@ -31,14 +24,14 @@ int main(int argc, char const *argv[])
      *         For I2C : BMA400_I2C_INTF
      *         For SPI : BMA400_SPI_INTF
      */
-    rslt = bma400_interface_init(&bma, BMA400_SPI_INTF);
+    rslt = bma400_interface_init(&bma, BMA400_I2C_INTF);
     bma400_check_rslt("bma400_interface_init", rslt);
-
-    rslt = bma400_soft_reset(&bma);
-    bma400_check_rslt("bma400_soft_reset", rslt);
 
     rslt = bma400_init(&bma);
     bma400_check_rslt("bma400_init", rslt);
+
+    rslt = bma400_soft_reset(&bma);
+    bma400_check_rslt("bma400_soft_reset", rslt);
 
     conf[0].type = BMA400_ACCEL;
     conf[1].type = BMA400_TAP_INT;
@@ -78,6 +71,9 @@ int main(int argc, char const *argv[])
 
     while (1)
     {
+        /* Delay given to give user certain time to provide tap movement */
+        bma.delay_us(10000, bma.intf_ptr);
+
         rslt = bma400_get_interrupt_status(&int_status, &bma);
         bma400_check_rslt("bma400_get_interrupt_status", rslt);
 
