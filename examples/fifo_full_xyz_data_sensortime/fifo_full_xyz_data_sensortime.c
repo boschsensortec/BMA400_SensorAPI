@@ -5,30 +5,35 @@
  *
  */
 
-/*!
- * @ingroup bma400Examples
- * @defgroup bma400ExamplesFifoST FIFO read with sensortime
- * @brief Read and extract FIFO data with sensortime
- * \include fifo_full_xyz_data_sensortime.c
- */
-
 #include <stdio.h>
 #include "bma400.h"
 #include "common.h"
 
-/* Earth's gravity in m/s^2 */
-#define GRAVITY_EARTH     (9.80665f)
+/************************************************************************/
+/*********                      Macros                      *************/
+/************************************************************************/
 
 /* 39.0625us per tick */
-#define SENSOR_TICK_TO_S  (0.0000390625f)
+#define SENSOR_TICK_TO_S        (0.0000390625f)
 
-/* Total number of frames */
-#define N_FRAMES_FULL     1024
+/* Total FIFO size */
+#define FIFO_SIZE               UINT16_C(1024)
 
 /* Add extra bytes to get complete fifo data */
-#define FIFO_SIZE_FULL    (N_FRAMES_FULL + BMA400_FIFO_BYTES_OVERREAD)
+#define FIFO_SIZE_FULL          (FIFO_SIZE + BMA400_FIFO_BYTES_OVERREAD)
 
-static float lsb_to_ms2(int16_t accel_data, uint8_t g_range, uint8_t bit_width);
+/*! Number of accel frames to be extracted from FIFO
+ * Calculation:
+ * fifo_buffer = 1024, accel_frame_len = 6, header_byte = 1.
+ * fifo_accel_frame_count = (1024 / (6 + 1)) = 146 frames
+ *
+ * Added extra frames to extract sensortime frame
+ */
+#define FIFO_ACCEL_FRAME_COUNT  UINT8_C(200)
+
+/************************************************************************/
+/*********                      Main Function               *************/
+/************************************************************************/
 
 int main(int argc, char const *argv[])
 {
@@ -36,15 +41,14 @@ int main(int argc, char const *argv[])
 
     uint16_t index;
 
-    struct bma400_sensor_data accel_data[N_FRAMES_FULL] = { { 0 } };
+    struct bma400_fifo_sensor_data accel_data[FIFO_ACCEL_FRAME_COUNT] = { { 0 } };
     struct bma400_int_enable int_en;
     struct bma400_fifo_data fifo_frame;
     struct bma400_device_conf fifo_conf;
     struct bma400_sensor_conf conf;
     uint16_t int_status = 0;
     uint8_t fifo_buff[FIFO_SIZE_FULL] = { 0 };
-    uint16_t accel_frames_req = N_FRAMES_FULL;
-    float x, y, z;
+    uint16_t accel_frames_req = FIFO_ACCEL_FRAME_COUNT;
     uint8_t try = 1;
 
     struct bma400_dev bma;
@@ -56,13 +60,11 @@ int main(int argc, char const *argv[])
     rslt = bma400_interface_init(&bma, BMA400_I2C_INTF);
     bma400_check_rslt("bma400_interface_init", rslt);
 
-    printf("Read FIFO Full interrupt XYZ data with sensortime\n");
+    rslt = bma400_init(&bma);
+    bma400_check_rslt("bma400_init", rslt);
 
     rslt = bma400_soft_reset(&bma);
     bma400_check_rslt("bma400_soft_reset", rslt);
-
-    rslt = bma400_init(&bma);
-    bma400_check_rslt("bma400_init", rslt);
 
     /* Select the type of configuration to be modified */
     conf.type = BMA400_ACCEL;
@@ -105,7 +107,9 @@ int main(int argc, char const *argv[])
     rslt = bma400_enable_interrupt(&int_en, 1, &bma);
     bma400_check_rslt("bma400_enable_interrupt", rslt);
 
-    while (try <= 25)
+    printf("Read FIFO Full interrupt XYZ data with sensortime\n");
+
+    while (try <= 10)
     {
         rslt = bma400_get_interrupt_status(&int_status, &bma);
         bma400_check_rslt("bma400_get_interrupt_status", rslt);
@@ -116,12 +120,16 @@ int main(int argc, char const *argv[])
 
             printf("Requested FIFO length : %d\n", fifo_frame.length);
 
+            fifo_frame.length = FIFO_SIZE_FULL;
+
             rslt = bma400_get_fifo_data(&fifo_frame, &bma);
             bma400_check_rslt("bma400_get_fifo_data", rslt);
 
             printf("Available FIFO length : %d\n", fifo_frame.length);
 
-            accel_frames_req = N_FRAMES_FULL;
+            accel_frames_req = FIFO_ACCEL_FRAME_COUNT;
+            printf("Requested FIFO frames : %d\n", accel_frames_req);
+
             rslt = bma400_extract_accel(&fifo_frame, accel_data, &accel_frames_req, &bma);
             bma400_check_rslt("bma400_extract_accel", rslt);
 
@@ -129,24 +137,14 @@ int main(int argc, char const *argv[])
             {
                 printf("Extracted FIFO frames : %d\n", accel_frames_req);
 
-                printf("Accel data in LSB units and Gravity data in m/s^2\n");
-
                 for (index = 0; index < accel_frames_req; index++)
                 {
                     /* 12-bit accelerometer at range 2G */
-                    printf("Accel[%d] X : %d raw LSB    Y : %d raw LSB    Z : %d raw LSB\n",
+                    printf("Accel[%d] Raw_X : %d     Raw_Y : %d     Raw_Z : %d \n",
                            index,
                            accel_data[index].x,
                            accel_data[index].y,
                            accel_data[index].z);
-
-                    /* 12-bit accelerometer at range 2G */
-                    x = lsb_to_ms2(accel_data[index].x, 2, 12);
-                    y = lsb_to_ms2(accel_data[index].y, 2, 12);
-                    z = lsb_to_ms2(accel_data[index].z, 2, 12);
-
-                    /* Print the data in m/s2. */
-                    printf("\t  Gravity-x = %4.2f, Gravity-y = %4.2f, Gravity-z = %4.2f\n", x, y, z);
                 }
             }
 
@@ -182,16 +180,4 @@ int main(int argc, char const *argv[])
     bma400_coines_deinit();
 
     return rslt;
-}
-
-static float lsb_to_ms2(int16_t accel_data, uint8_t g_range, uint8_t bit_width)
-{
-    float accel_ms2;
-    int16_t half_scale;
-
-    half_scale = 1 << (bit_width - 1);
-    accel_ms2 = (GRAVITY_EARTH * accel_data * g_range) / half_scale;
-
-    return accel_ms2;
-
 }
