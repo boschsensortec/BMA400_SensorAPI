@@ -1,6 +1,6 @@
-# BMA400 Sensor API
+# BMA400 SensorAPI
 
-> Bosch Sensortec's BMA400 accelerometer sensor API
+> Bosch Sensortec's BMA400 accelerometer SensorAPI
 
 ## Sensor Overview
 The BMA400 is the first real ultra-low power acceleration sensor that minimizes power consumption without compromising on performance. Featuring 12-bit digital resolution, continuous measurement and a defined selectable bandwidth combined with ultra-low power the BMA400 allows low-noise measurement of accelerations in three perpendicular axes. The BMA400 thus senses tilt, orientation, tab/double tab, and enables plug 'n' play step counting with activity recognition especially suited for wearable devices which need a long-lasting battery lifetime. 
