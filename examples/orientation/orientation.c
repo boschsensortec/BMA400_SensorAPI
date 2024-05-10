@@ -1,26 +1,56 @@
-/*
- * Copyright (C) 2020 Bosch Sensortec GmbH
+/**
+ * Copyright (c) 2024 Bosch Sensortec GmbH. All rights reserved.
  *
- * The license is available at root folder
+ * BSD-3-Clause
  *
- */
-
-/*!
- * @ingroup bma400Examples
- * @defgroup bma400ExamplesOrientation Orientation
- * @brief To showcase orientation feature
- * \include orientation.c
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
 #include <stdio.h>
 #include "bma400.h"
 #include "common.h"
 
+/************************************************************************/
+/*********                      Macros                      *************/
+/************************************************************************/
+
 /* Macro to determine count of activity change for each axis */
 #define BMA400_INT_COUNTER  UINT8_C(5)
 
+/************************************************************************/
+/*********                      Static APIs                 *************/
+/************************************************************************/
+
 /* orient_feature interrupts */
-static void test_bma400_orient_feature_int(struct bma400_orient_int_conf test_orient_conf, struct bma400_dev *dev)
+static void test_bma400_orient_feature_int(uint8_t combination,
+                                           struct bma400_orient_int_conf test_orient_conf,
+                                           struct bma400_dev *dev)
 {
     int8_t rslt = 0;
 
@@ -115,17 +145,22 @@ static void test_bma400_orient_feature_int(struct bma400_orient_int_conf test_or
         /* Loop breaker */
         if (orient_cnter >= BMA400_INT_COUNTER)
         {
-            printf("Orientation interrupt test done. Exiting!\n");
+            printf("\nOrientation interrupt test for Combination %d done\n\n", combination);
             break;
         }
     }
 }
+
+/************************************************************************/
+/*********                      Main Function               *************/
+/************************************************************************/
 
 int main(int argc, char const *argv[])
 {
     struct bma400_dev bma;
 
     int8_t rslt = 0;
+    uint8_t combination;
 
     struct bma400_orient_int_conf test_orient_conf = { 0 };
 
@@ -133,16 +168,17 @@ int main(int argc, char const *argv[])
      *         For I2C : BMA400_I2C_INTF
      *         For SPI : BMA400_SPI_INTF
      */
-    rslt = bma400_interface_init(&bma, BMA400_SPI_INTF);
+    rslt = bma400_interface_init(&bma, BMA400_I2C_INTF);
     bma400_check_rslt("bma400_interface_init", rslt);
-
-    rslt = bma400_soft_reset(&bma);
-    bma400_check_rslt("bma400_soft_reset", rslt);
 
     rslt = bma400_init(&bma);
     bma400_check_rslt("bma400_init", rslt);
 
-    printf("Orient change interrupt with XYZ Axes enabled\n");
+    rslt = bma400_soft_reset(&bma);
+    bma400_check_rslt("bma400_soft_reset", rslt);
+
+    combination = 1;
+    printf("Combination %d : Orient change interrupt with XYZ Axes enabled\n\n", combination);
     test_orient_conf.axes_sel = BMA400_AXIS_XYZ_EN;
     test_orient_conf.data_src = BMA400_DATA_SRC_ACC_FILT1;
     test_orient_conf.int_chan = BMA400_INT_CHANNEL_2;
@@ -151,9 +187,10 @@ int main(int argc, char const *argv[])
     test_orient_conf.ref_update = BMA400_ORIENT_REFU_ACC_FILT_2;
     test_orient_conf.stability_thres = 10; /* 1 LSB = 8mg */
 
-    test_bma400_orient_feature_int(test_orient_conf, &bma);
+    test_bma400_orient_feature_int(combination, test_orient_conf, &bma);
 
-    printf("Orient change interrupt with Y Axis enabled\n");
+    combination = 2;
+    printf("Combination %d : Orient change interrupt with Y Axis enabled\n\n", combination);
     test_orient_conf.axes_sel = BMA400_AXIS_Y_EN;
     test_orient_conf.data_src = BMA400_DATA_SRC_ACC_FILT2;
     test_orient_conf.int_chan = BMA400_UNMAP_INT_PIN;
@@ -161,9 +198,10 @@ int main(int argc, char const *argv[])
     test_orient_conf.orient_thres = 125; /* 1 LSB = 8mg */
     test_orient_conf.stability_thres = 10; /* 1 LSB = 8mg */
 
-    test_bma400_orient_feature_int(test_orient_conf, &bma);
+    test_bma400_orient_feature_int(combination, test_orient_conf, &bma);
 
-    printf("Orient change interrupt with X Axis enabled\n");
+    combination = 3;
+    printf("Combination %d : Orient change interrupt with X Axis enabled\n\n", combination);
     test_orient_conf.axes_sel = BMA400_AXIS_X_EN;
     test_orient_conf.data_src = BMA400_DATA_SRC_ACC_FILT2;
     test_orient_conf.int_chan = BMA400_MAP_BOTH_INT_PINS;
@@ -172,9 +210,10 @@ int main(int argc, char const *argv[])
     test_orient_conf.ref_update = BMA400_ORIENT_REFU_ACC_FILT_2;
     test_orient_conf.stability_thres = 10; /* 1 LSB = 8mg */
 
-    test_bma400_orient_feature_int(test_orient_conf, &bma);
+    test_bma400_orient_feature_int(combination, test_orient_conf, &bma);
 
-    printf("Orient change interrupt with Z Axis enabled\n");
+    combination = 4;
+    printf("Combination %d : Orient change interrupt with Z Axis enabled\n\n", combination);
     test_orient_conf.axes_sel = BMA400_AXIS_Z_EN;
     test_orient_conf.data_src = BMA400_DATA_SRC_ACC_FILT2;
     test_orient_conf.int_chan = BMA400_INT_CHANNEL_1;
@@ -183,11 +222,12 @@ int main(int argc, char const *argv[])
     test_orient_conf.ref_update = BMA400_ORIENT_REFU_ACC_FILT_2;
     test_orient_conf.stability_thres = 10; /* 1 LSB = 8mg */
 
-    test_bma400_orient_feature_int(test_orient_conf, &bma);
+    test_bma400_orient_feature_int(combination, test_orient_conf, &bma);
 
     /* Manual update of ref value is reflected while we read only when we enable that specific axes */
 
-    printf("Orient change interrupt with Z Axis enabled and manual update\n");
+    combination = 5;
+    printf("Combination %d : Orient change interrupt with Z Axis enabled and manual update\n\n", combination);
     test_orient_conf.axes_sel = BMA400_AXIS_Z_EN;
     test_orient_conf.data_src = BMA400_DATA_SRC_ACC_FILT2;
     test_orient_conf.int_chan = BMA400_INT_CHANNEL_1;
@@ -199,7 +239,7 @@ int main(int argc, char const *argv[])
     test_orient_conf.orient_ref_y = 300;
     test_orient_conf.orient_ref_z = 2000;
 
-    test_bma400_orient_feature_int(test_orient_conf, &bma);
+    test_bma400_orient_feature_int(combination, test_orient_conf, &bma);
 
     bma400_coines_deinit();
 
