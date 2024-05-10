@@ -1,7 +1,35 @@
 /**
- * Copyright (C) 2020 Bosch Sensortec GmbH. All rights reserved.
+ * Copyright (c) 2024 Bosch Sensortec GmbH. All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * BSD-3-Clause
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
 #include <stdint.h>
@@ -14,6 +42,9 @@
 /*! Read write length varies based on user requirement */
 #define READ_WRITE_LENGTH  UINT8_C(46)
 
+/*! BMA400 shuttle board ID */
+#define BMA400_SHUTTLE_ID  UINT16_C(0x1A1)
+
 /* Variable to store the device address */
 static uint8_t dev_addr;
 
@@ -24,7 +55,7 @@ BMA400_INTF_RET_TYPE bma400_i2c_read(uint8_t reg_addr, uint8_t *reg_data, uint32
 {
     uint8_t dev_addr = *(uint8_t*)intf_ptr;
 
-    return coines_read_i2c(dev_addr, reg_addr, reg_data, (uint16_t)len);
+    return coines_read_i2c(COINES_I2C_BUS_0,dev_addr, reg_addr, reg_data, (uint16_t)len);
 }
 
 /*!
@@ -34,7 +65,7 @@ BMA400_INTF_RET_TYPE bma400_i2c_write(uint8_t reg_addr, const uint8_t *reg_data,
 {
     uint8_t dev_addr = *(uint8_t*)intf_ptr;
 
-    return coines_write_i2c(dev_addr, reg_addr, (uint8_t *)reg_data, (uint16_t)len);
+    return coines_write_i2c(COINES_I2C_BUS_0,dev_addr, reg_addr, (uint8_t *)reg_data, (uint16_t)len);
 }
 
 /*!
@@ -44,7 +75,7 @@ BMA400_INTF_RET_TYPE bma400_spi_read(uint8_t reg_addr, uint8_t *reg_data, uint32
 {
     uint8_t dev_addr = *(uint8_t*)intf_ptr;
 
-    return coines_read_spi(dev_addr, reg_addr, reg_data, (uint16_t)len);
+    return coines_read_spi(COINES_SPI_BUS_0,dev_addr, reg_addr, reg_data, (uint16_t)len);
 }
 
 /*!
@@ -54,7 +85,7 @@ BMA400_INTF_RET_TYPE bma400_spi_write(uint8_t reg_addr, const uint8_t *reg_data,
 {
     uint8_t dev_addr = *(uint8_t*)intf_ptr;
 
-    return coines_write_spi(dev_addr, reg_addr, (uint8_t *)reg_data, (uint16_t)len);
+     return coines_write_spi(COINES_SPI_BUS_0,dev_addr, reg_addr, (uint8_t *)reg_data, (uint16_t)len);
 }
 
 /*!
@@ -74,19 +105,19 @@ void bma400_check_rslt(const char api_name[], int8_t rslt)
             /* Do nothing */
             break;
         case BMA400_E_NULL_PTR:
-            printf("Error [%d] : Null pointer\r\n", rslt);
+            printf("API : %s Error [%d] : Null pointer\r\n", api_name, rslt);
             break;
         case BMA400_E_COM_FAIL:
-            printf("Error [%d] : Communication failure\r\n", rslt);
+            printf("API : %s Error [%d] : Communication failure\r\n", api_name, rslt);
             break;
         case BMA400_E_INVALID_CONFIG:
-            printf("Error [%d] : Invalid configuration\r\n", rslt);
+            printf("API : %s Error [%d] : Invalid configuration\r\n", api_name, rslt);
             break;
         case BMA400_E_DEV_NOT_FOUND:
-            printf("Error [%d] : Device not found\r\n", rslt);
+            printf("API : %s Error [%d] : Device not found\r\n", api_name, rslt);
             break;
         default:
-            printf("Error [%d] : Unknown error code\r\n", rslt);
+            printf("API : %s Error [%d] : Unknown error code\r\n", api_name, rslt);
             break;
     }
 }
@@ -94,23 +125,33 @@ void bma400_check_rslt(const char api_name[], int8_t rslt)
 int8_t bma400_interface_init(struct bma400_dev *bma400, uint8_t intf)
 {
     int8_t rslt = BMA400_OK;
-
-    /* Switch VDD for sensor off */
-    coines_set_shuttleboard_vdd_vddio_config(0, 0);
-    coines_config_i2c_bus(COINES_I2C_BUS_0, COINES_I2C_FAST_MODE);
-
-    /* Switch VDD for sensor on */
-    coines_set_shuttleboard_vdd_vddio_config(3300, 3300);
+    struct coines_board_info board_info;
 
     if (bma400 != NULL)
     {
-        int16_t result = coines_open_comm_intf(COINES_COMM_INTF_USB);
+        int16_t result = coines_open_comm_intf(COINES_COMM_INTF_USB,NULL);
+
         if (result < COINES_SUCCESS)
         {
             printf(
                 "\n Unable to connect with Application Board ! \n" " 1. Check if the board is connected and powered on. \n" " 2. Check if Application Board USB driver is installed. \n"
                 " 3. Check if board is in use by another application. (Insufficient permissions to access USB) \n");
             exit(result);
+        }
+
+        rslt = coines_get_board_info(&board_info);
+
+#if defined(PC)
+        setbuf(stdout, NULL);
+#endif
+
+        if (rslt == COINES_SUCCESS)
+        {
+            if ((board_info.shuttle_id != BMA400_SHUTTLE_ID))
+            {
+                printf("! Warning invalid sensor shuttle \n ," "This application will not support this sensor \n");
+                exit(COINES_E_FAILURE);
+            }
         }
 
         coines_set_shuttleboard_vdd_vddio_config(0, 0);
@@ -159,5 +200,14 @@ int8_t bma400_interface_init(struct bma400_dev *bma400, uint8_t intf)
 
 void bma400_coines_deinit(void)
 {
-    coines_close_comm_intf(COINES_COMM_INTF_USB);
+    fflush(stdout);
+
+    coines_set_shuttleboard_vdd_vddio_config(0, 0);
+    coines_delay_msec(100);
+
+    /* Coines interface reset */
+    coines_soft_reset();
+    coines_delay_msec(100);
+
+    coines_close_comm_intf(COINES_COMM_INTF_USB,NULL);
 }

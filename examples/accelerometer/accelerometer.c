@@ -1,20 +1,44 @@
-/*
- * Copyright (C) 2020 Bosch Sensortec GmbH
+/**
+ * Copyright (c) 2024 Bosch Sensortec GmbH. All rights reserved.
  *
- * The license is available at root folder
+ * BSD-3-Clause
  *
- */
-
-/*!
- * @ingroup bma400Examples
- * @defgroup bma400ExamplesAccelerometer Accelerometer read
- * @brief To read accelerometer xyz data for defined range and ODR
- * \include accelerometer.c
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
 #include <stdio.h>
 #include "bma400.h"
 #include "common.h"
+
+/************************************************************************/
+/*********                      Macros                      *************/
+/************************************************************************/
 
 /* Earth's gravity in m/s^2 */
 #define GRAVITY_EARTH     (9.80665f)
@@ -22,7 +46,34 @@
 /* 39.0625us per tick */
 #define SENSOR_TICK_TO_S  (0.0000390625f)
 
-static float lsb_to_ms2(int16_t accel_data, uint8_t g_range, uint8_t bit_width);
+/************************************************************************/
+/*********                      Static APIs                 *************/
+/************************************************************************/
+
+/*!
+ *  @brief This internal API converts raw sensor values(LSB) to meters per seconds square.
+ *
+ *  @param[in] accel_data    : Raw sensor value.
+ *  @param[in] g_range       : Accel Range selected (2G, 4G, 8G, 16G).
+ *  @param[in] bit_width     : Resolution of the sensor.
+ *
+ *  @return Accel values in meters per second square.
+ *
+ */
+static float lsb_to_ms2(int16_t accel_data, uint8_t g_range, uint8_t bit_width)
+{
+    float accel_ms2;
+    int16_t half_scale;
+
+    half_scale = 1 << (bit_width - 1);
+    accel_ms2 = (GRAVITY_EARTH * accel_data * g_range) / half_scale;
+
+    return accel_ms2;
+}
+
+/************************************************************************/
+/*********                      Main Function               *************/
+/************************************************************************/
 
 int main(int argc, char const *argv[])
 {
@@ -39,14 +90,14 @@ int main(int argc, char const *argv[])
      *         For I2C : BMA400_I2C_INTF
      *         For SPI : BMA400_SPI_INTF
      */
-    rslt = bma400_interface_init(&bma, BMA400_SPI_INTF);
+    rslt = bma400_interface_init(&bma, BMA400_I2C_INTF);
     bma400_check_rslt("bma400_interface_init", rslt);
-
-    rslt = bma400_soft_reset(&bma);
-    bma400_check_rslt("bma400_soft_reset", rslt);
 
     rslt = bma400_init(&bma);
     bma400_check_rslt("bma400_init", rslt);
+
+    rslt = bma400_soft_reset(&bma);
+    bma400_check_rslt("bma400_soft_reset", rslt);
 
     /* Select the type of configuration to be modified */
     conf.type = BMA400_ACCEL;
@@ -94,7 +145,8 @@ int main(int argc, char const *argv[])
             z = lsb_to_ms2(data.z, 2, 12);
             t = (float)data.sensortime * SENSOR_TICK_TO_S;
 
-            printf("Gravity-x : %.2f,   Gravity-y : %.2f,  Gravity-z :  %.2f,   t(s) : %.4f\r\n", x, y, z, t);
+            printf("Acc_Raw_X : %d   Acc_Raw_Y : %d   Acc_Raw_Z : %d", data.x, data.y, data.z);
+            printf("\tAcc_ms2_X : %.2f,   Acc_ms2_Y : %.2f,  Acc_ms2_Z :  %.2f,   t(s) : %.4f\n", x, y, z, t);
             n_samples--;
         }
     }
@@ -120,7 +172,8 @@ int main(int argc, char const *argv[])
             y = lsb_to_ms2(data.y, 2, 12);
             z = lsb_to_ms2(data.z, 2, 12);
 
-            printf("Gravity-x : %.2f,   Gravity-y : %.2f,  Gravity-z :  %.2f\r\n", x, y, z);
+            printf("Acc_Raw_X : %d   Acc_Raw_Y : %d   Acc_Raw_Z : %d", data.x, data.y, data.z);
+            printf("\tAcc_ms2_X : %.2f,   Acc_ms2_Y : %.2f,  Acc_ms2_Z :  %.2f\n", x, y, z);
             n_samples--;
         }
     }
@@ -128,16 +181,4 @@ int main(int argc, char const *argv[])
     bma400_coines_deinit();
 
     return rslt;
-}
-
-static float lsb_to_ms2(int16_t accel_data, uint8_t g_range, uint8_t bit_width)
-{
-    float accel_ms2;
-    int16_t half_scale;
-
-    half_scale = 1 << (bit_width - 1);
-    accel_ms2 = (GRAVITY_EARTH * accel_data * g_range) / half_scale;
-
-    return accel_ms2;
-
 }
