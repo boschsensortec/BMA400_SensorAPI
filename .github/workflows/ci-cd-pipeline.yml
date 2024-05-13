@@ -1,0 +1,38 @@
+# GitHub CI build pipeline to trigger the tag creation after the merge
+name: CI/CD Pipeline
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  TagCreation:
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'Release')
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.merge_commit_sha }}
+        fetch-depth: '0'
+
+    - name: Parsing tag name from the branch
+      id: tagDetails
+      run: |
+        echo "Branch name is ${{ github.event.pull_request.head.ref }}"
+        tagName=$(echo ${{ github.event.pull_request.head.ref }} | grep -oP 'v\d+\.\d+\.\d+' | sed 's/^//')
+        echo "tagName=$tagName" >> $GITHUB_OUTPUT
+
+    - name: Tag name
+      run: |
+        echo ${{ steps.tagDetails.outputs.tagName }}
+
+    - uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ steps.tagDetails.outputs.tagName }}
+        token: "${{ secrets.GITHUB_TOKEN }}"
+        generateReleaseNotes: "true"
