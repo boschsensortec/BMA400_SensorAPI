@@ -1578,14 +1578,14 @@ static int8_t get_sensor_conf(const uint8_t *data, struct bma400_sensor_conf *co
 {
     int8_t rslt = BMA400_E_INVALID_CONFIG;
     uint8_t int_enable = 0;
-    enum bma400_int_chan int_map = BMA400_UNMAP_INT_PIN;
+    enum bma400_int_chan *int_map;
 
     if (BMA400_ACCEL == conf->type)
     {
         /* Get Accel configurations */
         rslt = get_accel_conf(&conf->param.accel, dev);
         int_enable = BMA400_DATA_READY_INT_MAP;
-        int_map = conf->param.accel.int_chan;
+        int_map = &conf->param.accel.int_chan;
     }
 
     if (BMA400_TAP_INT == conf->type)
@@ -1593,7 +1593,7 @@ static int8_t get_sensor_conf(const uint8_t *data, struct bma400_sensor_conf *co
         /* Get tap configurations */
         rslt = get_tap_conf(&conf->param.tap, dev);
         int_enable = BMA400_TAP_INT_MAP;
-        int_map = conf->param.tap.int_chan;
+        int_map = &conf->param.tap.int_chan;
     }
 
     if (BMA400_ACTIVITY_CHANGE_INT == conf->type)
@@ -1601,7 +1601,7 @@ static int8_t get_sensor_conf(const uint8_t *data, struct bma400_sensor_conf *co
         /* Get activity change configurations */
         rslt = get_activity_change_conf(&conf->param.act_ch, dev);
         int_enable = BMA400_ACT_CH_INT_MAP;
-        int_map = conf->param.act_ch.int_chan;
+        int_map = &conf->param.act_ch.int_chan;
     }
 
     if (BMA400_GEN1_INT == conf->type)
@@ -1609,7 +1609,7 @@ static int8_t get_sensor_conf(const uint8_t *data, struct bma400_sensor_conf *co
         /* Get generic int 1 configurations */
         rslt = get_gen1_int(&conf->param.gen_int, dev);
         int_enable = BMA400_GEN1_INT_MAP;
-        int_map = conf->param.gen_int.int_chan;
+        int_map = &conf->param.gen_int.int_chan;
     }
 
     if (BMA400_GEN2_INT == conf->type)
@@ -1617,7 +1617,7 @@ static int8_t get_sensor_conf(const uint8_t *data, struct bma400_sensor_conf *co
         /* Get generic int 2 configurations */
         rslt = get_gen2_int(&conf->param.gen_int, dev);
         int_enable = BMA400_GEN2_INT_MAP;
-        int_map = conf->param.gen_int.int_chan;
+        int_map = &conf->param.gen_int.int_chan;
     }
 
     if (BMA400_ORIENT_CHANGE_INT == conf->type)
@@ -1625,20 +1625,20 @@ static int8_t get_sensor_conf(const uint8_t *data, struct bma400_sensor_conf *co
         /* Get orient int configurations */
         rslt = get_orient_int(&conf->param.orient, dev);
         int_enable = BMA400_ORIENT_CH_INT_MAP;
-        int_map = conf->param.orient.int_chan;
+        int_map = &conf->param.orient.int_chan;
     }
 
     if (BMA400_STEP_COUNTER_INT == conf->type)
     {
         rslt = BMA400_OK;
         int_enable = BMA400_STEP_INT_MAP;
-        int_map = conf->param.step_cnt.int_chan;
+        int_map = &conf->param.step_cnt.int_chan;
     }
 
     if (rslt == BMA400_OK)
     {
         /* Int pin mapping settings */
-        get_int_pin_map(data, int_enable, &int_map);
+        get_int_pin_map(data, int_enable, int_map);
     }
 
     return rslt;
